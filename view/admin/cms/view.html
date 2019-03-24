@@ -1,0 +1,123 @@
+{% include 'admin/lib/header.html' %}
+<script src="{{base_url}}assets/ckeditor/ckeditor.js" type="text/javascript"></script>
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+    {% include 'admin/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres">
+		<div class="">
+			<div class="chit-chat-heading">
+				<h3>{{ constant('VIEW')}} {{ constant('PAGE')}}</h3>
+			</div>           			
+			<form action="{{ base_url }}admin/cms/edit/{{edit_data[0].page_id|e}}" method="POST" name="cms_form" enctype="multipart/form-data">								
+				<div class="col-md-3 md-form">
+					<label for="page_title">{{constant('PAGE')}} {{constant('TITLE')}}</label>
+				</div>
+				<div class="col-md-9 md-form">
+					<input type="text" id="page_title" value="{{edit_data[0].page_title|e}}" name="page_title" class="form-control" readonly>
+				</div>				
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('PAGE')}} {{constant('SLUG')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_slug" value="{{edit_data[0].page_slug|e}}" name="page_slug" class="form-control" readonly>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_desc">{{constant('PAGE')}} {{constant('DESCRIPTION')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">										
+					<textarea id="page_desc" readonly name="page_desc" class="form-control ckeditor">{{edit_data[0].page_desc|e}}</textarea>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_banner">{{constant('BANNER IMAGE')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">
+					{% if edit_data[0].page_banner_image|e %}
+					<div class="col-md-2 md-form">
+						<img src="{{base_url}}upload/cms_images/{{edit_data[0].page_banner_image|e}}" style="max-width:100px;" height="100" width="100">
+					</div>
+					{% endif %}
+					<div class="col-md-7 md-form">
+						<input type="file" id="page_banner" disabled class="" name="page_banner" aria-describedby="fileHelp" dir="auto" accept="image/*">
+						{{edit_data[0].page_banner_image|e}}
+					</div>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('META')}} {{constant('TITLE')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_meta_title" placeholder="{{constant('ENTER')}} {{constant('META')}} {{constant('TITLE')}}" readonly value="{{edit_data[0].page_meta_title|e}}" name="page_meta_title" class="form-control">
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('META')}} {{constant('KEY')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_meta_key" placeholder="{{constant('ENTER')}} {{constant('META')}} {{constant('KEY')}}" readonly value="{{edit_data[0].page_meta_key|e}}" name="page_meta_key" class="form-control">
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_desc">{{constant('PAGE')}} {{constant('META')}} {{constant('DESCRIPTION')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">										
+					<textarea id="page_meta_desc" readonly name="page_meta_desc" class="form-control ckeditor">{{edit_data[0].page_meta_desc|e}}</textarea>
+				</div>
+				<div class="col-md-12 text-center">					
+					<div class="text-right">
+						<a href="{{ base_url }}admin/cms/" type="button" class="btn btn-warning">{{ constant('BACK')}}  </a>
+					</div>
+				</div>									
+			</form>						
+		</div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  {% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add Role -->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+</body>
+</html>                     

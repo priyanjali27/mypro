@@ -1,0 +1,145 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+    <div class="page-container">	
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'resturant/lib/nav.html' %}
+
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="work-progres">
+                                <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+                                    SELECT {{constant('BRAND')}}
+                                    <!-- <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a> -->
+                                </div>
+                            </div>
+                        </div>	  
+                    </div>	  	  
+                    <div class="clearfix"></div>	  	  	 	
+                    <div class="chit-chat-layer1 modal-spacee">
+                        <div class="clearfix">  </div>	
+
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">			
+                                <div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">				
+
+                                    <form action="{{ base_url }}resturant/staffrole/assign_brands" method="POST" name="staffmodal_form">
+                                        <div class="col-md-3 md-form" style="padding:0px;">
+                                            <input type="hidden" value="{{user_id}}" name="res_user_id"/>
+                                            <input type="hidden" value="{{company_id}}" name="res_company_id"/>
+
+                                            <label for="res_brand_ids">{{ constant('BRAND')}}&nbsp;{{ constant('NAME')}}<span class="required">*</span></label>
+                                            <br><br><br>
+                                            <select id="res_brand_ids" name="res_brand_ids[]" class="selectpicker form-control-select" multiple >					
+                                                {% if all_brands %}
+                                                {% for key,brands in all_brands %} 
+                                                <option {% if brands.resturantbrand_id in assigned_brands.res_brand_ids %}selected{% endif %} value="{{ brands.resturantbrand_id|e}}">{{ brands.resturantbrand_name|e }}</option>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 text-center">              
+                                            <button class="btn btn-success" value="Submit" name="update">{{constant('SUBMIT')}}</button>				
+                                        </div>
+                                        
+                                    </form>
+
+                                </div>	                      	
+
+                            </div>				
+                        </div>		
+                    </div>            
+                </div>		
+                <div class="clearfix"></div>
+                <!--main page chit chating end here-->
+
+                <!--copy rights start here-->
+                {% include 'resturant/lib/footer.html' %}	
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        {% include 'resturant/lib/sidebar.html' %}
+    </div>
+    <!--slide bar menu end here-->
+
+    <!--//scrolling js-->
+    <script src="{{base_url}}assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{base_url}}assets/multi.min.css ">
+    <script src="{{base_url}}assets/multi.min.js"></script>
+    <script>
+var select = document.getElementById('res_brand_ids');
+multi(select);
+    </script>
+
+    <script>
+        var select = document.getElementById('location_code');
+        multi(select);
+    </script>
+
+    <script type="text/javascript">
+
+        // Wait for the DOM to be ready
+        $(function () {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='staffmodal_form']").validate({
+                // Specify validation rules
+                rules: {
+                    res_brand_ids: "required",
+                },
+                // Specify validation error messages
+                messages: {
+
+                    res_brand_ids: "Please Select Brand",
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    var formData = $(form).serialize();
+                    var options = $('#res_brand_ids > option:selected');
+                    if (options.length == 0) {
+                        $('#res_brand_ids').after('<label id="res_brand_ids" class="error" for="res_brand_ids">Please Select Brand(atleast one)</label>');
+                        return false;
+                    }
+                    var urlData = $(form).attr('action');
+                    $.ajax({
+                        url: urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        data: formData,
+                        success: function (data) {
+                            var data = $.parseJSON(data);
+                            if (data.error == 'true') {
+                                $.each(data.error_msg, function (index, value) {
+                                    $('#' + index).after('<label id="' + index + '-error" class="error" for="user_name">' + value + '</label>');
+                                });
+                            } else if (data.error == 'permission') {
+                                $('.alert').delay(500).fadeOut(100);
+                                $('form[name="staffmodal_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                            } else {
+                                $('form[name="staffmodal_form"]')[0].reset();
+                                $('form[name="staffmodal_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                if ($('.alert').delay(10000).fadeOut(100)) {
+                                    //window.location.reload();
+                                    window.location.href = "{{base_url}}resturant/staffrole";
+                                }
+
+                            }
+
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>                     

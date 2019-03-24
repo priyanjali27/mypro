@@ -1,0 +1,168 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'resturant/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+				<div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+               <div class="work-progres">
+							<div class="modal-content">
+			<div class="modal-header">
+			  <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+			  <h4 class="modal-title">{{ constant('CHANGE PASSWORD')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										{%if(success_massage) %}
+										<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}</div>
+										
+										{% endif %}
+										<form  method="POST" action="{{ base_url }}resturant/user/change_password" name="userregistration">
+										
+											<div class="col-md-12 col-lg-6 md-form">
+												<i class="fa fa-key prefix grey-text"></i>
+												<label for="form341">{{ constant('OLD')}} {{ constant('PASSWORD')}} </label>
+													<input type="password" name="old_password" placeholder="{{constant('ENTER')}} {{ constant('OLD')}} {{ constant('PASSWORD')}}" value="{{set_data.old_password}}" class="form-control">
+												
+													{% if(error_msg.old_password)%}
+													<label id="old_password-error" class="error" for="user_name">{{error_msg.old_password}}</label>
+													{% endif %}																				
+											</div>
+											<div class="col-md-12 col-lg-6 md-form">
+												<i class="fa fa-key prefix grey-text"></i>
+												<label for="form341">{{ constant('NEW')}} {{ constant('PASSWORD')}} </label>
+												<input type="password" name="new_password" id="new_password" placeholder="{{constant('ENTER')}} {{ constant('NEW')}} {{ constant('PASSWORD')}}" value="{{set_data.new_password}}"  class="form-control">
+											</div>
+											<div class="col-md-12 col-lg-6 md-form">
+												<i class="fa fa-key prefix grey-text"></i>
+												<label for="form31">{{ constant('CONFIRM')}} {{ constant('PASSWORD')}} </label>
+												<input type="password" name="confirm_password" placeholder="{{constant('REENTER')}} {{ constant('NEW')}} {{ constant('PASSWORD')}}" id="confirm_password"  value="{{set_data.confirm_password}}"   class="form-control">
+											
+												{% if(error_msg.confirm_password)%}
+												<label id="confirm_password-error" class="error" for="user_name">{{error_msg.confirm_password}}</label>
+												{% endif %}
+											</div>
+										
+										
+										
+
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">Submit</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+				</div>
+      </div>
+				<div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'resturant/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    {% include 'resturant/lib/sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+<!--slide bar menu end here-->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='userregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		old_password: "required",
+		new_password: "required",
+		   confirm_password : {
+		             required: true,
+                    equalTo : "#new_password"
+                }
+		
+    },
+    // Specify validation error messages
+    messages: {
+      old_password: "Please enter your password",
+	  new_password: "Please enter your new password",
+
+	   confirm_password : {
+		             required: "Please enter your confirm password",
+                    equalTo : "New password doesn't match."
+                }
+		
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     form.submit();
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+</body>
+</html>                     

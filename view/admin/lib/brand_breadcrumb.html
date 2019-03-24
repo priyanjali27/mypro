@@ -1,0 +1,25 @@
+<div class="chit-chat-layer1">
+    <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres sub-top-menu-wrapper">
+
+ {% for company in company_details %}
+       <div class="col-md-2 col-sm-12 col-lg-4"> <img src="{{base_url}}upload/companydefault.png" title="Company Logo" alt="Company Logo" class="data_images1 text-rest-img" width="100"></div>
+
+     
+    <div class="col-md-2 col-sm-12 col-lg-2" style="margin-left: -24%;"><b>Company:</b>{{ company.company_language_name|e }}<br><b>Email:</b>{{ company.company_email|e }}<br><b>Telephone:</b>{{ company.company_phone|e }}</div>
+     {% endfor %}
+ <div class="col-md-2 col-sm-12 col-lg-2"></div>
+
+       {% for brand in brand_details %}
+      <div class="col-md-2 col-sm-12 col-lg-2">
+         {% if brand.resturantbrand_file %}
+        <img src="{{base_url}}upload/logoimages/{{brand.resturantbrand_file}}" title="Restaurant Logo" alt="Restaurant Logo" class="data_images1 text-rest-img" width="100"> {%else%}
+        <img src="{{base_url}}upload/companydefault.png" title="Restaurant Logo" alt="Restaurant Logo" class="data_images1 text-rest-img" width="100"> 
+        {%endif%}
+    </div>
+      <div class="col-md-2 col-sm-12 col-lg-2" style="margin-left: -7%;"><b>Brand:</b>{{ brand.resturantbrand_language_name}}<br><b>Email:</b>{{ brand.resturantbrand_email|e }}<br><b>Telephone:</b>{{ brand.resturantbrand_phoneno|e }}</div>
+     {% endfor %}
+
+ <div class="col-md-2 col-sm-12 col-lg-2"></div>
+
+    </div>
+   </div>

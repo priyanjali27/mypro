@@ -1,0 +1,547 @@
+{% include 'resturant/lib/header.html' %}
+<!-- Core JS files -->
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/pace.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/blockui.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/app.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/interactions.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/widgets.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/effects.min.js"></script>
+
+</head>
+<body >	
+
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'resturant/lib/nav.html' %}
+		<!-- /script-for sticky-nav -->
+<!--inner block start here-->
+<div class="inner-block" style="background-color:#fff;border:1px solid #ccc; height:auto;padding:4em 2em 4em 2em;">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1" style="background-color: #fff;padding: 20px;">
+
+<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12 mrg-se">
+						<div class="col-md-12 col-sm-12 col-lg-4 col-xs-12">
+					<!--	<form class="example">
+						  <input type="text" placeholder="Search.." name="search">
+						  <button type="submit"><i class="fa fa-search"></i></button>
+						</form>-->
+						</div>
+						<div class="col-md-12 col-sm-12 col-lg-8 col-xs-12">
+							<div class="main-top-button">
+							<div class="add-listt add-category">
+									<div class="" data-toggle="modal" data-target="#myModal"><span><i class="fa fa-plus"></i></span>{{constant('ADD')}} {{constant('CATEGORY')}}</div>
+								</div>
+								<div class="add-listt add-items">
+									<div class=""><span></span><a href="{{base_url}}resturant/menus/additems">{{constant('ADD ITEMS')}}</a></div>
+								</div>
+								
+								<div class="add-listt import-menu">
+									<div class="">Import Menu</div>
+								</div>
+								<div class="add-listt Emport-menu">
+									<div class="">Export Menu</div> 
+								</div>
+							</div>
+						</div>
+						
+					</div>
+						<div class="col-md-12">
+							<div class="col-md-12 col-sm-12 col-lg-8 col-xs-12">
+							{% if items %}
+							<div class="panel panel-flat" style="padding-left:0px; padding-top:0px; padding-bottom:0px;">
+								<div class="panel-body padding-0px" style="padding-left:0px; padding-top:0px;padding-bottom:0px;">
+											{% for key, item in items %} 
+								<div class="col-md-12 col-sm-12 col-xs-12 main-item-list">
+								<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+									<div class="main-img-head">
+										<div class="img-list box-img">
+											<div class="coco-img"><img  src="{{base_url}}upload/images/{{item.item_image}}" class="" alt="jkdf"></div>
+										</div>
+										<div class="img-list text-img">
+											<div class="coco-title">{{item.item_name}}</div>
+											<div class="coco-type">{{item.item_code}}</div>
+											<div class="coco-price">{{item.item_defaultprice}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12">
+								<div class="main-enabel-edit">
+							
+								<div class="list-enable btn-edit">
+									<a href="{{base_url}}resturant/menus/edit/{{item.item_id}}"><span><i class="fa fa-pencil" aria-hidden="true"></i></span>{{constant('EDIT')}}</a>
+								</div>
+								
+									</div>
+									</div>
+								</div>	
+								{%endfor%}
+						
+							
+								
+							
+								
+								</div>
+								
+							</div>
+								{% else %}
+							<div class="col-md-12 col-sm-12 col-xs-12 main-item-list">
+								<div class="add-new">
+									No items Found
+								</div>
+							</div>
+								{% endif %}
+							<div class="clearfix"></div>
+								
+								<div class="add-new">
+									<a href="#"  data-toggle="modal" data-target="#myModal"><span><i class="fa fa-plus"></i></span>Add New Category</a>
+								</div>
+							</div>
+							
+							<div class="col-md-12 col-sm-12 col-lg-4 col-xs-12">
+								<div class="r-menu-categories">Menu Categories</div>
+								
+								<div id="ck-button" class="all_category">
+								   <label>
+									  <input type="checkbox" onclick='window.location.assign("{{ base_url }}resturant/category")'/><span>All</span>
+								   </label>
+								</div>
+								<div class="categories">
+								{% if results %}
+									{% for key, category in results %} 
+								<div id='ck-button'><label><input type='checkbox' value='{{category.category_id}}'><span>{{category.category_name}}</span></label></div>
+								{% endfor %}
+								{% endif %}
+								</div>
+								<div class="clearfix"></div>
+								
+								<div class="add-new">
+									<a href="#"  data-toggle="modal" data-target="#myModal"><span><i class="fa fa-plus"></i></span>Add New Category</a>
+								</div>
+								
+								
+								</div>
+								
+								
+					
+</div>
+					</div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'resturant/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'resturant/lib/rest_sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+
+<!--slide bar menu end here-->
+ <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('CATEGORY MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="editregistration" method="POST" action="{{ base_url }}resturant/category/add/" id="edit_dept_form" >
+												<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-user prefix grey-text"></i>
+													<label for="form31">{{ constant('CATEGORY NAME')}}</label>
+												<input type="text" id="category_name" name="category_name" class="form-control">
+											
+										</div>
+											<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-file prefix grey-text"></i>
+													
+												<input type="file" id="category_file" name="category_file" class="">
+											
+										</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<style>
+	.logo {
+    width: auto;
+    position: relative;
+	left:0px;
+	top:10px;
+	}
+	.checkbox label::before{
+	display:none;
+	}
+	.checkbox {
+    padding-left: 0;
+}
+.fa-trash:before, .fa-trash:after{
+left:0px;
+}
+.fileinput-r {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none repeat scroll 0 0 transparent;
+    cursor: inherit;
+    display: block;
+}
+select[multiple], select[size] {
+    background-color: #fff;
+    padding: 10px;
+}
+
+select[multiple] option, select[size] option {
+    padding: 7px 12px;
+    border-radius: 3px;
+}
+	select[multiple], select[size] {
+    height: 200px;
+    padding: 7px;
+}
+
+.no-border    {border-bottom: 1px solid #ccc !important;
+    border: none;
+    box-shadow: none;
+}
+.btn {
+    font-size: .8rem;
+    padding: 10px;
+	}
+	
+	.nav > li > a:hover, .nav > li > a:focus{
+	 font-size: 18px;
+    border: none;
+    color: #7c7c7c;
+    background-image: url(../../images/radio-active.jpg) !important;
+    background-repeat: no-repeat !important;
+    background-position: left center;
+    padding-left: 45px;
+	}
+	.bor-bottom-1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #3c3c3c;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+	
+}
+.coco-img img {
+	border: 1px solid #dbdbdb;
+	border-radius: 60px;
+	width: 90px;
+	height: 90px;
+	text-align: center;
+	background-color: #fff;
+}
+</style>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {    
+        
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+<!--scrolling js-->
+<script src="{{ base_url }}assets/js/jquery.nicescroll.js"></script>
+<script src="{{ base_url }}assets/js/scripts.js"></script>
+<!--//scrolling js-->
+<script src="{{ base_url }}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='editregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		category_name: "required",
+		category_file: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      category_name: "Please enter your Category Name",
+      	category_file: "Please enter your Category File",
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	      var input = document.getElementById("category_file");
+          file = input.files[0];
+		  if(file != undefined){
+    formData= new FormData();
+    if(!!file.type.match(/image.*/)){
+      
+	var category_name=  $('#category_name').val();
+	formData.append("image", file);
+	formData.append("category_name", category_name);
+		 // console.log(file);return false;
+	    // var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success:function(data) 
+				{
+				
+				
+				   var data = $.parseJSON(data);
+				  
+				  
+				   
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					     $('form[name="editregistration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(5000).fadeOut(100)){
+                           
+						   }
+					   }
+					}else{
+					$('form[name="editregistration"]')[0].reset();
+					var appendToResult ="";
+					$('form[name="editregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					
+					$.each(data.results, function( index, value ) {
+					
+					var category_id=value['category_id'];
+					var category_name=value['category_name'];
+					appendToResult +="<div id='ck-button'><label><input type='checkbox' value='"+category_id+"'><span>"+category_name+"</span></label></div>";
+					});
+
+				$('.categories').html(appendToResult);
+					
+					if($('.alert').delay(5000).fadeOut(100)){
+                  $("#myModal .close").click();
+					 }
+            		}
+				}
+			});
+			}  else{
+      alert('Not a valid image!');
+    }
+    }
+	}
+  });
+});
+</script>
+
+<script type="">
+							$("#slider-range").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time').html(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time2').html(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+						 
+						 
+						 
+						 <script type="">
+							$("#slider-range-combo").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time-combo').html(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time2-combo').html(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+						     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+ <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker-from" ).datepicker();
+	 $( "#datepicker-to" ).datepicker();
+  } );
+  </script>
+
+</body>
+</html>                     

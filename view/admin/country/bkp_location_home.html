@@ -1,0 +1,806 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres work-progres-country">
+
+					<div class="chit-chat-heading" style="padding: 10px">						
+						<a class="breadcrumb" href="{{base_url}}admin/country/home">{{breadcrumb.country_name|e}} </a>
+						<span class="arrow-r"> > </span>	
+						<a class="breadcrumb" href="{{base_url}}admin/city/home/{{breadcrumb.country_code|e}}">{{breadcrumb.city_name|e}} </a>
+						<span class="arrow-r"> > </span>
+						<a class="breadcrumb active" href="javascript:void(0)">{{constant('LOCATION')}} ({{location_count}})</a> 	
+							
+						
+						
+						
+						<a style="color:#fff;" href="#" data-toggle="modal" data-target="#myModal-location" class="hvr-icon-float-away add-latest-user">Add Location</a>
+						<a style="color:#fff;" href="#" data-toggle="modal" data-target="#myModal-zone" class="hvr-icon-float-away add-latest-user">Add Zone</a>
+						<select name="allzones" id="allzones" style="float:right;">
+						<option value="">{{ constant('PLEASE SELECT') }} {{constant('ZONE')}}</option>
+						{% if zone_list %}
+							{% for key,zone in zone_list %} 
+								<option value="{{zone.zone_code|e}}">{{zone.zone_name|e}}</option>
+							{% endfor %}
+						{% endif %}						
+						</select>
+					</div>                        
+             </div>
+      </div>
+     <div class="clearfix"> </div>
+	 <div class="row">
+		
+		<div class="market-updates">
+		<div class="col-md-12 col-sm-12 col-lg-12" id="zone">
+		{% if results %}
+			{% for key,loc in results %} 
+				<div class="col-md-4 col-sm-4 col-lg-3 col-xs-12">
+					<div class="main-country">
+						
+						<div class="main-city-name">
+						<a href="{{base_url}}admin/location/restaurants/{{ loc.location_code|e }}">
+							<div class="col-md-8 col-sm-8 col-xs-8">
+								<h3>{{ loc.location_name|e }}</h3>
+								<h4>Total Restaurants </h4>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<div class="rest-count">{{ loc.Totalrest|e}} </div>
+							</div>
+							</a>
+						</div>
+						
+					</div> 
+				</div>
+				
+				
+			{% endfor %}
+		{% endif %}
+			
+		</div>
+			
+		<div class="clearfix"> </div>
+		</div>
+		
+	 </div>
+</div>
+<!--main page chit chating end here-->
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+
+<div class="modal fade" id="myModal-location" role="dialog">
+
+	<div class="modal-dialog">		
+
+		<!-- Modal content-->
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				<h4 class="modal-title">{{constant('ADD')}} {{constant('LOCATION')}}</h4>
+
+			</div>
+
+			<div class="col-md-12">
+
+				<div class="card form-white" style="box-shadow: none;">
+
+					<div class="card" style="box-shadow:none">
+
+						<div class="card-body">
+
+							<!-- Form contact -->
+
+							<form action="{{ base_url }}admin/location/add" method="POST" name="loc_form">
+
+								<div class="col-md-12" style="padding:0px;">
+
+									<div class="col-md-6 md-form" style="padding:0px;">
+
+										<i class="fa fa-globe prefix grey-text"></i>
+
+										<label for="country_code">{{constant('COUNTRY')}}</label>
+
+										<select id="country_code" name="country_code" class="selectpicker form-control-select">
+
+										<option value="">{{constant('PLEASE SELECT')}}</option>
+
+										{% if related_country %}
+
+											{% for key,country in related_country %} 
+
+												{% if country.country_status == 1 %}
+
+													<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+
+												{% endif %}
+
+											{% endfor %}
+
+										{% endif %}
+
+										</select>				
+
+									</div>
+
+									<div class="col-md-6 md-form">
+
+										<i class="fa fa-location-arrow prefix grey-text"></i>
+
+										<label for="city_code">{{constant('CITY')}}</label>
+
+										<select id="city_code" name="city_code" class="selectpicker form-control-select">
+
+											<option value="">{{constant('PLEASE SELECT')}}</option>
+
+										</select>				
+
+									</div>
+
+								</div>
+
+								<div class="col-md-12 md-form" style="padding:0px;">																
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i><label for="location_name">{{constant('LOCATION')}} {{constant('NAME')}}</label>
+
+										<input type="text" id="location_name" name="location_name" placeholder="{{constant('ENTER')}} {{constant('LOCATION')}}" class="form-control">											
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-code prefix grey-text"></i><label for="location_code">{{constant('LOCATION')}} {{constant('CODE')}}</label>
+
+										<input type="text" id="location_code" name="location_code" placeholder="{{constant('ENTER')}} {{constant('LOCATION')}} {{constant('CODE')}} " class="form-control">	
+									</div>
+								</div>
+
+								<div class="col-md-12 text-center">
+
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+
+								</div>
+
+							</form>
+
+							<!-- Form contact -->
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>				
+
+			<div class="modal-footer">
+
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!--Add location-->
+
+<!--Add Zone-->
+<div class="modal fade" id="myModal-zone" role="dialog">
+
+	<div class="modal-dialog">		
+
+		<!-- Modal content-->
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				<h4 class="modal-title">{{constant('ADD')}} {{constant('ZONE')}}</h4>
+
+			</div>
+
+			<div class="col-md-12">
+
+				<div class="card form-white" style="box-shadow: none;">
+
+					<div class="card" style="box-shadow:none">
+
+						<div class="card-body">
+
+							<!-- Form contact -->
+
+							<form action="{{ base_url }}admin/zone/add" method="POST" name="zone_form">
+
+								<div class="col-md-12" style="padding:0px;">
+
+									<div class="col-md-6 md-form" style="padding:0px;">
+
+										<i class="fa fa-globe prefix grey-text"></i>
+
+										<label for="country_code">{{constant('COUNTRY')}}</label>
+
+										<select id="country_code1" name="country_code" class="selectpicker form-control-select">
+
+										<option value="">{{constant('PLEASE SELECT')}}</option>
+
+										{% if related_country %}
+
+											{% for key,country in related_country %} 
+
+												{% if country.country_status == 1 %}
+
+													<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+
+												{% endif %}
+
+											{% endfor %}
+
+										{% endif %}
+
+										</select>				
+
+									</div>
+
+									<div class="col-md-6 md-form">
+
+										<i class="fa fa-location-arrow prefix grey-text"></i>
+
+										<label for="city_code">{{constant('CITY')}}</label>
+
+										<select id="city_code1" name="city_code" class="selectpicker form-control-select">
+
+											<option value="">{{constant('PLEASE SELECT')}}</option>
+
+										</select>				
+
+									</div>
+
+								</div>
+
+								<div class="col-md-12 md-form" style="padding:0px;">
+
+									<div class="col-md-6 md-form" style="padding:0px;">
+
+										<i class="fa fa-road prefix grey-text"></i>
+
+										<label for="location_code">{{constant('LOCATION')}}</label>
+
+										<select id="location_code1" name="location_code[]" class="selectpicker form-control-select" multiple>
+
+											<option value="">{{constant('PLEASE SELECT')}}</option>
+
+										</select>				
+
+									</div>
+
+									<div class="col-md-6 md-form">
+
+										<i class="fa fa-building prefix grey-text"></i>
+
+										<label for="zone_name">{{constant('ZONE')}} {{constant('NAME')}}</label>
+
+										<input type="text" id="zone_name1" maxlength="50" name="zone_name" placeholder="{{constant('ENTER')}} {{constant('ZONE')}}" class="form-control">											
+
+									</div>
+
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+
+									<i class="fa fa-building prefix grey-text"></i>
+
+									<label for="zone_code">{{constant('ZONE')}} {{constant('CODE')}}</label>
+
+									<input type="text" id="zone_code1" maxlength="50" name="zone_code" placeholder="{{constant('ENTER')}} {{constant('ZONE')}} {{constant('CODE')}} " class="form-control">											
+
+								</div>
+
+								<div class="col-md-12 text-center">
+
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+
+								</div>
+
+							</form>
+
+							<!-- Form contact -->
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>				
+
+			<div class="modal-footer">
+
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!--Add Zone-->
+<script>
+var toggle = true;            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+
+<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+
+<script src="{{base_url}}assets/js/scripts.js"></script>
+
+<!--//scrolling js-->
+
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<script>
+// Wait for the DOM to be ready
+
+$(function() {
+
+  // Initialize form validation on the registration form.
+
+  // It has the name attribute "registration"
+
+  $("form[name='loc_form']").validate({
+
+    // Specify validation rules
+
+    rules: {
+
+      // The key name on the left side is the name attribute
+
+      // of an input field. Validation rules are defined
+
+      // on the right side
+
+		location_name: "required",
+		
+		location_code: "required",
+
+		city_code: "required",
+
+		country_code: "required",		
+
+    },
+
+    // Specify validation error messages
+
+    messages: {
+
+		location_name: "Please Enter Location Name",
+	  
+		location_code: "Please Enter Location Code",
+
+		city_code: "Please Select City",
+
+		country_code: "Please Select Country", 
+
+    },
+
+    // Make sure the form is submitted to the destination defined
+
+    // in the "action" attribute of the form when valid
+
+    submitHandler: function(form) {
+
+	     var formData = $(form).serialize();
+
+		 var urlData = $(form).attr('action');
+
+		 $.ajax(
+
+			{
+
+				url : urlData,
+
+				type: "POST",
+
+				crossDomain: true,
+
+				data : formData,
+
+				success:function(data) 
+
+				{
+
+				  var data = $.parseJSON(data);
+
+					if(data.error == 'true'){
+
+					   $.each(data.error_msg, function( index, value ) {
+
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+
+                       });
+
+					   
+
+					}else{
+
+					$('form[name="loc_form"]')[0].reset();
+
+					$('form[name="loc_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+
+					if($('.alert').delay(10000).fadeOut(100)){
+
+					window.location.reload();
+
+					}
+
+				    
+
+            		}
+
+				}
+
+			});
+
+    }
+
+  });
+
+});
+
+// Wait for the DOM to be ready
+
+$(function() {
+
+  // Initialize form validation on the registration form.
+
+  // It has the name attribute "registration"
+
+  $("form[name='zone_form']").validate({
+
+    // Specify validation rules
+
+    rules: {
+
+      // The key name on the left side is the name attribute
+
+      // of an input field. Validation rules are defined
+
+      // on the right side
+
+		zone_name: "required",
+
+		city_code: "required",
+
+		country_code: "required",		
+
+		zone_code: "required",		
+
+    },
+
+    // Specify validation error messages
+
+    messages: {
+
+	  zone_name: "Please Enter Zone Name",
+
+      city_code: "Please Select Cities(y)",
+
+	  country_code: "Please Select Country", 
+
+	  zone_code: "Please Enter Zone Code", 
+
+    },
+
+    // Make sure the form is submitted to the destination defined
+
+    // in the "action" attribute of the form when valid
+
+    submitHandler: function(form) {
+
+	     var formData = $(form).serialize();
+
+		 var options = $('#location_code1 > option:selected');
+
+         if(options.length == 0){
+
+             $('#location_code1').after('<label id="location_code-error" class="error" for="location_code">Please Select Location(atleast one)</label>');
+
+             return false;
+
+         }
+
+		 var urlData = $(form).attr('action');
+
+		 $.ajax(
+
+			{
+
+				url : urlData,
+
+				type: "POST",
+
+				crossDomain: true,
+
+				data : formData,
+
+				success:function(data) 
+
+				{
+
+				  var data = $.parseJSON(data);
+
+					if(data.error == 'true'){
+
+					   $.each(data.error_msg, function( index, value ) {
+
+						$('#'+index+'1').after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');
+
+                       });
+
+					   
+
+					}else{
+
+						$('form[name="zone_form"]')[0].reset();
+
+						$('form[name="zone_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+
+						if($('.alert').delay(10000).fadeOut(100)){
+
+						window.location.reload();
+
+					}    
+
+            		}
+
+				}
+
+			});
+
+    }
+
+  });
+
+});
+
+	$(document).ready(function(){
+
+		$('#country_code').change(function(){
+
+			$('#city_code').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+
+			var ci_id = $(this).val();
+
+			var urlData='{{ base_url }}admin/location/related_cities/'+ci_id;
+
+			$.ajax(
+
+				{
+
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+
+						var data = $.parseJSON(data);
+
+						
+
+						   $.each(data.related_cities, function( key, value ) {
+
+								$('#city_code').append('<option value="' + value.city_code + '">' + value.city_name + '</option>');								
+
+						   });						
+
+					}
+
+				});
+
+		});
+		
+	$('#allzones').change(function(e){
+		e.preventDefault();
+		var zone_code = $(this).val();
+		var url = window.location.href.replace(/\/$/, '');
+		var city = url.substr(url.lastIndexOf('/') + 1);
+		var urlData = '{{base_url}}admin/location/zone_filter/'+zone_code;
+		
+		$.ajax(
+			{
+				url : urlData,
+
+				type: "POST",
+				data: {'city':city},
+
+				crossDomain: true,
+
+				success:function(data) 
+
+				{
+
+				  var data = $.parseJSON(data);
+				  var result = '';
+				  $.each(data.filtered_locations, function( index, value ) {
+						result += '<div class="col-md-4 col-sm-4 col-lg-3 col-xs-12"><div class="main-country"><div class="main-city-name">';
+						result +='<a href="{{base_url}}admin/location/restaurants/'+value.location_code+'"><div class="col-md-8 col-sm-8 col-xs-8">';
+						result +='<h3>'+value.location_name+'</h3><h4>Total Restaurants </h4></div><div class="col-md-4 col-sm-4 col-xs-4">';
+						result +='<div class="rest-count">'+value.Totalrest+'</div></div></a></div></div></div>';
+						
+				  });
+				  $('#zone').html(result);
+				  
+				}
+			});
+		
+	});
+	
+			$('#country_code1').change(function(){
+
+			$('#city_code1').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			$('#location_code1').html('');
+
+			var co_id = $(this).val();
+
+			var urlData='{{ base_url }}admin/zone/related_cities/'+co_id;
+
+			$.ajax(
+
+				{
+
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+
+						var data = $.parseJSON(data);
+
+						
+
+						   $.each(data.related_cities, function( key, value ) {								
+
+								$('#city_code1').append('<option value="' + value.city_code + '">' + value.city_name + '</option>');
+
+						   });						
+
+					}
+
+				});
+
+		});
+
+		
+
+		$('#city_code1').change(function(){
+
+			$('#location_code1').html('');
+
+			var ci_id = $(this).val();
+
+			var urlData='{{ base_url }}admin/zone/related_locations/'+ci_id;
+
+			$.ajax(
+
+				{
+
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+
+						var data = $.parseJSON(data);
+
+						
+
+						   $.each(data.related_locations, function( key, value ) {							
+
+								$('#location_code1').append('<option value="' + value.location_code + '">' + value.location_name + '</option>');
+
+						   });						
+
+					}
+
+				});
+
+		});
+
+});
+</script>
+<style> 	     
+  .invoice-box{ 	 
+  background-color: #FFFFFF;         max-width:800px;         margin:30px 0;         padding:30px;         border:1px solid #eee;       
+  box-shadow:0 0 10px rgba(0, 0, 0, .15);         font-size:16px;         line-height:24px;       
+  font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;         color:#555;     } 	 	
+  .invoice-boxx{ 	    background-image: url("http://images.alphacoders.com/458/458169.jpg");       
+  max-width:800px;         margin:auto;         padding:30px;         border:1px solid #eee;        
+  box-shadow:0 0 10px rgba(0, 0, 0, .15);         font-size:16px;         line-height:24px;        
+  font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;         color:#f7f7f7;     }
+  .btn {   background: #3cb0fd;   background-image: -webkit-linear-gradient(top, #3cb0fd, #3cb0fd); 
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: -ms-linear-gradient(top, #3cb0fd, #3cb0fd);   
+  background-image: -o-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: linear-gradient(to bottom, #3cb0fd, #3cb0fd); 
+  -webkit-border-radius: 4;   -moz-border-radius: 4;   border-radius: 4px;   font-family: Arial;   color: #ffffff;   font-size: 35px;   
+  padding: 6px 16px 10px 20px;   text-decoration: none; } 
+  .btn:hover {   background: #3cb0fd;   background-image: -webkit-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: -moz-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: -ms-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: -o-linear-gradient(top, #3cb0fd, #3cb0fd);   background-image: linear-gradient(to bottom, #3cb0fd, #3cb0fd);   text-decoration: none; }  	     .invoice-box table{         width:100%;         line-height:inherit;         text-align:left;     }          .invoice-box table td{         padding:5px;         vertical-align:top;     }          .invoice-box table tr td:nth-child(2){         text-align:;     }          .invoice-box table tr.top table td{         padding-bottom:20px;     }          .invoice-box table tr.top table td.title{         font-size:45px;         line-height:45px;         color:#333;     }          .invoice-box table tr.information table td{         padding-bottom:40px;     }          .invoice-box table tr.heading td{         background:#EEEEE0;         border-bottom:1px solid #ddd;         font-weight:bold;     }          .invoice-box table tr.details td{         padding-bottom:20px;     }          .invoice-box table tr.item td{         border-bottom:1px solid #eee;     }          .invoice-box table tr.item.last td{         border-bottom:none;     }          .invoice-box table tr.total td:nth-child(2){         border-top:2px solid #eee;         font-weight:bold;     }          @media only screen and (max-width: 600px) {         .invoice-box table tr.top table td{             width:100%;             display:block;             text-align:center;         }                  .invoice-box table tr.information table td{             width:100%;             display:block;             text-align:center;         }     }    
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+	margin-top:20px;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+	text-align:center;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+  </style>
+</body>
+</html>                     

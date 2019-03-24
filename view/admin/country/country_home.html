@@ -1,0 +1,257 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres work-progres-country">
+					<div class="chit-chat-heading" style="padding:10px; color:#fff;">
+					 {{ constant('COUNTRY')}} ({{country_count}})
+						  <a style="color:#fff;" href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+					</div>                        
+             </div>
+      </div>
+     <div class="clearfix"> </div>
+	 <div class="row">
+		
+		<div class="market-updates">
+		<div class="col-md-12 col-sm-12 col-lg-12">
+		{% if results %}
+			{% for key,country in results %} 
+				<div class="col-md-4 col-sm-4 col-lg-3 col-xs-12">
+					<div class="main-country" style="padding:10px">
+						<div class="Main-country-icon">
+							<img src="{{base_url}}upload/flagimages/{{ country.country_file|e }}" class="img-responsive" alt="img" />
+						</div> 
+						<a href="{{base_url}}admin/city/home/{{ country.country_code|e}}"><div class="main-country-name">
+							<h3>{{ country.country_name|e }}</h3>
+							<h4>Total Restaurants :<span>{{ country.Totalrest|e}} </span></h4>
+						</div></a>
+					</div> 
+				</div>
+			{% endfor %}
+		{% endif %}
+			
+		</div>
+			
+		<div class="clearfix"> </div>
+		</div>
+		
+	 </div>
+</div>
+<!--main page chit chating end here-->
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+
+<!--Add country-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{constant('ADD')}} {{constant('COUNTRY')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form action="{{ base_url }}admin/country/add" method="POST" name="country_form" enctype="multipart/form-data">								
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-globe prefix grey-text"></i>
+									<label for="country_name">{{constant('COUNTRY')}} {{constant('NAME')}}</label>
+									<input type="text" placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('NAME')}}" id="country_name" name="country_name" class="form-control">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-code prefix grey-text"></i>
+									<label for="country_code">{{constant('COUNTRY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" style="text-transform:uppercase" placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('CODE')}}" id="country_code" name="country_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-phone prefix grey-text"></i>
+									<label for="country_phone_code">{{constant('PHONE')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" placeholder="{{constant('ENTER')}} {{constant('PHONE')}} {{constant('CODE')}}" id="country_phone_code" name="country_phone_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-gg prefix grey-text"></i>
+									<label for="country_currency_code">{{constant('CURRENCY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="10" placeholder="{{constant('ENTER')}} {{constant('CURRENCY')}} {{constant('CODE')}}" id="country_currency_code" name="country_currency_code" class="form-control">
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<i class="fa fa-file prefix grey-text"></i>													
+									<input type="file" id="country_file" name="country_file" class="">
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+<!--Add country-->
+<script>
+var toggle = true;            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='country_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		country_name: "required",
+		country_code: "required",
+		country_phone_code: "required",
+		country_currency_code: "required",
+		country_file: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+		country_name: "Please Enter Country Name",
+		country_code: "Please Enter Country Code",
+		country_phone_code: "Please Enter Phone Code",
+		country_currency_code: "Please Enter Currency Code",
+		country_file: "Please Upload country flag.",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+		
+		  var urlData = $(form).attr('action');
+		  var input = document.getElementById("country_file");
+          file = input.files[0];
+		  formData= new FormData();
+		  if(file != undefined){			
+			if(!!file.type.match(/image.*/)){
+				formData.append('country_name', $('#country_name').val());
+				formData.append('country_code', $('#country_code').val());
+				formData.append('country_phone_code', $('#country_phone_code').val());
+				formData.append('country_currency_code', $('#country_currency_code').val());
+				formData.append("image", file);
+			$.ajax(
+					{
+						url : urlData,
+						type: "POST",
+						crossDomain: true,
+						data : formData,
+						processData: false,
+						contentType: false,
+						success:function(data) 
+						{
+						  var data = $.parseJSON(data);
+							if(data.error == 'true'){
+							   $.each(data.error_msg, function( index, value ) {
+								$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+							   });
+							   
+							}else{
+							$('form[name="country_form"]')[0].reset();
+							$('form[name="country_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+							if($('.alert').delay(10000).fadeOut(100)){
+							window.location.reload();
+							}
+							
+							}
+						}
+					});
+				}
+			}
+		}
+  });
+});
+</script>
+
+<style> 	     
+  .invoice-box{ 	 
+  background-color: #FFFFFF;         max-width:800px;         margin:30px 0;         padding:30px;         border:1px solid #eee;       
+  box-shadow:0 0 10px rgba(0, 0, 0, .15);         font-size:16px;         line-height:24px;       
+  font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;         color:#555;     } 	 	
+  .invoice-boxx{ 	    background-image: url("http://images.alphacoders.com/458/458169.jpg");       
+  max-width:800px;         margin:auto;         padding:30px;         border:1px solid #eee;        
+  box-shadow:0 0 10px rgba(0, 0, 0, .15);         font-size:16px;         line-height:24px;        
+  font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;         color:#f7f7f7;     }
+  
+
+  .invoice-box table{         width:100%;         line-height:inherit;         text-align:left;     }          .invoice-box table td{         padding:5px;         vertical-align:top;     }          .invoice-box table tr td:nth-child(2){         text-align:;     }          .invoice-box table tr.top table td{         padding-bottom:20px;     }          .invoice-box table tr.top table td.title{         font-size:45px;         line-height:45px;         color:#333;     }          .invoice-box table tr.information table td{         padding-bottom:40px;     }          .invoice-box table tr.heading td{         background:#EEEEE0;         border-bottom:1px solid #ddd;         font-weight:bold;     }          .invoice-box table tr.details td{         padding-bottom:20px;     }          .invoice-box table tr.item td{         border-bottom:1px solid #eee;     }          .invoice-box table tr.item.last td{         border-bottom:none;     }          .invoice-box table tr.total td:nth-child(2){         border-top:2px solid #eee;         font-weight:bold;     }          @media only screen and (max-width: 600px) {         .invoice-box table tr.top table td{             width:100%;             display:block;             text-align:center;         }                  .invoice-box table tr.information table td{             width:100%;             display:block;             text-align:center;         }     }    
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+	margin-top:20px;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+	text-align:center;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+  </style>
+</body>
+</html>                     

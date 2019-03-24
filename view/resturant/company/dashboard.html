@@ -1,0 +1,474 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'resturant/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+		<!--<div class="row box-pa">
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+                            <div class="main-box">				
+                                <div class="img-text-box">
+                                <div class="icon-box"><i class="fa fa-map-marker"></i></div>
+                                <a href="#"><div class="text-box">{{ constant('LOCATION STEP') }}</div></a>
+                            </div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+                            <div class="main-box">
+                                <div class="img-text-box">
+                                <a href="{{base_url}}resturant/company/brand"><div class="icon-box"><i class="fa fa-cutlery"></i></div>
+                                <div class="text-box">{{ constant('BRAND MANAGEMENT') }}</div></a>
+                            </div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+                            <div class="main-box">
+                                <div class="img-text-box">
+                                <a href="{{base_url}}resturant/staffrole/"><div class="icon-box"><i class="fa fa-users"></i></div>
+                                <div class="text-box">{{ constant('STAFF MANAGEMENT') }}</div></a>
+                            </div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+                            <div class="main-box">
+                                <div class="img-text-box">
+                                <a href="{{base_url}}resturant/user/profile"><div class="icon-box"><i class="fa fa-cog"></i></div>
+                                <div class="text-box">{{constant('Global Settings')}}</div></a>
+                            </div>
+			</div>
+			</div>
+			</div>-->
+			<div class="clearfix space-k"></div>
+		<!--	<div class="row box-pa">
+			
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+				<div class="main-box">
+				
+					<div class="img-text-box">
+					<div class="icon-box"><i class="fa fa-map-marker"></i></div>
+					<a href="#"><div class="text-box">Location Step</div></a>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+				<div class="main-box">
+					<div class="img-text-box">
+					<a href="#"><div class="icon-box"><i class="fa fa-cutlery"></i></div>
+					<div class="text-box">Menu Step</div></a>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+				<div class="main-box">
+					<div class="img-text-box">
+					<a href="#"><div class="icon-box"><i class="fa fa-users"></i></div>
+					<div class="text-box">Staff</div></a>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
+				<div class="main-box">
+					<div class="img-text-box">
+					<a href="#"><div class="icon-box"><i class="fa fa-cog"></i></div>
+					<div class="text-box">Globel Setting</div></a>
+				</div>
+			</div>
+			</div>
+		</div> -->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'resturant/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+	{% include 'resturant/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--latest user add-->
+
+<!--Country Popup Starts Here-->
+{% if all_countries %}
+    <div class="modal fade" id="countryPopup" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                    <h4 class="modal-title"> {{ constant('COUNTRY')}}  </h4>
+                </div>
+                <div class="col-md-12">
+                    <div class="card form-white" style="box-shadow: none;">
+                        <div class="card" style="box-shadow:none">
+                            <div class="card-body">
+                                <!-- Form contact -->
+                                <form name="country_box" action="{{ base_url }}resturant/dashboard/change_country_popup" method="post">                                    
+                                    <div class="col-md-12 md-form">
+                                        <i class="fa fa-globe prefix grey-text"></i>
+                                        <label for="countries">{{ constant('COUNTRY')}}<span class="required">*</span></label>
+                                        <select id="countries" name="countries" class="selectpicker form-control-select">
+                                            <option value="">{{constant('PLEASE SELECT')}}</option>                                               
+                                                {% for key,country in all_countries %} 
+                                                    {% if country.country_status == 1 %}
+                                                        <option value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+                                                    {% endif %} 
+                                                {% endfor %}                                               
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-success">{{ constant('SUBMIT')}}</button>                                        
+                                    </div>
+                                </form>
+                                <!-- Form contact -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!--Country Popup ENds here...-->
+
+
+<script>
+    
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+    //alert('{{session.company_country}}');
+    $('#countryPopup').modal({backdrop: 'static', keyboard: false}) ;    
+    $(window).on('load',function(){
+        if('{{session.selected_country}}' || ('{{session.company_country}}'=='SAU')){
+            $('#countryPopup').modal('hide');
+        }else{
+            $('#countryPopup').modal('show');
+        }
+    });
+   
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='country_box']").validate({
+    // Specify validation rules
+    rules: {
+            countries: "required"
+            },
+    // Specify validation error messages
+    messages: {
+      countries: "Please select country"
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    /*submitHandler: function(form) {
+	    var countryval = $('#countries').val();
+            var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+                        url : urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        data : {country_sel:countryval},
+                        success:function(data) 
+                        { 
+                            var data = $.parseJSON(data);
+                            if(data.error == 'true'){ alert(data);
+                                if(data.msg=='false'){
+                                    $.each(data.error_msg, function( index, value ) {
+                                        $('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                                    });
+                                }else{
+                                    $('form[name="country_box"]')[0].reset();
+                                    $('form[name="country_box"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+                                    $('.alert').delay(10000).fadeOut(100);
+                                    check_data();
+                                }
+                            }else{ alert(1);
+                                $('form[name="country_box"]')[0].reset();
+                                window.location.href = "{{base_url}}resturant/company/brand";
+                            }
+                        }
+			});
+    }*/
+  });
+});
+    
+// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='userregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		user_name: "required",
+		user_username: "required",
+		user_phoneno: {
+		required: true,
+	    number: true
+        },
+		user_gender: "required",
+		user_address: "required",
+		user_dob: "required", 
+		user_city: "required",
+		user_zipcode: {
+		required: true,
+        },
+
+        user_email: {
+        required: true,
+        // Specify that email should be validated
+        // by the built-in "email" rule
+        email: true
+        },
+        user_password: {
+        required: true,
+        minlength: 5
+        }
+    },
+    // Specify validation error messages
+    messages: {
+      user_name: "Please enter your Name",
+      user_username: "Please enter your username",
+	  user_phoneno: {
+		required: "Please enter phone number",
+		number: "Your Phone no  must be numeric"
+		},
+	  user_gender: "Please select your gender",
+	  user_city: "Please enter your city",
+	  user_address: "Please enter your address",
+	   user_dob: "Enter your date of birth",
+	  
+      user_password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 5 characters long",
+      },
+		
+		user_zipcode: {
+		required: "Please enter zipcode",
+		},
+		  user_email: {
+        required: "Please enter  email address",
+        // Specify that email should be validated
+        // by the built-in "email" rule
+        email: "Please enter a valid email address",
+        },
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					   $('form[name="userregistration"]')[0].reset();
+						 $('form[name="userregistration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						$('.alert').delay(10000).fadeOut(100);
+						check_data();
+					   }
+					}else{
+					$('form[name="userregistration"]')[0].reset();
+					$('form[name="userregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					$('.alert').delay(10000).fadeOut(100);
+					check_data();
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='resturantbrands']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		resturantbrand_name: "required",
+		resturantbrand_displayname: "required",
+		resturantbrand_email: "required",
+
+		resturantbrand_phoneno: "required", 
+		resturantbrand_address: "required",
+		resturantbrand_countusers:"required",
+		resturantbrand_countpos:"required"
+		
+    },
+    // Specify validation error messages
+    messages: {
+        resturantbrand_name: "Please enter your Name.",
+		resturantbrand_displayname: "Please enter your Display Name.",
+		resturantbrand_email: "Please enter  email address",
+		resturantbrand_phoneno: "Please enter your phoneno.", 
+		resturantbrand_address: "Please enter your Address.",
+		resturantbrand_countusers:"Please enter users count.",
+		resturantbrand_countpos:"Please enter POS count."
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 var dashboard = $('#dashboard').attr('value');
+		 
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="resturantbrands"]')[0].reset();
+					$('form[name="resturantbrands"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					$('.alert').delay(10000).fadeOut(100);
+				    check_data();
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <script language="javascript">
+        $(document).ready(function () {
+            $(document).on('click','.view-modal',function(){
+			$('#user_name1').attr('value',$(this).data('name'));
+			$('#user_username1').attr('value',$(this).data('username'));
+			$('#user_dob1').attr('value',$(this).data('dob'));
+			$('#user_email1').attr('value',$(this).data('email'));
+			$('#user_city1').attr('value',$(this).data('city'));
+			$('#user_zipcode1').attr('value',$(this).data('zipcode'));
+			$('#user_depart1').attr('value',$(this).data('department_name'));
+			$('#user_gender1').attr('value',$(this).data('gender'));
+			$('#user_phoneno1').attr('value',$(this).data('phone'));
+		    $('#user_address1').text($(this).data('address'));
+			});
+        });
+    </script>
+	   <script language="javascript">
+        $(document).ready(function () {
+            $(document).on('click','.view-modal1',function(){
+			$('#rest_name').attr('value',$(this).data('name'));
+			$('#rest_displayname').attr('value',$(this).data('displayname'));
+			$('#rest_email').attr('value',$(this).data('email'));
+			if($(this).data('brand')!=null){
+			$('#rest_brand').attr('value',$(this).data('brand'));
+			}
+		    $('#rest_address').text($(this).data('address'));
+			$('#rest_phone').attr('value',$(this).data('phone'));
+			$('#rest_created').attr('value',$(this).data('created'));
+			});
+        });
+    </script>
+    <script language="javascript">
+        $(document).ready(function () {
+            $(".dobs").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00"
+            });
+        });
+		function check_data(){
+		 var dashboard = $('#dashboard').attr('value');
+			   $.ajax({
+							url : dashboard,
+							type: "POST",
+							success:function(jsondata) 
+							{
+							 var jsondata = $.parseJSON(jsondata);
+							 $('#get_total_languages').html(jsondata.get_total_languages);
+							 $('#get_total_users').html(jsondata.get_total_users);
+							 ('#get_total_users1').html(jsondata.get_total_users);
+							$('#get_total_resturants').html(jsondata.get_total_resturants);
+							 var userdata="";
+							 var resturantdata="";
+							 $.each(jsondata.users, function( index, value ) {
+							 userdata=userdata+'<tr><td>'+value.user_name+'</td><td>'+value.user_email+'</td><td><div class="market-update-right"><a href="#" data-toggle="modal" data-target="#myModal-view" data-name="'+value.user_name+'" data-username="'+value.user_username+'" data-dob="'+value.user_dob+'" data-email="'+value.user_email+'" data-city="'+value.user_city+'" data-zipcode="'+value.user_zipcode+'" data-depart="'+value.department_name+'" data-gender="'+value.user_gender+'" data-phone="'+value.user_phoneno+'" data-address="'+value.user_address+'" class="view-modal"><i class="fa fa-eye latest-view-icon"></i></a></div></td></tr>';
+                             });
+							 //console.log(userdata);
+							 
+							  $('#user_details').html(userdata);
+							  $.each(jsondata.resturants, function( index, rest ) {
+                              if(rest.t2resturantbrand_name == null ){
+							   brand="";
+							  }else{
+							  brand= rest.t2resturantbrand_name;
+							  }
+							   resturantdata=resturantdata+'<tr><td>'+rest.resturantbrand_name+'</td><td><b>'+brand+'</b></td><td>'+rest.resturantbrand_email+'</td><td><div class="market-update-right"><a href="#" data-toggle="modal" data-target="#myModal-view1" class="view-modal1" data-name="'+rest.resturantbrand_name+'" data-brand="'+brand+'" data-displayname="'+rest.resturantbrand_displayname+'" data-email="'+rest.resturantbrand_email+'" data-phone="'+rest.resturantbrand_phoneno+'" data-address="'+rest.resturantbrand_address+'" data-created="'+rest.resturantbrand_created+'"><i class="fa fa-eye latest-view-icon"></i></a></div></td></tr>';
+                             });
+							 $('#resturant_details').html(resturantdata);
+							 
+							
+							}
+						});
+		}
+    </script>
+</body>
+</html>                     

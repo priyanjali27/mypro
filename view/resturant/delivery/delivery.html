@@ -1,0 +1,523 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'resturant/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								{{constant('DELIVERY DRIVER MANAGEMENT')}}   <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('COUNTRY')}}</th>
+										<th>{{ constant('RESTURANT')}}</th>
+										<th>{{ constant('TYPE')}}</th>
+										<th>{{ constant('DELIVERY VALUE')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody>	
+										{% if results %}
+											{% for key,delivery in results %} 
+												<tr>									
+												<td>{{ delivery.country_name|e }}</td>
+												<td>{{ delivery.resturantbrand_name|e }}</td>
+												<td>{{ delivery.delivery_type|e }}</td>
+												<td>{{ delivery.delivery_value|e }}</td>
+												
+												<td>
+												{% if delivery.delivery_status == 1 %}
+												   <div class="active-button">Active</div>
+												 {% else %}
+												   <div class="inactive-button">Inactive</div>
+												{% endif %}
+												</td>
+												<td>
+												<div class="market-update-right">
+											<span><a class="modal-view" href="" data-id="{{ delivery.delivery_id|e }}" data-toggle="modal" data-target="#myModal-view" title="View Delivery Commission History"><i class="fa fa-eye latest-view-icon"></i></a></span>
+											<span><a class="modal-edit" href="#" data-toggle="modal" data-id="{{ base_url }}resturant/delivery/edit/{{ delivery.delivery_id|e }}" data-value="{{ delivery.delivery_value|e }}" data-type="{{ delivery.delivery_type|e }}"   data-country="{{ delivery.country_name|e }}" data-rest="{{ delivery.resturantbrand_name|e }}" data-target="#myModal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+										
+										</div>
+												
+												</td>
+												</tr>
+											{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'resturant/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'resturant/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add country add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('ADD')}} {{constant('DELIVERY DRIVER MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}resturant/delivery/add_delivery" method="POST" name="delivery_form">
+								<div class="col-md-12 md-form">
+									<i class="fa fa-caret-square-o-down prefix grey-text"></i>
+									<label for="form31">{{constant('COUNTRY')}}</label>
+									<select id="delivery_country_id" name="delivery_country_id" class="selectpicker form-control-select">
+									<option value="">--Select--</option>
+									{% if related_country %}
+										{% for key,country in related_country %} 
+											{% if country.country_status == 1 %}
+												<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+									</select>				
+								</div>				
+								<input type="hidden" name="delivery_brand_id" value="{{restaurant_id}}">
+										<div class="col-md-12 md-form">
+										<i class="fa fa-caret-square-o-down prefix grey-text"></i>
+										<label for="value_type">{{ constant('TYPE')}}<span class="required">*</span></label>
+										<select id="delivery_type" name="delivery_type" class="selectpicker form-control-select">
+											<option value="">{{constant('PLEASE SELECT')}}</option>										
+											<option value="fixed">Fixed</option>										
+											<option value="percentage">Percentage</option>										
+										</select>				
+									</div>	
+								
+<div class="col-md-12 md-form">
+									<i class="fa fa-location-arrow prefix grey-text"></i><label for="form31">{{constant('DELIVERY VALUE')}}</label>
+									<input type="text" id="delivery_value" min="1" name="delivery_value" class="form-control" placeholder="{{constant('DELIVERY VALUE')}} ">												
+								</div>								
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add country add-->
+
+<!--edit country add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('DELIVERY DRIVER MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="" id="edit_country_form" name="edit_country_form" method="POST">
+										
+										<div class="col-md-12 md-form" >
+									<i class="fa fa-caret-square-o-down prefix grey-text"></i>
+									<label for="form31">{{constant('COUNTRY')}}</label>
+									<input type="text" id="delivery_country_id1"  name="delivery_country_id" class="form-control"  readonly value="" placeholder="{{constant('COUNTRY')}} ">			
+								</div>
+									<div class="col-md-12 md-form" >
+									<i class="fa fa-caret-square-o-down prefix grey-text"></i>
+									<label for="form31">{{constant('RESTURANT')}}</label>
+														 <input type="text" id="delivery_brand_id1"  name="delivery_brand_id" class="form-control" readonly value="" placeholder="{{constant('RESTURANT')}} ">		
+								</div>
+							
+										<div class="col-md-12 md-form">
+										<i class="fa fa-caret-square-o-down prefix grey-text"></i>
+										<label for="value_type">{{ constant('TYPE')}}<span class="required">*</span></label>
+										<select id="delivery_type1" name="delivery_type" class="selectpicker form-control-select">
+											<option value="">--Select--</option>										
+											<option value="fixed">Fixed</option>										
+											<option value="percentage">Percentage</option>										
+										</select>				
+									</div>	
+								
+<div class="col-md-12 md-form">
+									<i class="fa fa-location-arrow prefix grey-text"></i><label for="form31">{{constant('DELIVERY VALUE')}}</label>
+									<input type="text" id="delivery_value1" min="1" name="delivery_value" class="form-control" placeholder="{{constant('DELIVERY VALUE')}} ">												
+								</div>				
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit department add-->
+   <!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+<!--View Discount Coupon-->
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('HISTORY')}} {{ constant('DELIVERY DRIVER MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body" id="delivery_view">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+<!--View discount coupon-->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+			<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='delivery_form']").validate({
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		
+		delivery_type:{
+		required: true,
+		},
+		delivery_value:{
+		required: true,
+		number: true
+		},
+	 },
+    // Specify validation error messages
+    messages: {
+    
+		delivery_type:{
+						required: "Please Select value type.",
+						},
+		delivery_value:{
+						required: "Please enter minimum charges.",
+						number: "Please enter numeric value."
+						},
+
+    },
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+					   $('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="delivery_form"]')[0].reset();
+					$('form[name="delivery_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+	       $('#delivery_brand_id1').attr('value',$(this).data('rest'));
+			$('#delivery_country_id1').attr('value',$(this).data('country'));
+           $('#delivery_value1').attr('value',$(this).data('value'));
+			
+			$('#edit_country_form').attr('action',$(this).data('id'));
+
+			$('select#delivery_type1').find('option[value="'+$(this).data('type')+'"]').prop("selected", true);			
+        });
+    </script>
+
+	<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_country_form']").validate({
+    // Specify validation rules
+         rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		
+		delivery_value:{
+		required: true,
+		number: true
+		},
+		delivery_type:{
+		required: true,
+		},
+	 },
+    // Specify validation error messages
+    messages: {
+    
+		delivery_value:{
+						required: "Please enter delivery value.",
+						number: "Please enter numeric value."
+						},
+		delivery_type:{
+						required: "Please Select Type.",
+						},
+
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="edit_country_form"]')[0].reset();
+					$('form[name="edit_country_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted successfully!");
+  var urlData='{{ base_url }}resturant/delivery/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+$(document).on('change','#country_rel',function(){
+var id=$(this).val();
+  $.ajax(
+			{
+				url :"{{base_url}}resturant/delivery/select_resturant/"+id,
+				type: "POST",
+			    success:function(data) 
+				{
+				 var data = $.parseJSON(data);
+				 var datahtml="";
+					$.each(data, function( index, value ) {
+					datahtml+='<option value="'+value['resturantbrand_id']+'">'+value['resturantbrand_name']+'</option>';
+                     });
+				$('#delivery_brand_id').html(datahtml); // now close modal
+				
+				}
+			});
+});
+	$(".modal-view").click(function(e) {  
+		e.preventDefault();
+		var cid = $(this).data('id');
+		var urlData='{{ base_url }}resturant/delivery/view/'+cid;
+			$.ajax(
+				{
+					url : urlData,
+					type: "POST",
+					crossDomain: true,
+					success:function(data) 
+					{
+						var data = $.parseJSON(data);	
+                        var datahtml="";
+                        if(data){						
+                       	datahtml+='<table class="table"><thead class="thead-inverse table-head-bg"><tr><th>{{constant("COUNTRY")}}</th><th>{{constant("RESTURANT")}}</th>									<th>{{constant("TYPE")}}</th><th>{{constant("DELIVERY VALUE")}}</th><th>{{constant("CREATED")}}</th></tr></thead>	<tbody>';					
+						   $.each(data, function( key, value ) {
+							datahtml+='<tr><td>'+value['country_name']+'</td><td>'+value['resturantbrand_name']+'</td><td>'+value['delivery_type']+'</td><td>'+value['delivery_value']+'</td><td>'+value['delivery_created']+'</td></tr>';
+						   });		
+						   datahtml+=" </tbody> </table>";
+						   }
+$('#delivery_view').html(datahtml);						   
+					}
+				});							
+        });
+</script>
+</body>
+</html>                     

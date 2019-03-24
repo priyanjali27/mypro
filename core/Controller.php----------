@@ -1,0 +1,52 @@
+<?php error_reporting(-1);ini_set('display_errors', 1);
+class Controller{
+	/**
+	 * Reference to the CI singleton
+	 *
+	 * @var	object
+	 */
+	private static $obj;
+	/**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
+	public function __construct()
+	{		
+		self::$obj =& $this;
+		$this->url = new Uri();		
+	    $this->db = core_file_loader('Dbclass');
+		$this->validation = core_file_loader('Validation');
+		$this->pagination = core_file_loader('Pagination');
+		
+		//print_r(is_loaded());
+
+		// Assign all the class objects that were instantiated by the
+		// bootstrap file (CodeIgniter.php) to local class variables
+		// so that CI can run as one big super object.
+		/* foreach (is_loaded() as $var => $class)
+		{
+			$this->$var =& load_class($class);
+		}
+
+		$this->load =& load_class('Loader', 'core');
+		$this->load->initialize();
+		log_message('info', 'Controller Class Initialized'); */
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Get the CI singleton
+	 *
+	 * @static
+	 * @return	object
+	 */
+	public static function &get_instance()
+	{
+		return self::$obj;
+	}
+
+}
+
+?>

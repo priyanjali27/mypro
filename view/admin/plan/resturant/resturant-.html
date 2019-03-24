@@ -1,0 +1,280 @@
+{% include 'admin/lib/header.html' %}
+<body>
+
+	<!-- Main navbar -->
+	{% include 'admin/lib/nav.html' %}
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			{% include 'admin/lib/sidebar.html' %}
+			<!-- /main sidebar -->
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content">
+
+
+				<!--  Page content -->
+				{% if (action == 'add' or action == 'edit')   %}		
+				<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">{{ constant('RESTURANT')}}  
+							
+							</h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+
+						<div class="panel-body">
+							
+							<form class="form-horizontal" action="{{ base_url }}admin/resturant/{{action}}/{{user_id}}" method="post">
+								<fieldset class="content-group">
+									<input type="hidden" name="resturantbrand_id" class="form-control" value="{{resturantbrand_id}}" placeholder="">
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('NAME')}}   <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="resturantbrand_name" value="{{set_data.resturantbrand_name}}"class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('NAME') }}" dir="auto">
+											<div class="error_msg">{{ error_msg.resturantbrand_name|e }}</div>
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('DISPLAY NAME')}}  <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="resturantbrand_displayname" value="{{set_data.	resturantbrand_displayname}}" class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('DISPLAY NAME') }}"  dir="auto">
+											<div class="error_msg">{{ error_msg.resturantbrand_displayname|e }}</div>
+								        </div>
+										
+										
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('EMAIL')}}   <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="email" name="resturantbrand_email" value="{{set_data.resturantbrand_email}}"  class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('EMAIL') }}" dir="auto">
+											<div class="error_msg" >{{ error_msg.resturantbrand_email|e }}</div>
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+			                        	<label class="control-label col-lg-2">{{ constant('BRAND')}}   </label>
+			                        	<div class="col-lg-10">
+				                            <select name="resturantbrand_type" class="form-control"  id="resturantbrand_type" >
+				                                <option value="">{{ constant('PLEASE SELECT')}}</option>
+												{% set selector = '' %}
+												
+												{% for key, resturant_branch in resturants %} 
+												
+												 {% if (resturant_branch.resturantbrand_id) == set_data.resturantbrand_type %}
+													   <option value="{{resturant_branch.resturantbrand_id}}" selected
+										>{{resturant_branch.resturantbrand_name}}</option>
+													{% else %}
+				                                <option value="{{resturant_branch.resturantbrand_id}}" 
+										>{{resturant_branch.resturantbrand_name}}</option>
+										{% endif %}
+												{% endfor %}
+				                                
+				                            </select>
+											<div class="error_msg">{{ error_msg.resturantbrand_type|e }}</div>
+			                            </div>
+										
+			                        </div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('PHONENO')}}   <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="resturantbrand_phoneno" value="{{set_data.resturantbrand_phoneno}}" class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('PHONENO') }}" dir="auto" >
+											<div class="error_msg">{{ error_msg.resturantbrand_phoneno|e }}</div>
+										</div>
+										
+									</div>
+									
+									
+									
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('ADDRESS')}}   <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<textarea rows="5" cols="5" name="resturantbrand_address" class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('ADDRESS') }}" dir="auto" >{{set_data.resturantbrand_address}}</textarea>
+											<div class="error_msg">{{ error_msg.resturantbrand_address|e }}</div>
+										</div>
+										
+									</div>
+
+									<div  class="form-group hide_div">
+										<label class="control-label col-lg-2">{{ constant('COUNTUSERS')}}  <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="resturantbrand_countusers" class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('COUNTUSERS') }}"  value="{{set_data.resturantbrand_countusers}}" dir="auto">
+											<div class="error_msg">{{ error_msg.resturantbrand_countusers|e }}</div>
+										</div>
+										
+									</div>
+									
+									<div class="form-group hide_div">
+										<label class="control-label col-lg-2">{{ constant('COUNTPOS')}}<span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="resturantbrand_countpos" value="{{set_data.resturantbrand_countpos}}" class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('COUNTPOS') }}" dir="auto">
+											<div class="error_msg">{{ error_msg.resturantbrand_countpos|e }}</div>
+										</div>
+										
+									</div>
+								</fieldset>
+								
+								<div class="text-right">
+									<a href="{{ base_url }}admin/resturant/" type="button" class="btn btn-warning">{{ constant('BACK')}}</a>
+									<button type="submit" class="btn btn-primary" name="submit">{{ constant('SUBMIT')}} <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+							
+				{% else %}
+				<div class="panel panel-flat">
+						
+
+						<div class="panel-body">
+							
+							
+							<form class="form-horizontal" action="{{ base_url }}admin/resturant/index/{{page_number}}/{{search}}" method="post">
+								<fieldset class="content-group">
+								
+									<div class="form-group">
+										<div class="col-lg-3">
+											<input type="text" name="search" value="{{searched}}"class="form-control" placeholder="{{constant('NAME') }}  , {{constant('DISPLAY NAME') }} & {{constant('EMAIL') }}   " dir="auto" >
+											<div class="error_msg">{{ error_msg.search|e }}</div>
+										</div>
+										<button type="submit" class="btn btn-primary" name="submit">{{ constant('SEARCH')}} <i class="icon-arrow-right14 position-right"></i></button>
+										<a href="{{ base_url }}admin/resturant/" class="btn btn-warning" >{{ constant('BACK')}}</a>
+									</div>
+									
+									
+								</form>	
+							
+							
+						</div>
+					</div>	
+				
+     			<!---- Data Table start ----->	
+				
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">{{ constant('RESTURANT')}} <a href="{{ base_url }}admin/resturant/add" class="btn btn-primary btn-icon" ><i class="icon-plus2"></i></i></a> </h5>
+							<p class="message">{{ success_massage }}<p>
+							<div class="text-right">
+							{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+						</div>
+             		    <div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('BRAND')}}</th>
+										<th>{{ constant('EMAIL')}}</th>
+										<th>{{ constant('PHONENO')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th class="text-center" ><i class="icon-menu-open2"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% if results %}
+									{% for key, resturant in results %} 
+										<tr>									
+    									<td>{{ resturant.resturantbrand_name|e }}</td>
+										<td><b>{{ resturant.t2resturantbrand_name|e }}</b></td>
+										<td>{{ resturant.resturantbrand_email|e }}</td>
+										<td>{{ resturant.resturantbrand_phoneno|e }}</td>
+										
+										<td><span class="label label-success">
+										{% if resturant.resturantbrand_status == 1 %}
+										<p>Active</p>
+									     {% else %}
+										<p>Inactive</p>
+									    {% endif %}</span>
+										</td>
+										<td class="text-center">
+										    <a href="{{ base_url }}admin/resturant/view/{{ resturant.resturantbrand_id|e }}" class="btn border-warning text-warning-600 btn-flat btn-icon" ><i class="icon-eye"></i></i></a>
+											
+											<a href="{{ base_url }}admin/resturant/edit/{{ resturant.resturantbrand_id|e }}" type="button" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"><i class=" icon-pencil5"></i></a>
+											
+											<a href="{{ base_url }}admin/resturant/delete/{{ resturant.resturantbrand_id|e }}" class="btn border-warning text-warning-600 btn-flat btn-icon delete-user-row-with-data-type"  ><i class=" icon-cancel-square2"></i></a>
+										</td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+							<tr>									
+							<td class="record" colspan="7" >
+							{{ constant('NO RECORD FOUND')}} </td>								
+							</tr>							
+							{% endif %}	
+								</tbody>
+							</table>
+							{{ links|raw  }}
+						</div>
+					</div>
+					<!-- /basic responsive table -->
+
+					
+				{% endif %}	
+					
+					
+					
+					<!-- /// Page content -->
+					
+
+				{% include 'admin/lib/footer.html' %}
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#resturantbrand_type").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".hide_div" ).hide();
+				$( "input[name='resturantbrand_countusers']").attr('value','0');
+				$( "input[name='resturantbrand_countpos']").attr('value','0');
+				} else{
+                $(".hide_div").show();
+		   }
+        });
+    }).change();
+});
+</script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ base_url }}assets/js/core/bootstrap-confirm-delete.js"></script>
+<script src="{{ base_url }}assets/js/core/test.js"></script>

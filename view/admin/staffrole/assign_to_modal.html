@@ -1,0 +1,375 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+    <div class="page-container">	
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'admin/lib/nav.html' %}
+                {% if type == 2 %}
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="work-progres">
+                                <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+                                    SELECT &nbsp;{{constant('COMPANY')}}
+                                    <!-- <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a> -->
+                                </div>
+                            </div>
+                        </div>	  
+                    </div>	  	  
+                    <div class="clearfix"></div>	  	  	 	
+                    <div class="chit-chat-layer1 modal-spacee">
+                        <div class="clearfix">  </div>	
+
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">			
+                                <div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">				
+
+                                    <form action="{{ base_url }}admin/staffrole/add_company" method="POST" name="staffmodal_form" enctype="multipart/form-data">
+                                        <div class="col-md-6 md-form" style="padding:0px;">
+                                            <input type="hidden" value="{{id}}" name="user_id"/>
+                                            <input type="hidden" value="{{type}}" name="access_type"/>
+
+                                            {{error}}
+
+
+                                            <label for="value_type">{{ constant('COMPANY')}}&nbsp;{{ constant('NAME')}}<span class="required">*</span></label>
+                                              Total  Company: {{company_count}}<br><br>
+                                              Selected  Company: {{sel_company}}
+                                            <br><br><br>
+<!--{{assigned_company.companyid}}-->
+                                            <select id="companyid" name="companyid[]" class="selectpicker form-control-select" multiple >					
+                                                {% if all_company %}
+                                                {% for key,company in all_company %} 
+                                                <option {% if company.company_id in assgn_company2 %}selected{% endif %} value="{{ company.company_id}}">{{ company.company_name|e }}({{company.company_id}})({{company.company_cr_no}})</option>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+
+                                </div>					
+                                <div class="col-md-12 text-center"  style="padding:0px;">              
+                                    <button class="btn btn-success" value="Submit" name="update">{{constant('SUBMIT')}}</button>				
+                                </div>	
+                                </form>			
+                            </div>				
+                        </div>		
+                    </div>            
+                </div>		
+                <div class="clearfix"></div>
+                <!--main page chit chating end here-->
+                {% endif %}
+                {% if type == 1 %}
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="work-progres">
+                                <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+                                    SELECT	&nbsp;{{constant('LOCATION')}}
+                                    <!-- <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a> -->
+                                </div>
+                            </div>
+                        </div>	  
+                    </div>	  	  
+                    <div class="clearfix"></div>	  	  	 	
+                    <div class="chit-chat-layer1 modal-spacee">
+                        <div class="clearfix">  </div>	
+
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">			
+                                <div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">					
+
+                                    <form action="{{ base_url }}admin/staffrole/add_location" method="POST" name="location_form" id="location_form">
+                                        {% if user_name %}
+                                        {% for key,user in user_name %} 
+                                        {{user.user_name}}
+                                        {% endfor %}
+                                        {% endif %}
+                                        <input type="hidden" value="{{id}}" name="user_id"/>
+                                        <input type="hidden" value="{{type}}" name="access_type"/>
+                                        <div class="col-md-12" style="padding:0px;">
+                                            <div class="col-md-6 md-form" style="padding:0px;">
+                                                <i class="fa fa-globe prefix grey-text"></i>
+                                                <label for="country_code">{{constant('COUNTRY')}}</label>
+                                                <select id="country_code" name="country_code" class="selectpicker form-control-select">
+                                                    <option value="">{{constant('PLEASE SELECT')}}</option>
+                                                    {% if related_country %}
+                                                    {% for key,country in related_country %} 
+                                                    {% if country.country_status == 1 %}
+                                                    {% if country.country_code == assigned_locations.country_code %}
+                                                        <option selected value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+                                                    {% else %}
+                                                        <option value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </select>				
+                                            </div>
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-location-arrow prefix grey-text"></i>
+                                                <label for="city_code">{{constant('CITY')}}</label>
+                                                <select id="city_code" name="city_code" class="selectpicker form-control-select">
+                                                    <option value="">{{constant('PLEASE SELECT')}}</option>
+                                                </select>				
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 md-form" style="padding:0px;">
+                                            <div class="col-md-6 md-form" style="padding:0px;">
+                                                <i class="fa fa-road prefix grey-text"></i>
+                                                <label for="location_code">{{constant('LOCATION')}}</label>
+                                                <select id="location_code" name="location_code[]" class="selectpicker form-control-select" multiple>
+                                                    
+                                                </select>				
+                                            </div>
+
+                                        </div>								
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success">{{constant('SUBMIT')}}</button>
+
+                                        </div>
+                                    </form>
+                                    <!-- Form contact -->	
+                                </div>				
+                            </div>		
+                        </div>            
+                    </div>		
+                    <div class="clearfix"></div>
+
+                    {% endif %}
+
+
+                </div>
+
+                <!--copy rights start here-->
+                {% include 'admin/lib/footer.html' %}	
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        {% include 'admin/lib/sidebar.html' %}
+    </div>
+    <!--slide bar menu end here-->
+
+    <!--//scrolling js-->
+    <script src="{{base_url}}assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{base_url}}assets/multi.min.css ">
+    <script src="{{base_url}}assets/multi.min.js"></script>
+    <script>
+var select = document.getElementById('companyid');
+multi(select);
+    </script>
+
+    <script>
+        var select1 = document.getElementById('location_code');
+        multi(select1);
+    </script>
+
+    <script type="text/javascript">
+
+        // Wait for the DOM to be ready
+        $(function () {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='staffmodal_form']").validate({
+                // Specify validation rules
+                rules: {
+                    companyid: "required",
+                },
+                // Specify validation error messages
+                messages: {
+
+                    companyid: "Please Select Company",
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    var formData = $(form).serialize();
+                    var options = $('#companyid > option:selected');
+                    if (options.length == 0) {
+                        $('#companyid').after('<label id="companyid" class="error" for="companyid">Please Select Company(atleast one)</label>');
+                        return false;
+                    }
+                    var urlData = $(form).attr('action');
+                    $.ajax({
+                        url: urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        data: formData,
+                        success: function (data) {
+                            var data = $.parseJSON(data);
+                            if (data.error == 'true') {
+                                $.each(data.error_msg, function (index, value) {
+                                    $('#' + index).after('<label id="' + index + '-error" class="error" for="user_name">' + value + '</label>');
+                                });
+                            } else if (data.error == 'permission') {
+                                $('.alert').delay(500).fadeOut(100);
+                                $('form[name="staffmodal_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                            } else {
+                                $('form[name="staffmodal_form"]')[0].reset();
+                                $('form[name="staffmodal_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                if ($('.alert').delay(10000).fadeOut(100)) {
+                                    //window.location.reload();
+                                    window.location.href = "{{base_url}}admin/staffrole";
+                                }
+
+                            }
+
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function () {
+
+            if('{{assigned_locations.location_code|json_encode|raw}}' != null){
+                load_cities('{{related_country.country_code}}');
+            }
+            if('{{assigned_locations.city_code|json_encode|raw}}' != null){
+                load_locations('{{as_city}}');
+            }
+            $('#country_code,#country_code1').change(function () {
+                $('.non-selected-wrapper').html('');
+                $('.selected-wrapper').html('');
+                load_cities();
+            });
+            $('#city_code,#city_code1').change(function () {
+                $('.non-selected-wrapper').html('');
+                $('.selected-wrapper').html('');
+                load_locations();
+            });
+            
+        function load_cities(country=''){
+            $('#city_code').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+                $('#location_code,#location_code1').html('');
+                var co_id = $('#country_code').val();
+                if(country!=''){
+                    co_id = country;
+                }
+                var urlData = '{{ base_url }}admin/staffrole/related_cities/' + co_id;
+                $.ajax(
+                        {
+                            url: urlData,
+                            type: "POST",
+                            crossDomain: true,
+                            success: function (data)
+                            {
+                                var data = $.parseJSON(data);
+
+                                $.each(data.related_cities, function (key, value) {
+                                    if(value.city_code == '{{as_city}}'){
+                                        $('#city_code').append('<option selected value="' + value.city_code + '">' + value.city_language_name + '</option>');
+                                    }else{
+                                        $('#city_code').append('<option value="' + value.city_code + '">' + value.city_language_name + '</option>');
+                                    }
+                                });
+                            }
+                        });
+        }          
+            
+        function load_locations(city_code=''){
+            $('#location_code,#location_code1').html('');
+            var ci_id = $('#city_code').val();
+            if(city_code!=''){
+                ci_id = city_code;
+            }
+            var urlData = '{{ base_url }}admin/staffrole/related_locations/' + ci_id;
+            $.ajax(
+                    {
+                        url: urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        success: function (data)
+                        {    //alert('{{as_location}}');                      
+                            var data = $.parseJSON(data);
+                            var i=1;
+                            $.each(data.related_locations, function (key, value) { 
+                                
+                                if('{{as_location}}'.indexOf(value.location_code)>=0){
+                                    //$('.non-selected-wrapper').find('a[data-value="'+value.location_code+'"]').addClass('priyanjaka');
+                                    //document.getElementById("the_id").getAttribute("original-title");
+                                    $('#location_form .selected-wrapper').append('<a tabindex="0" class="item selected" role="button" data-value="'+value.location_code+'" multi-index="0">'+ value.location_language_location_name +'</a>');
+                                    var sel = 'selected';                                    
+                                }else{
+                                    var sel = '';
+                                }
+                                $('#location_code').append('<option value="' + value.location_code + '">' + value.location_language_location_name + '</option>');
+                                $('#location_form .non-selected-wrapper').append('<a tabindex="0" class="item '+sel+'" role="button" data-value="' + value.location_code + '" multi-index="'+i+'">'+ value.location_language_location_name +'</a>');
+                                i++;
+                            });
+                            
+                        }
+                    });
+        }
+        });
+
+        // Wait for the DOM to be ready
+        $(function () {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='location_form']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    country_code: "required",
+                    city_code: "required",
+
+                },
+                // Specify validation error messages
+                messages: {
+                    country_code: "Please Select Country",
+                    city_code: "Please Select Cities(y)",
+
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    var formData = $(form).serialize();
+                    var options = $('#location_code > option:selected');
+                    if (options.length == 0) {
+                        $('#location_code').after('<label id="location_code-error" class="error" for="location_code">Please Select Location(atleast one)</label>');
+                        return false;
+                    }
+                    var urlData = $(form).attr('action');
+                    $.ajax(
+                            {
+                                url: urlData,
+                                type: "POST",
+                                crossDomain: true,
+                                data: formData,
+                                success: function (data)
+                                {
+                                    var data = $.parseJSON(data);
+                                    if (data.error == 'true') {
+                                        $.each(data.error_msg, function (index, value) {
+                                            $('#' + index).after('<label id="' + index + '-error" class="error" for="' + index + '">' + value + '</label>');
+                                        });
+                                    } else if (data.error == 'permission') {
+                                        $('.alert').delay(500).fadeOut(100);
+                                        $('form[name="location_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                    } else {
+                                        $('form[name="location_form"]')[0].reset();
+                                        $('form[name="location_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                        if ($('.alert').delay(10000).fadeOut(100)) {
+                                            window.location.href = "{{base_url}}admin/staffrole";
+                                        }
+
+                                    }
+                                }
+                            });
+                }
+            });
+        });
+    </script>
+
+
+</body>
+</html>                     

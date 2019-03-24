@@ -1,0 +1,130 @@
+<div class="header-main">
+    <div class="header-left">
+        <div class="logo-name">
+            <a href="{{base_url}}admin/user/"> <!--<h1>Shoppy</h1>--> 
+                <img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+            </a> 								
+        </div>
+        <!--search-box-->
+        <!--//end-search-box-->
+        <div class="clearfix"> </div>
+    </div>
+    <div class="header-right">
+<!-- {{session.userdata.user_default_country}}-->
+
+        <div class="col-md-6 md-form">          
+            <strong>Country</strong>
+            <select id="country_nav" name="country_nav" class="selectpicker form-control-select2">                  <option value="">{{constant('PLEASE SELECT')}}</option>                                             
+
+                {% for key,country in all_countries %} 
+
+
+                {% if country.country_status == 1 %}
+                {%if ( session.selected_country == country.country_code) or ( session.userdata.user_default_country  == country.country_code ) %}
+                <option selected value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+                {% else %}
+                <option value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+                {% endif %} 
+                {% endif %} 
+                {% endfor %}                                               
+            </select>
+        </div>
+
+        <div class="profile_details">		
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">	
+                            <span class="prfil-img"><img src="{{ base_url }}images/p1.png" alt=""> </span> 
+                            <div class="user-name">
+                                <p>{{session.userdata.user_name}}</p>
+                                <span>{% if session.userdata.user_role=="0"  %} {{ constant('SUPER ADMINISTRATOR')}}
+                                    {% else  %}
+                                    {{ constant('ADMINISTRATOR')}}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <i class="fa fa-angle-down lnr"></i>
+                            <i class="fa fa-angle-up lnr"></i>
+                            <div class="clearfix"></div>	
+                        </div>	
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        <li><a href="{{base_url}}admin/user/profile"><i class="fa fa-user"></i>{{ constant('MY PROFILE')}}</a> </li> 
+                        <li> <a href="{{ base_url }}admin/language"><i class="fa fa-language"></i> {{ constant('LANGUAGE') }}</a> </li> 
+                        <li> <a href="{{base_url}}admin/user/change_password"><i class="fa fa-cog"></i> {{ constant('CHANGE PASSWORD')}}</a> </li>
+                        <!--<li> <a href="#"><i class="fa fa-cog"></i> {{ constant('SETTING')}}</a> </li>		-->									
+                        <li> <a href="{{base_url}}admin/terms"><i class="fa fa-cogs"></i> {{ constant('TERMS & CONDITIONS') }}</a> </li> 
+                        <li><a href="{{ base_url }}admin/user/change_country"><i class="fa fa-globe"></i> {{ constant('COUNTRY')}}</a> </li>
+                        <li><a href="{{ base_url }}admin/logout"><i class="fa fa-sign-out"></i> {{ constant('LOGOUT')}}</a> </li>
+                              
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="profile_details">		
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">	
+                            <span class="prfil-img">
+                                {% for key, lang in language %}
+                                {% if( lang.language_code == session.lang_code) %}    
+                                <img width="50" src="{{ base_url }}upload/lang_flags/{{lang.language_flag}}" alt=""> </span> 
+                            <div class="user-name">
+
+                                <p> {{lang.language_name}}</p>
+                            </div>
+
+                            {% endif %}
+                            {% endfor %}
+                            <i class="fa fa-angle-down lnr"></i>
+                            <i class="fa fa-angle-up lnr"></i>
+                            <div class="clearfix"></div>	
+                        </div>	
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        {% for key, lang in language %}
+                        <li value="{{lang.language_code}}">
+                            <a href="{{base_url}}admin/language/change_language/{{lang.language_code}}" class="{{ lang.language_name }}">
+                                <img width="50" src="{{ base_url }}upload/lang_flags/{{lang.language_flag}}" alt=""> {{ lang.language_name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+<!--          {{session.selected_country}}-->
+
+        <div class="clearfix"> </div>	
+
+
+
+
+
+
+    </div>
+    <div class="clearfix"> </div>	
+</div>
+<!--heder end here-->
+<!-- script-for sticky-nav -->
+<script>
+    $(document).ready(function () {
+        var navoffeset = $(".header-main").offset().top;
+        $(window).scroll(function () {
+            var scrollpos = $(window).scrollTop();
+            if (scrollpos >= navoffeset) {
+                $(".header-main").addClass("fixed");
+            } else {
+                $(".header-main").removeClass("fixed");
+            }
+        });
+
+    });
+
+    $('#country_nav').on('change', function () {
+        var countryval = $(this).val();
+        window.location = "{{base_url}}admin/company/change_country/" + countryval;
+    });
+
+</script>
+<!-- /script-for sticky-nav -->

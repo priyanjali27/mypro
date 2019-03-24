@@ -1,0 +1,851 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+		<div class="work-progres">	
+			<div class="chit-chat-heading">
+				{{constant('MANAGE')}} {{ constant('DISCOUNT')}}
+				  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+			</div>
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-inverse table-head-bg">
+					<tr>										
+						<th>{{ constant('DISCOUNT')}} {{constant('NAME')}}</th>
+						<th>{{ constant('DISCOUNT')}} {{ constant('CODE')}}</th>
+						<th>{{ constant('TYPE')}}</th>
+						<th>{{ constant('FROMDATE')}} to {{ constant('TODATE')}}</th>
+									
+						<th>{{ constant('CREATED')}}</th>
+						<th>{{ constant('STATUS')}}</th>
+						<th>{{ constant('ACTION')}}</th>										
+					</tr>
+					</thead>
+					<tbody>	
+						{% if results %}
+							{% for key,discount in results %} 
+								<tr>												
+									<td>{{ discount.discount_name|e }}</td>
+									<td>{{ discount.discount_code|e }}</td>
+									{% if discount.value_type|e == 'fixed' %}									
+										<td>Fixed</td>
+									{% else %}
+										<td>Percentage</td>
+									{% endif %}
+									<td>{{ discount.from_date|e }} to {{ discount.to_date|e }}</td>
+								
+									<td>{{ discount.discount_created|e }}</td>										
+									<td class="status {{ discount.discount_id|e }}">
+										{% if discount.discount_status == 1 %}
+											<div class="active-button" onclick="statusFunction({{ discount.discount_id|e }},0)">Active</div>
+										{% else %}
+											<div class="inactive-button" onclick="statusFunction({{ discount.discount_id|e }},1)">Inactive</div>
+										{% endif %}
+									</td>
+									<td>
+										<div class="market-update-right">
+											<span><a class="modal-view" href="#" data-id="{{ discount.discount_id|e }}" data-toggle="modal" data-target="#myModal-view"><i class="fa fa-eye latest-view-icon"></i></a></span>
+											<span><a class="modal-edit" href="#" data-toggle="modal" data-action="{{ base_url }}admin/discount/edit/{{ discount.discount_id|e }}" data-cpn="{{ discount.no_of_coupons|e }}" data-id="{{ discount.discount_id|e }}"  data-countryid="{{ discount.discount_country_id|e }}" data-target="#myModal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+											<span><a href="#" onclick="confirmDeleteModal('{{ discount.discount_id|e }}')"><i class="fa fa-trash"></i></a></span>
+										</div>
+									</td>
+								</tr>
+							{% endfor %}
+						{% else %}									
+								<tr>									
+									<td class="record" colspan="4" >{{ constant('NO RECORD FOUND')}} </td>								
+								</tr>							
+						{% endif %}										
+					</tbody>
+				</table>
+				<!--Pagination -->
+				<nav class="my-4 pagenation-border">
+				  {{ links|raw  }}
+					<div class="total-records">
+						<div>{% if results %}
+								{{start}}-{{end}} {{ constant('RECORD')}}
+								{% else %}
+								
+								0 {{ constant('RECORD')}}
+								{% endif %}</div>
+					</div>
+				</nav>
+				<!--/Pagination -->
+			</div>
+		</div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add Discount Coupon-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{constant('ADD')}} {{constant('DISCOUNT')}} {{constant('COUPON')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form action="{{ base_url }}admin/discount/add" method="POST" name="discount_form">						
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<i class="fa fa-globe prefix grey-text"></i>
+									<label for="discount_country_id">{{constant('COUNTRY')}}</label>
+									<select id="country_rel" name="discount_country_id" class="selectpicker form-control-select">
+									
+									{% if related_country %}
+										{% for key,country in related_country %} 
+											{% if country.country_status == 1 %}
+											 {%if ( session.selected_country == country.country_code) or ( session.userdata.user_default_country  == country.country_code ) %}
+												<option selected value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+											{% endif %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+									</select>				
+								</div>					
+								<div class="col-md-12" style="padding:0px;">									
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-user prefix grey-text active"></i>
+										<label for="discount_name">{{constant('DISCOUNT')}} {{constant('NAME')}}<span class="required">*</span></label>
+										<input type="text" placeholder="{{constant('ENTER')}} {{constant('DISCOUNT')}} {{constant('NAME')}}" id="discount_name" name="discount_name" class="form-control">					
+									</div>									
+									<div class="col-md-6 md-form">	
+										<i class="fa fa-tags prefix grey-text active"></i>
+										<label for="no_of_coupons">{{constant('NUM COUPONS')}}<span class="required">*</span></label>
+										<input type="number" min="1" placeholder="{{constant('ENTER')}} {{constant('NUM COUPONS')}}" id="no_of_coupons" name="no_of_coupons" class="form-control">					
+									</div>
+								</div>
+								<div class="col-md-12" style="padding:0px;">									
+									<div class="col-md-6 md-form" style="padding:0px;">	
+										<i class="fa fa-code prefix grey-text"></i>									
+										<label for="discount_code">{{constant('DISCOUNT')}} {{constant('CODE')}}<span class="required">*</span></label>
+										<input type="text" placeholder="{{constant('ENTER')}} {{constant('DISCOUNT')}} {{constant('CODE')}}" id="discount_code" name="discount_code" class="form-control">					
+									</div>
+									<div class="col-md-6 md-form">										
+										<button class="generate">Autogenerate</button>					
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">																
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-percent prefix grey-text"></i>
+										<label for="value_type">{{ constant('TYPE')}}<span class="required">*</span></label>
+										<select id="value_type" name="value_type" class="selectpicker form-control-select">
+											<option value="">{{constant('PLEASE SELECT')}}</option>										
+											<option value="fixed">Fixed</option>										
+											<option value="percentage">Percentage</option>										
+										</select>	
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-hand-grab-o prefix grey-text"></i>
+										<label for="use_type">{{constant('DISCOUNT')}} {{ constant('VALUE')}}<span class="required">*</span></label>
+										<input type="text" placeholder="{{constant('ENTER')}} {{constant('DISCOUNT')}} {{ constant('VALUE')}}" id="discount_value" name="discount_value" class="form-control">	
+									</div>
+								</div>									
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-reorder prefix grey-text"></i>
+										<label for="use_type">{{constant('USE')}} {{ constant('TYPE')}}<span class="required">*</span></label>
+										<select id="use_type" name="use_type" class="selectpicker form-control-select">
+											<option value="">{{constant('PLEASE SELECT')}}</option>										
+											<option value="single">Single Use</option>										
+											<option value="multi">Multi Use</option>										
+										</select>
+									</div>		
+									<div class="col-md-6 md-form">
+										<i class="fa fa-hand-grab-o prefix grey-text"></i>
+										<label for="min_orderval">{{constant('MIN ORDERVAL')}}<span class="required">*</span></label>
+										<input type="number" min="0" placeholder="{{constant('ENTER')}} {{constant('MIN ORDERVAL')}}" id="min_orderval" name="min_orderval" class="form-control">	
+									</div>
+								</div>
+								<div class="col-md-12" style="padding:0px;">
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-calendar prefix grey-text"></i>
+										<label for="from_date">{{constant('FROMDATE')}}<span class="required">*</span></label>
+										<input type="text" placeholder="{{constant('COUPON')}} {{constant('VALIDFROM')}}" id="from_date" name="from_date" class="form-control from_date">					
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+										<label for="to_date">{{constant('TODATE')}}<span class="required">*</span></label>
+										<input type="text" placeholder="{{constant('COUPON')}} {{constant('VALIDTILL')}}" id="to_date" name="to_date" class="form-control to_date">					
+									</div>
+								</div>								
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+
+<!--Add discount coupon-->
+
+<!--Edit discount coupon-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{ constant('DISCOUNT')}} {{constant('COUPON')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form action="" id="edit_discount_form" name="edit_discount_form" method="POST">
+							    	<div class="col-md-12 md-form" style="padding:0px;">
+										<!-- <i class="fa fa-globe prefix grey-text"></i>
+										<label for="form31">{{constant('COUNTRY')}}</label> -->
+										<input type="hidden"  id="discount_countryid1" class="form-control">
+
+									</div>			
+									<div class="col-md-12 md-form" style="padding:0px;">
+										<div class="col-md-6 md-form" style="padding:0px;">
+											<i class="fa fa-user prefix grey-text"></i>
+											<label for="discount_name">{{constant('DISCOUNT')}} {{constant('NAME')}}<span class="required">*</span></label>
+											<input type="text" readonly id="discount_name1" class="form-control">					
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-code prefix grey-text"></i>
+											<label for="discount_code">{{constant('DISCOUNT')}} {{constant('CODE')}}<span class="required">*</span></label>
+											<input type="text" readonly id="discount_code1" class="form-control">					
+										</div>
+									</div>
+									<div class="col-md-12" style="padding:0px;">	
+										<div class="col-md-5 md-form" style="padding:0px;">
+											<i class="fa fa-tags prefix grey-text"></i>
+											<label for="no_of_coupons">{{constant('NUM COUPONS')}}<span class="required">*</span></label>
+											<input type="number" min="1" id="no_of_coupons1" readonly class="form-control">					
+										</div>
+										<div class="col-md-5 md-form addcpn" style="display:none;">
+											<i class="fa fa-plus prefix grey-text"></i>
+											<label for="no_of_coupons">{{constant('ADD')}} {{constant('NUM COUPONS')}}</span></label>
+											<input type="number" min="1" id="add_coupons1" name="add_coupons" class="form-control">					
+										</div>
+										<div class="col-md-2 md-form">
+											<button id="add_coupn"><i class="fa fa-plus"></i></button>				
+										</div>
+									</div>
+									<div class="col-md-12" style="padding:0px;">									
+										<div class="col-md-6 md-form" style="padding:0px;">
+											<i class="fa fa-reorder prefix grey-text"></i>
+											<label for="use_type">{{constant('USE')}} {{ constant('TYPE')}}</label>
+											<select id="use_type1" disabled class="selectpicker form-control-select">
+												<option value="">{{constant('PLEASE SELECT')}}</option>										
+												<option value="single">Single Use</option>										
+												<option value="multi">Multi Use</option>										
+											</select>
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-percent prefix grey-text"></i>
+											<label for="value_type">{{ constant('TYPE')}}<span class="required">*</span></label>
+											<select id="value_type1" disabled class="selectpicker form-control-select">
+												<option value="">{{constant('PLEASE SELECT')}}</option>										
+												<option value="fixed">Fixed</option>										
+												<option value="percentage">Percentage</option>										
+											</select>				
+										</div>
+									</div>
+									<div class="col-md-12 md-form" style="padding:0px;">
+										<div class="col-md-6 md-form" style="padding:0px;">
+											<i class="fa fa-hand-grab-o prefix grey-text"></i>
+											<label for="min_orderval">{{constant('MIN ORDERVAL')}}<span class="required">*</span></label>
+											<input type="number" min="0" placeholder="{{constant('ENTER')}} {{constant('MIN ORDERVAL')}}" id="min_orderval1" name="min_orderval" class="form-control">	
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-hand-grab-o prefix grey-text"></i>
+											<label for="use_type">{{constant('DISCOUNT')}} {{ constant('VALUE')}}<span class="required">*</span></label>
+											<input type="text" id="discount_value1" readonly class="form-control">	
+										</div>																		
+									</div>
+									<div class="col-md-12" style="padding:0px;">
+										<div class="col-md-6 md-form" style="padding:0px;">
+											<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="from_date">{{constant('FROMDATE')}}<span class="required">*</span></label>
+											<input type="text" id="from_date1" disabled class="form-control from_date1">					
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="to_date">{{constant('TODATE')}}<span class="required">*</span></label>
+											<input type="text" placeholder="{{constant('COUPON')}} {{constant('VALIDTILL')}}" id="to_date1" name="to_date" class="form-control to_date1">					
+										</div>
+									</div>								
+									<div class="col-md-12 text-center">
+										<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+										<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+									</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+<!--Edit Discount Coupon-->
+
+<!--View Discount Coupon-->
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('VIEW')}} {{ constant('DISCOUNT')}} {{constant('COUPON')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<!-- <i class="fa fa-globe prefix grey-text"></i>
+									<label for="form31">{{constant('COUNTRY')}}</label> -->
+									<input type="hidden" readonly id="discount_countryid2" class="form-control">					
+								</div>
+								<div class="col-md-12" style="padding:0px;">																			
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-user prefix grey-text"></i>
+										<label for="discount_name">{{constant('DISCOUNT')}} {{constant('NAME')}}<span class="required">*</span></label>
+										<input type="text" readonly id="discount_name2" class="form-control">					
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-tags prefix grey-text"></i>
+										<label for="no_of_coupons">{{constant('NUM COUPONS')}}<span class="required">*</span></label>
+										<input readonly type="text" id="no_of_coupons2" class="form-control">					
+									</div>									
+								</div>
+								<div class="col-md-12" style="padding:0px;">
+									<div class="col-md-6 md-form" style="padding:0px;">									
+										<i class="fa fa-code prefix grey-text"></i>
+										<label for="discount_code">{{constant('DISCOUNT')}} {{constant('CODE')}}<span class="required">*</span></label>
+										<input type="text" readonly id="discount_code2" class="form-control">					
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-hand-grab-o prefix grey-text"></i>
+										<label for="min_orderval">{{constant('MIN ORDERVAL')}}<span class="required">*</span></label>
+										<input type="text" id="min_orderval2" class="form-control" READONLY>	
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-percent prefix grey-text"></i>
+										<label for="value_type">{{ constant('TYPE')}}<span class="required">*</span></label>
+										<select disabled id="value_type2" class="selectpicker form-control-select">
+											<option value="">{{constant('PLEASE SELECT')}}</option>										
+											<option value="fixed">Fixed</option>										
+											<option value="percentage">Percentage</option>										
+										</select>				
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-hand-grab-o prefix grey-text"></i>
+										<label for="use_type">{{constant('DISCOUNT')}} {{ constant('VALUE')}}<span class="required">*</span></label>
+										<input type="text" readonly id="discount_value2" class="form-control">	
+									</div>									
+								</div>	
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<i class="fa fa-reorder prefix grey-text"></i>
+									<label for="use_type">{{constant('USE')}} {{ constant('TYPE')}}<span class="required">*</span></label>
+									<select disabled id="use_type2" class="selectpicker form-control-select">
+										<option value="">{{constant('PLEASE SELECT')}}</option>										
+										<option value="single">Single Use</option>										
+										<option value="multi">Multi Use</option>										
+									</select>				
+								</div>
+								<div class="col-md-12" style="padding:0px;">
+									<div class="col-md-6 md-form" style="padding:0px;">
+										<i class="fa fa-calendar prefix grey-text"></i>
+										<label for="from_date">{{constant('FROMDATE')}}<span class="required">*</span></label>
+										<input readonly type="text" id="from_date2" class="form-control dobs">					
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+										<label for="to_date">{{constant('TODATE')}}<span class="required">*</span></label>
+										<input readonly type="text" id="to_date2" class="form-control dobs">					
+									</div>
+								</div>								
+								<div class="col-md-12 text-center">									
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+<!--View discount coupon-->
+
+<!----modal starts here--->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+			<div class="delete_message"></div>
+            <div class="modal-body">
+                <p>{{constant('SURE DELETE')}}</p>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+function statusFunction(id,value){
+
+		var urlData='{{ base_url }}admin/discount/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {				
+						if(value.discount_status == 1){															
+							$('td.status.'+value.discount_id).html("<div class='active-button' onclick='statusFunction("+value.discount_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.discount_id).html("<div class='inactive-button' onclick='statusFunction("+value.discount_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='discount_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		discount_name: "required",
+		discount_code: "required",
+		discount_country_id: "required",
+		no_of_coupons: {
+						required:true,
+						number:true
+						},
+		min_orderval:{
+						required:true,
+						number:true
+						},
+		value_type: "required",
+		use_type: "required",
+		from_date: "required",
+		to_date: "required",
+		discount_value: {
+						required:true,
+						number:true
+						},
+		
+    },
+    // Specify validation error messages
+    messages: {
+		discount_name: "Please Enter Discount Name",
+		discount_code: "Please Enter Discount Code",
+		discount_country_id: "Please Select country.",
+		no_of_coupons: {
+						required: "Please enter no. of coupons",
+						number: "It must be numeric"
+						},
+		min_orderval:{
+						required: "Please enter minimum order value",
+						number: "It must be numeric"
+						},
+		value_type: "Please Enter Type of Discount",
+		use_type: "Please Enter Use Type",
+		from_date: "Please Enter Valid From Date",
+		to_date: "Please Enter Valid To Date",	  
+		discount_value: {
+						required: "Please enter Discount value",
+						number: "It must be numeric"
+						},	  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					}else if (data.error == 'permission') {
+						$('.alert').delay(500).fadeOut(100);
+						$('form[name="discount_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+					}else{
+					$('form[name="discount_form"]')[0].reset();
+					$('form[name="discount_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {
+		e.preventDefault();	
+		$('label.error').css('display','none');
+		$('.form-control').removeClass('error');
+		$('select').removeClass('error');
+		$('form[name="edit_discount_form"]')[0].reset();
+		var cid = $(this).data('id');
+		$('#edit_discount_form').attr('action',$(this).data('action'));
+		var urlData='{{ base_url }}admin/discount/view/'+cid;
+			$.ajax(
+				{
+					url : urlData,
+					type: "POST",
+					crossDomain: true,
+					success:function(data) 
+					{ 
+						var data = $.parseJSON(data);						
+						   $.each(data.view_data, function( key, value ) {
+						      	$('#min_orderval1').val(value.min_orderval);
+                                $('#discount_name1').val(value.discount_name);
+								$('#discount_code1').val(value.discount_code);
+								$('#no_of_coupons1').val(value.no_of_coupons);
+								$('#discount_value1').val(value.discount_value);
+								$('#value_type1').find('option[value="'+value.value_type+'"]').prop("selected", true);
+								$('#use_type1').find('option[value="'+value.use_type+'"]').prop("selected", true);
+								$('#from_date1').val(value.from_date);
+								$('#to_date1').val(value.to_date);
+								$("#to_date1").datepicker( "option", "minDate", value.from_date );
+								$('#discount_countryid1').val(value.discount_country_id);
+						   });						
+					}
+				});	
+			var no_cpn = $(this).data('cpn');
+			$("#add_coupons1").keyup(function(e){
+				var extend = $(this).val();
+				var newval = parseInt(no_cpn) + parseInt(extend);
+				$('#no_of_coupons1').val(newval);
+				if(e.keyCode == 8){
+					var extend1 = $(this).val();
+					var newval1 = parseInt(no_cpn) + parseInt(extend1);
+					$('#no_of_coupons1').val(newval1);
+					if(extend1==''){
+						$('#no_of_coupons1').val(no_cpn);
+					}
+				}
+			});
+        });
+		
+		$('.add-latest-user').click(function(){
+			$('label.error').css('display','none');
+			$('.form-control').removeClass('error');
+			$('select').removeClass('error');
+			$('form[name="discount_form"]')[0].reset();
+		});
+		
+		$(".modal-view").click(function(e) {  
+		e.preventDefault();
+		var cid = $(this).data('id');
+		var urlData='{{ base_url }}admin/discount/view/'+cid;
+			$.ajax(
+				{
+					url : urlData,
+					type: "POST",
+					crossDomain: true,
+					success:function(data) 
+					{
+						var data = $.parseJSON(data);						
+						   $.each(data.view_data, function( key, value ) {
+								$('#discount_name2').val(value.discount_name);
+								$('#discount_code2').val(value.discount_code);
+								$('#no_of_coupons2').val(value.no_of_coupons);
+								$('#discount_value2').val(value.discount_value);
+									$('#discount_countryid2').val(value.discount_country_id);
+									
+								$('#value_type2').find('option[value="'+value.value_type+'"]').prop("selected", true);
+								$('#use_type2').find('option[value="'+value.use_type+'"]').prop("selected", true);
+								$('#from_date2').val(value.from_date);
+								$('#to_date2').val(value.to_date);
+								$('#min_orderval2').val(value.min_orderval);	
+						   });						
+					}
+				});							
+        });
+    </script>
+
+	<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_discount_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		discount_name: "required",
+		discount_code: "required",
+		discount_country_id: "required",
+		no_of_coupons: {
+						required:true,
+						number:true
+						},
+		min_orderval:{
+						required:true,
+						number:true
+						},
+		value_type: "required",
+		discount_value: {
+						required:true,
+						number:true
+						},
+		use_type: "required",
+		from_date: {required:true,dateISO: true},
+		to_date:  {required:true ,dateISO: true},
+		
+    },
+    // Specify validation error messages
+    messages: {
+		discount_name: "Please Enter Discount Name",
+		discount_code: "Please Enter Discount Code",
+		discount_country_id: "Please Select country.",
+    	no_of_coupons: {
+						required: "Please enter no. of coupons",
+						number: "It must be numeric"
+						},
+		min_orderval:{
+						required: "Please enter minimum order value",
+						number: "It must be numeric"
+						},
+		discount_value:{
+						required: "Please enter Discount value",
+						number: "It must be numeric"
+						},
+		value_type: "Please Enter Type of Discount",
+		use_type: "Please Enter Use Type",
+		from_date: "Please Enter Valid From Date",
+		to_date: "Please Enter Valid To Date",	  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					}else if (data.error == 'permission') {
+						$('.alert').delay(500).fadeOut(100);
+						$('form[name="edit_discount_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>'); 
+					}else{
+					$('form[name="edit_discount_form"]')[0].reset();
+					$('form[name="edit_discount_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted Successfully!");
+  var urlData='{{ base_url }}admin/discount/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function(data) 
+				{
+					 var data = $.parseJSON(data);
+					if (data.error == 'false') {
+                        $('#deleteModal').modal('hide'); // now close modal
+                        window.location.reload();
+                    } else {
+
+                        $('.delete_message').html('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                    }
+				}
+			});  
+}
+
+
+$(".generate").on("click", function(e) {
+	e.preventDefault();
+	$('#discount_code1').val('');
+	$('#discount_code').val('');
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var string_length = 8;
+	var randomstring = '';
+	for (var i=0; i<string_length; i++) {
+	var rnum = Math.floor(Math.random() * chars.length);
+	randomstring += chars.substring(rnum,rnum+1);
+	}
+	$('#discount_code').val(randomstring);
+	$('#discount_code1').val(randomstring);
+});
+
+$(document).ready(function(){
+
+		$("#from_date").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				minDate: 0,
+				onSelect: function(date){ 
+							$("#to_date").datepicker( "option", "minDate", date );							
+						}
+            });
+		$("#to_date").datepicker({ 
+					dateFormat: "yy-mm-dd",
+					changeYear: true,
+					changeMonth: true
+				});
+		$("#from_date1").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				minDate: 0,
+				onSelect: function(date){ 
+							$("#to_date1").datepicker( "option", "minDate", date );							
+						}
+            });
+		$("#to_date1").datepicker({ 
+					dateFormat: "yy-mm-dd",
+					changeYear: true,
+					changeMonth: true,
+				});
+		
+		$('#add_coupn').click(function(e){
+			e.preventDefault();
+			$('.addcpn').css('display','block');
+			$('#add_coupn').prop( "disabled", true );
+		});
+});
+</script>
+</body>
+</html>                     

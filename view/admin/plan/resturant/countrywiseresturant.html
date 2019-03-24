@@ -1,0 +1,76 @@
+<table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th>{{ constant('BRAND')}}
+										</th>
+										<th></th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+										{% if results %}
+									{% for key, resturant in results %} 
+										<tr>									
+    									<td>
+										{% if resturant.resturantbrand_file %}
+										<img src="{{base_url}}upload/logoimages/{{resturant.resturantbrand_file}}" title="Restaurant Logo" alt="Restaurant Logo" class="data_images" width="100">
+										{%else%}
+										<img src="{{base_url}}upload/companydefault.png" title="Restaurant Logo" alt="Restaurant Logo" class="data_images" width="100">
+										{%endif%}<br/>
+										<b>{{ resturant.resturantbrand_name|e }}</b><br/>
+										<span>{{ resturant.resturantbrand_email|e }}</span><br/>
+										<span>{{ resturant.resturantbrand_phoneno|e }}</span><br/>
+										 <a href="#" data-toggle="modal" data-target="#myModal-view1" class="view-modal1" data-rid="{{ resturant.resturantbrand_id|e }}" data-created="{{ resturant.resturantbrand_created|e }}"><i class="fa fa-eye"></i></a>
+      <a href="#" class="modal-edit" data-rid="{{ resturant.resturantbrand_id|e }}" data-id="{{ base_url }}admin/resturant/edit/{{ resturant.resturantbrand_id|e }}" data-toggle="modal" data-target="#myModal-edit"><i class="fa fa-pencil"></i></a>
+      <a href="#" onclick="confirmDeleteModal('{{ resturant.resturantbrand_id|e }}')"><i class="fa fa-trash-o"></i></a>
+										</td>
+    								
+										
+										<td class="status {{ resturant.resturantbrand_id|e }}">
+											{% if resturant.resturantbrand_status == 1 %}
+												<div class="active-button" onclick="statusFunction({{ resturant.resturantbrand_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" onclick="statusFunction({{ resturant.resturantbrand_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<td>
+
+ 
+  <a href="{{ base_url }}admin/resturant/branches/{{ resturant.resturantbrand_id|e }}"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{constant('VIEW BRANCHES')}}</button></a>
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{constant('Global Settings')}}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+  
+        <li><a href="{{ base_url }}admin/category/resturant/{{ resturant.resturantbrand_id|e }}/{{country_code}}">{{constant('CATEGORY MANAGEMENT')}}</a></li>
+        <li><a href="{{ base_url }}admin/menus/resturant/{{ resturant.resturantbrand_id|e }}/{{country_code}}">{{constant('ITEMS MANAGEMENT')}}</a></li>
+        <li><a href="{{ base_url }}admin/commission/commission/{{ resturant.resturantbrand_id|e }}/{{country_code}}">{{constant('COMMISSION MANAGEMENT')}}</a></li>
+		<li><a href="{{ base_url }}admin/delivery/delivery/{{ resturant.resturantbrand_id|e }}/{{country_code}}">{{constant('DELIVERY DRIVER MANAGEMENT')}}</a></li>
+    </ul>
+  </div>  
+ 
+										    
+										</td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+							<tr>									
+							<td class="record" colspan="7" >
+							{{ constant('NO RECORD FOUND')}} </td>								
+							</tr>							
+							{% endif %}	
+											</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+               			

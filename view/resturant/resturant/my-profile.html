@@ -1,0 +1,465 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+				{% include 'resturant/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+				<div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+               <div class="work-progres">
+							<div class="modal-content">
+			<div class="modal-header">
+			  <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+			  <h4 class="modal-title">{{constant('RESTADDRESS')}} </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<!-- Form contact -->
+										{%if(success_massage) %}
+										<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}</div>
+										
+										{% endif %}
+									<form name="resturantbrands" action="{{ base_url }}resturant/resturant/profile1" method="post">
+											<div class="row" style="padding:0px;">													
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-user prefix grey-text"></i>
+														<label for="form31"> {{ constant('NAME')}} <span class="required">*</span></label>
+													<input type="text" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('RESTURANT')}} {{ constant('NAME')}}" id="resturantbrand_name"  name="resturantbrand_name" value="{{set_data.resturantbrand_name}}" class="form-control">
+												
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>
+														<label for="form21">{{ constant('DISPLAY NAME')}} <span class="required">*</span></label>
+													<input type="text" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('DISPLAY NAME')}}" id="resturantbrand_displayname" name="resturantbrand_displayname" value="{{set_data.resturantbrand_displayname}}"  class="form-control">
+												
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-envelope prefix grey-text"></i>
+													<label for="form341">{{ constant('EMAIL')}}  <span class="required">*</span></label>
+													<input type="email" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" id="resturantbrand_email" name="resturantbrand_email" value="{{set_data.resturantbrand_email}}"  class="form-control">
+												
+												</div>									
+												<div class="col-md-6 md-form">
+													<i class="fa fa-phone prefix grey-text"></i>
+													<label for="form341">{{ constant('PHONENO')}} <span class="required">*</span> </label>
+													<input type="tel" min="0" maxlength="20" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" id="resturantbrand_phoneno" name="resturantbrand_phoneno" value="{{set_data.resturantbrand_phoneno}}"  class="form-control">
+												</div>												
+											</div>											
+											<div class="row" style="padding:0px;">
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="resturantbrand_country">{{constant('COUNTRY')}}</label>
+													<select id="resturantbrand_country" name="resturantbrand_country" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if all_countries %}
+														{% for key,country in all_countries %} 
+															{% if country.country_status == 1 %}
+																{% if set_data.resturantbrand_country == country.country_code %}
+																	<option selected value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+																{% else %}
+																	<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-compass prefix grey-text"></i>
+													<label for="resturantbrand_region">{{constant('REGION')}}</label>
+													<select id="resturantbrand_region" name="resturantbrand_region" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if related_regions %}
+														{% for key,region in related_regions %}
+																{% if set_data.resturantbrand_region == region.region_code %}
+																	<option selected value="{{ region.region_code|e}}">{{ region.region_name|e }}</option>
+																{% else %}
+																	<option value="{{ region.region_code|e}}">{{ region.region_name|e }}</option>
+																{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+											</div>
+											<div class="row" style="padding:0px;">
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-location-arrow prefix grey-text"></i>
+													<label for="resturantbrand_city">{{constant('CITY')}}</label>
+													<select id="resturantbrand_city" name="resturantbrand_city" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+														{% if related_cities %}
+															{% for key,city in related_cities %}
+																	{% if set_data.resturantbrand_city == city.city_code %}
+																		<option selected value="{{ city.city_code|e}}">{{ city.city_name|e }}</option>
+																	{% else %}
+																		<option value="{{ city.city_code|e}}">{{ city.city_name|e }}</option>
+																	{% endif %}
+															{% endfor %}
+														{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-sitemap prefix grey-text"></i>
+													<label for="resturantbrand_zone">{{constant('ZONE')}}</label>
+													<select id="resturantbrand_zone" name="resturantbrand_zone" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+														{% if related_zone %}
+															{% for key,zone in related_zone %}
+																	{% if set_data.resturantbrand_zone == zone.zone_code %}
+																		<option selected value="{{ zone.zone_code|e}}">{{ zone.zone_name|e }}</option>
+																	{% else %}
+																		<option value="{{ zone.zone_code|e}}">{{ zone.zone_name|e }}</option>
+																	{% endif %}
+															{% endfor %}
+														{% endif %}
+													</select>
+												</div>
+											</div>
+											<div class="row" style="padding:0px;">
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-road prefix grey-text"></i>
+													<label for="resturantbrand_location">{{constant('LOCATION')}}</label>
+													<select id="resturantbrand_location" name="resturantbrand_location" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+														{% if related_locations %}
+															{% for key,loc in related_locations %}
+																	{% if set_data.resturantbrand_location == loc.location_code %}
+																		<option selected value="{{ loc.location_code|e}}">{{ loc.location_name|e }}</option>
+																	{% else %}
+																		<option value="{{ loc.location_code|e}}">{{ loc.location_name|e }}</option>
+																	{% endif %}
+															{% endfor %}
+														{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form">											
+													<i class="fa fa-address-card prefix grey-text"></i><label for="resturantbrand_address">{{ constant('ADDRESS')}}</label>
+													<textarea type="text" id="resturantbrand_address" MAXLENGTH="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" name="resturantbrand_address" class="md-textarea" style="height: 30px">{{set_data.resturantbrand_address}}</textarea>
+												</div>	
+											</div>
+										
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+				</div>
+      </div>
+				<div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+<div class="copyrights">
+	 <p>© 2018 Tabqy. All Rights Reserved | Design by  <a href="#" target="_blank">Askonlinesolutions</a> </p>
+</div>	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+
+{% include 'resturant/lib/sidebar.html' %}
+<!--slide bar menu end here-->
+
+<style>
+	.logo {
+    width: auto;
+    position: relative;
+	left:0px;
+	top:10px;
+	}
+	
+</style>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='resturantbrands']").validate({
+    // Specify validation rules
+    rules: {
+      resturantbrand_name: "required",
+		resturantbrand_displayname: "required",
+		resturantbrand_email: {
+						required: true,
+						email: true
+						},
+		resturantbrand_phoneno: {
+						required: true,
+						number: true
+						}, 
+		resturantbrand_address: "required",
+		resturantbrand_country: "required",
+		resturantbrand_region: "required",
+		resturantbrand_zone: "required",
+		resturantbrand_city: "required",
+		resturantbrand_location: "required",
+	
+    },
+    // Specify validation error messages
+    messages: {
+        resturantbrand_name: "Please enter your Name.",
+		resturantbrand_displayname: "Please enter your Display Name.",
+		resturantbrand_email: {
+						required: "Please enter email address",
+						email: "Please enter a valid email address",
+						},
+		resturantbrand_phoneno: {
+						required: "Please enter your phoneno.",
+						number: "Your phoneno. must be numeric"
+						}, 
+		resturantbrand_address: "Please enter your Address.",
+		resturantbrand_country: "Please Select Country",
+		resturantbrand_region: "Please Select Region",
+		resturantbrand_zone: "Please Select Zone",
+		resturantbrand_city: "Please Select City",
+		resturantbrand_location: "Please Select Location",
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	    var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					//$('form[name="resturantbrands"]')[0].reset();
+					$('form[name="resturantbrands"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					$('.alert').delay(1000).fadeOut(100);
+                   
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+   $(document).ready(function () {
+
+            $("#user_dob").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00",
+            });
+			});
+</script>
+<script>
+$(document).ready(function(e){
+	$('#resturantbrand_country').change(function(){
+	
+			$('#resturantbrand_region').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_city').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_zone').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_location').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var cntry = $(this).val();
+			var urlData='{{ base_url }}resturant/resturant/related_regions/'+cntry;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+
+						   $.each(data.related_regions, function( key, value ) {
+
+								$('#resturantbrand_region').append('<option value="' + value.region_code + '">' + value.region_name + '</option>')
+
+						   });						
+
+					}
+
+				});
+
+		});
+		
+		$('#resturantbrand_region').change(function(){
+	
+			$('#resturantbrand_city').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_zone').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_location').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var region = $(this).val();
+			var urlData='{{ base_url }}resturant/resturant/related_cities/'+region;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+
+							$.each(data.related_cities, function( key, value ) {
+								$.each(value, function( key1, value1 ) {
+									$('#resturantbrand_city').append('<option value="' + value1.city_code + '">' + value1.city_name + '</option>');
+								});
+							});						
+
+					}
+
+				});
+
+		});
+		
+		$('#resturantbrand_city').change(function(){
+	
+			$('#resturantbrand_zone').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#resturantbrand_location').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var city = $(this).val();
+			var urlData='{{ base_url }}resturant/resturant/related_zone/'+city;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+							$.each(data.related_zone, function( key, value ) {
+									$('#resturantbrand_zone').append('<option value="' + value.zone_code + '">' + value.zone_name + '</option>');
+							});	
+							$.each(data.related_locations, function( key, value ) {
+								$.each(value, function( key1, value1 ) {
+									$('#resturantbrand_location').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+								});
+							});	
+
+					}
+
+				});
+
+		});
+		
+		$('#resturantbrand_zone').change(function(){	
+			
+			$('#resturantbrand_location').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+				var zone = $(this).val();
+				var urlData='{{ base_url }}resturant/resturant/related_locations/'+zone;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);					
+							
+							$.each(data.related_locations, function( key, value ) {
+								$.each(value, function( key1, value1 ) {
+									$('#resturantbrand_location').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+								});
+							});	
+
+					}
+
+				});
+
+		});
+
+});
+</script>
+</body>
+</html>                     

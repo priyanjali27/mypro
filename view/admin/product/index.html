@@ -1,0 +1,237 @@
+{% include 'admin/lib/header.html' %}
+<body>
+
+	<!-- Main navbar -->
+	{% include 'admin/lib/nav.html' %}
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			{% include 'admin/lib/sidebar.html' %}
+			<!-- /main sidebar -->
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content">
+
+					<div class="success_msg" style="text-align:center;" >{{ success }}</div>
+					<div class="error_msg" style="text-align:center;" >{{ error }} </div>
+					
+					<!--  Page content -->
+					
+					{% if action == 'add' %}
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Form Role </h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+
+						<div class="panel-body">
+							
+							<form class="form-horizontal" method="post" enctype="multipart/form-data" >
+								<fieldset class="content-group">
+								
+								
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Select User <span class="error_msg"  >*</span></label>
+			                        	<div class="col-lg-6">
+				                            <select name="username" class="form-control">
+												{% for user_list in user_lists %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+											<div class="error_msg" ></div>
+			                            </div>
+			                        </div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Modules</label>
+			                        	<div class="col-lg-6">Action</div>
+			                        </div>
+									
+									
+									
+									{% for controller_list in controller_lists %}
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1"> {{ controller_list.controllers_display_name }}</label>
+										<div class="col-lg-6">
+											<input type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" class=""> Add
+											<input type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}"  class=""> Edit
+											<input type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"  class=""> Delete
+										</div>
+									</div>
+									{% endfor %}
+									
+								</fieldset>
+
+								
+								<div class="text-right">
+									<a href="{{ base_url }}admin/role/" type="button" class="btn btn-warning">Back</a>
+									<button type="submit" name="Save" class="btn btn-primary" value="Submit" >Submit <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					{% elseif action == 'edit' %}
+					
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Form Role  </h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+
+						<div class="panel-body">
+							
+							<form class="form-horizontal" method="post" enctype="multipart/form-data" >
+								<fieldset class="content-group">
+								
+								
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Select User <span class="error_msg"  >*</span></label>
+			                        	<div class="col-lg-6">
+				                            <select name="username" class="form-control" readonly  >
+												{% for user_list in edit_data.user %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+											<div class="error_msg" ></div>
+			                            </div>
+			                        </div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Modules</label>
+			                        	<div class="col-lg-6">Action </div>
+			                        </div>
+									
+									
+									
+									{% for controller_list in controller_lists %}
+									{% set cid = controller_list.controllers_id %}
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">{{ controller_list.controllers_display_name }} </label>
+										<div class="col-lg-6">
+											<input type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_add"] == '1' %}checked{% endif%} > Add
+											<input type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_edit"] == '1' %}checked{% endif%} > Edit
+											<input type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_delete"] == '1' %}checked{% endif%} > Delete
+										</div>
+									</div>
+									{% endfor %}
+									
+								</fieldset>
+
+								
+								<div class="text-right">
+								<a href="{{ base_url }}admin/role/" type="button" class="btn btn-warning">Back</a>
+									<button type="submit" name="Save" class="btn btn-primary" value="Submit" >Submit <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+					{% else %}
+					
+				<!---- Data Table start ----->	
+				
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Role table  <a href="{{ base_url }}admin/role/add" class="btn btn-primary btn-icon" ><i class="icon-plus2"></i></i></a> </h5>
+							
+						</div>
+
+						
+
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Email</th>
+										<th>Username</th>
+										<th >Action <i class="icon-menu-open2"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								
+								   
+								{% if list_datas %}
+								{% for list_data in list_datas %} 
+								   <tr>
+										   
+									<td>{{ list_data.user_name }}</td>
+									<td>{{ list_data.user_email }}</td>
+								    <td>{{ list_data.user_username }}</td>
+									
+									<td>
+									
+									   <a href="{{ base_url }}admin/role/view/{{ list_data.user_id }}" class="btn border-warning text-warning-600 btn-flat btn-icon" ><i class="icon-eye"></i></i></a>
+									
+									
+										<a href="{{ base_url }}admin/role/update/{{ list_data.user_id }}" class="btn border-warning text-warning-600 btn-flat btn-icon" ><i class="icon-pen6"></i></a>
+										<a href="{{ base_url }}admin/role/delete/{{ list_data.user_id }}" class="btn border-warning text-warning-600 btn-flat btn-icon"  onclick="return confirm('are you sure want to delete');" >
+										<i class="icon-trash"></i></i>
+										</a>
+										
+									</td>
+								 </tr>
+						    {% endfor %}
+						    {% else %}									
+							<tr>									
+							<td class="record" colspan="4" >No Record Found</td>								
+							</tr>							
+							{% endif %}
+									
+									
+									
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- /basic responsive table -->
+					{% endif %}
+					
+					
+					
+					
+					
+					<!-- /// Page content -->
+					
+
+				{% include 'admin/lib/footer.html' %}
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>

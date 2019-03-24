@@ -1,0 +1,918 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'resturant/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								  {{ constant('USER LOCATION MANAGMENT')}} 
+							  <a href="#" data-toggle="modal" data-target="#myModal-resturent" class="hvr-icon-float-away add-latest-user"></a>
+								</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('USERNAME')}}</th>
+										<th>{{ constant('EMAIL')}}</th>	
+										<th>{{ constant('PHONENO')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th> 
+										</tr>
+									</thead>
+									<tbody>
+									
+										{% if results %}
+									{% for key, resturant in results %} 
+										<tr>									
+    									<td>{{ resturant.user_name|e }}</td>
+										<td>{{ resturant.user_username|e }}</td>
+										<td>{{ resturant.user_email|e }}</td>
+										<td>{{ resturant.user_phoneno|e }}</td>
+										<td class="status {{ resturant.userlocation_id|e }}">
+											{% if resturant.userlocation_status == 1 %}
+												<div class="active-button" onclick="statusFunction({{ resturant.userlocation_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" onclick="statusFunction({{ resturant.userlocation_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<td>
+	   <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li>  <a href="#" data-toggle="modal" data-target="#myModal-view1" class="view-modal1" data-rid="{{ resturant.userlocation_id|e }}" data-created="{{ resturant.userlocation_created|e }}">{{constant('VIEW')}}</a></li>
+      <li><a href="#" class="modal-edit" data-rid="{{ resturant.userlocation_id|e }}" data-id="{{ base_url }}resturant/userlocation/edit/{{ resturant.userlocation_id|e }}" data-toggle="modal" data-target="#myModal-edit">{{constant('EDIT')}}</a></li>
+      <li><a href="#" onclick="confirmDeleteModal('{{ resturant.userlocation_id|e }}')">{{constant('DELETE')}}</a></li>
+  
+    </ul>
+  </div>      
+										</td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+							<tr>									
+							<td class="record" colspan="7" >
+							{{ constant('NO RECORD FOUND')}} </td>								
+							</tr>							
+							{% endif %}	
+											</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'resturant/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  	{% include 'resturant/lib/sidebar.html' %}
+</div>
+
+
+<!--latest user add-->
+
+<!--latest resturent add-->
+<div class="modal fade" id="myModal-resturent" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title"> {{ constant('USER LOCATION MANAGMENT')}}  </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="userlocations" action="{{ base_url }}resturant/userlocation/add" method="post">
+
+																			    
+											<div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-user prefix grey-text"></i>
+													<label for="userlocation_user_id">{{constant('STAFF MEMBER')}}</label>
+													<select id="userlocation_user_id" name="userlocation_user_id" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if users %}
+														{% for key,user in users %} 
+															
+																<option value="{{ user.user_id|e}}">{{ user.user_name|e }}</option>
+															
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="userlocation_country">{{constant('COUNTRY')}}</label>
+													<select id="userlocation_country" name="userlocation_country" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if all_countries %}
+														{% for key,country in all_countries %} 
+															{% if country.country_status == 1 %}
+																<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												</div>
+													<div class="col-md-12" style="padding:0px;">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-compass prefix grey-text"></i>
+													<label for="userlocation_region">{{constant('REGION')}}</label>
+													<select id="userlocation_region" name="userlocation_region[]" multiple class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+											
+										
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-location-arrow prefix grey-text"></i>
+													<label for="userlocation_city">{{constant('CITY')}}</label>
+													<select id="userlocation_city" multiple name="userlocation_city[]" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+													</div>
+													<div class="col-md-12" style="padding:0px;">
+											
+												<div class="col-md-6 md-form">
+													<i class="fa fa-sitemap prefix grey-text"></i>
+													<label for="userlocation_zone">{{constant('ZONE')}}</label>
+													<select id="userlocation_zone" name="userlocation_zone[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+									
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-road prefix grey-text"></i>
+													<label for="userlocation_location">{{constant('LOCATION')}}</label>
+													<select id="userlocation_location" name="userlocation_location[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+												
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+	  
+	  
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title"> {{ constant('EDIT')}} {{ constant('USER LOCATION MANAGMENT')}}  </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form id="edit_dept_form" name="edit_dept_form" action="" method="post">										
+											    	<div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-user prefix grey-text"></i>
+													<label for="userlocation_user_id">{{constant('STAFF MEMBER')}}</label>
+													<select id="userlocation_user_id2" name="userlocation_user_id" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if users %}
+														{% for key,user in users %} 
+															
+																<option value="{{ user.user_id|e}}">{{ user.user_name|e }}</option>
+															
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="userlocation_country">{{constant('COUNTRY')}}</label>
+													<select id="userlocation_country2" name="userlocation_country" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if all_countries %}
+														{% for key,country in all_countries %} 
+															{% if country.country_status == 1 %}
+																<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												</div>
+													<div class="col-md-12" style="padding:0px;">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-compass prefix grey-text"></i>
+													<label for="userlocation_region">{{constant('REGION')}}</label>
+													<select id="userlocation_region2" name="userlocation_region[]" multiple class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+											
+										
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-location-arrow prefix grey-text"></i>
+													<label for="userlocation_city">{{constant('CITY')}}</label>
+													<select id="userlocation_city2" multiple name="userlocation_city[]" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+													</div>
+													<div class="col-md-12" style="padding:0px;">
+											
+												<div class="col-md-6 md-form">
+													<i class="fa fa-sitemap prefix grey-text"></i>
+													<label for="userlocation_zone">{{constant('ZONE')}}</label>
+													<select id="userlocation_zone2" name="userlocation_zone[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+									
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-road prefix grey-text"></i>
+													<label for="userlocation_location2">{{constant('LOCATION')}}</label>
+													<select id="userlocation_location2" name="userlocation_location[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+												
+											</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+	  
+	  
+	  
+	  
+	  <input type="hidden" id="dashboard" value="{{ base_url }}resturant/user/dashboard_list">
+<!--latest resturent add-->
+
+
+	  <div class="modal fade" id="myModal-view1" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{ constant('VIEW')}} {{ constant('USER LOCATION MANAGMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+                <div class="card form-white" style="box-shadow: none;">
+                        <div class="card" style="box-shadow:none">
+                                <div class="card-body">
+                                    <!-- Form contact -->                                    
+                                   <div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-user prefix grey-text"></i>
+													<label for="userlocation_user_id">{{constant('STAFF MEMBER')}}</label>
+													<select id="userlocation_user_id3" disabled="true" readonly name="userlocation_user_id" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if users %}
+														{% for key,user in users %} 
+															
+																<option value="{{ user.user_id|e}}">{{ user.user_name|e }}</option>
+															
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="userlocation_country">{{constant('COUNTRY')}}</label>
+													<select id="userlocation_country3" readonly disabled="true" name="userlocation_country" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if all_countries %}
+														{% for key,country in all_countries %} 
+															{% if country.country_status == 1 %}
+																<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												</div>
+													<div class="col-md-12" style="padding:0px;">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-compass prefix grey-text"></i>
+													<label for="userlocation_region">{{constant('REGION')}}</label>
+													<select id="userlocation_region3" readonly  disabled="true" name="userlocation_region[]" multiple class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+											
+										
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-location-arrow prefix grey-text"></i>
+													<label for="userlocation_city">{{constant('CITY')}}</label>
+													<select id="userlocation_city3" readonly disabled="true" multiple name="userlocation_city[]" class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+													</div>
+													<div class="col-md-12" style="padding:0px;">
+											
+												<div class="col-md-6 md-form">
+													<i class="fa fa-sitemap prefix grey-text"></i>
+													<label for="userlocation_zone">{{constant('ZONE')}}</label>
+													<select id="userlocation_zone3" readonly disabled="true" name="userlocation_zone[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+									
+												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-road prefix grey-text"></i>
+													<label for="userlocation_location">{{constant('LOCATION')}}</label>
+													<select id="userlocation_location3" readonly disabled="true" name="userlocation_location[]" multiple class="selectpicker form-control-select">
+														<option value="">{{constant('PLEASE SELECT')}}</option>
+													
+													</select>
+												</div>
+												
+											</div>                       
+                                    <!-- Form contact -->
+                                </div>
+                            </div>
+                    </div>
+        </div>
+
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ constant('SURE DELETE') }}</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+	<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+
+function statusFunction(id,value){
+		var urlData='{{ base_url }}resturant/userlocation/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.userlocation_status == 1){															
+							$('td.status.'+value.userlocation_id).html("<div class='active-button' onclick='statusFunction("+value.userlocation_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.userlocation_id).html("<div class='inactive-button' onclick='statusFunction("+value.userlocation_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+	
+// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='userlocations']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		
+		userlocation_country: "required",
+		userlocation_user_id:"required",
+    },
+    // Specify validation error messages
+    messages: {
+     
+		userlocation_country: "Please Select Country.",
+		userlocation_user_id:"Please select staff member.",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 var dashboard = $('#dashboard').attr('value');
+		 
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+				   if(data.error == 'true'){
+					   if(data.msg=='false'){
+					    $.each(data.error_msg, function( index, value ) { 
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');
+                       });
+					   }else{
+					   $('form[name="userlocations"]')[0].reset();
+						 $('form[name="userlocations"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(10000).fadeOut(100)){
+                          // window.location.reload();
+						   }
+					   }
+					   
+					}else{
+					$('form[name="userlocations"]')[0].reset();
+					$('form[name="userlocations"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+				    window.location.reload();
+					}
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_dept_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		
+		userlocation_country: "required",
+		userlocation_user_id:"required",
+    },
+    // Specify validation error messages
+    messages: {
+     
+		userlocation_country: "Please Select Country.",
+		userlocation_user_id:"Please select Staff Member."
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					$('form[name="edit_dept_form"]')[0].reset();
+					$('form[name="edit_dept_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+                     window.location.reload();
+					 }
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	
+	<script language="javascript">
+    $(".modal-edit,.view-modal1").click(function(e) {  
+		e.preventDefault();
+	$('#edit_dept_form').attr('action',$(this).data('id'));
+		var rest_id = $(this).data('rid');
+		
+		$('#userlocation_region2').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+	    $('#userlocation_city2').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_zone2').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_location2').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_id1').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		
+		$('#userlocation_region3').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_city3').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_zone3').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+		$('#userlocation_location3').html('<option value="">{{constant("PLEASE SELECT")}}</option>');
+
+		
+			var urlData='{{ base_url }}resturant/userlocation/edit_view/'+rest_id;
+
+			$.ajax(
+
+				{
+
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{ 
+
+						var data = $.parseJSON(data);	
+
+						$.each(data.related_regions, function( key, value ) {
+
+							$('#userlocation_region2').append('<option value="' + value.region_code + '">' + value.region_name + '</option>');$('#userlocation_region3').append('<option value="' + value.region_code + '">' + value.region_name + '</option>');							
+
+					
+								
+
+						});	
+						$.each(data.related_cities, function( key, value ) {
+							$.each(value, function( key1, value1 ) {
+							
+								$('#userlocation_city2').append('<option value="' + value1.city_code + '">' + value1.city_name + '</option>');
+                                $('#userlocation_city3').append('<option value="' + value1.city_code + '">' + value1.city_name + '</option>');
+								
+							});
+						});
+
+						$.each(data.related_zone, function( key, value ) {
+
+							$('#userlocation_zone2').append('<option value="' + value.zone_code + '">' + value.zone_name + '</option>');
+							$('#userlocation_zone3').append('<option value="' + value.zone_code + '">' + value.zone_name + '</option>');
+					
+							
+
+						});
+						
+						$.each(data.related_locations, function( key, value ) {
+							$.each(value, function( key1, value1 ) {
+							
+								$('#userlocation_location2').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+								$('#userlocation_location3').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+
+							
+							});
+						});
+
+						$.each(data.edit_view, function( key, value ) {
+							
+							
+							$('#userlocation_country2').find('option[value="'+value.userlocation_country+'"]').prop("selected", true);	
+							$('#userlocation_country3').find('option[value="'+value.userlocation_country+'"]').prop("selected", true);
+							
+							var datauserlocation_region=value.userlocation_region.split(",");	
+							$.each(datauserlocation_region, function( key1, value1 ) {
+								$('#userlocation_region2').find('option[value="'+value1+'"]').prop("selected", true);
+								$('#userlocation_region3').find('option[value="'+value1+'"]').prop("selected", true);
+								});
+							var datauserlocation_city=value.userlocation_city.split(",");	
+							
+							$.each(datauserlocation_city, function( key1, value1 ) {
+								$('#userlocation_city2').find('option[value="'+value1+'"]').prop("selected", true);	
+									$('#userlocation_city3').find('option[value="'+value1+'"]').prop("selected", true);	
+							});
+							
+							var datauserlocation_zone=value.userlocation_zone.split(",");	
+							$.each(datauserlocation_zone, function( key1, value1 ) {
+								$('#userlocation_zone2').find('option[value="'+value1+'"]').prop("selected", true);	
+								$('#userlocation_zone3').find('option[value="'+value1+'"]').prop("selected", true);									
+							});
+							var datauserlocation_location=value.userlocation_location.split(",");	
+							$.each(datauserlocation_location, function( key1, value1 ) {
+							$('#userlocation_location2').find('option[value="'+value1+'"]').prop("selected", true);
+							$('#userlocation_location3').find('option[value="'+value1+'"]').prop("selected", true);
+								});							
+							$('#userlocation_user_id2').find('option[value="'+value.userlocation_user_id+'"]').prop("selected", true);		$('#userlocation_user_id3').find('option[value="'+value.userlocation_user_id+'"]').prop("selected", true);						
+						
+							
+							
+
+						});							
+
+					}
+
+				});
+		<!-- $('#userlocation_name2').attr('value',$(this).data('name')); -->
+		<!-- $('#userlocation_displayname2').attr('value',$(this).data('displayname')); -->
+		<!-- $('#userlocation_email2').attr('value',$(this).data('email')); -->
+		<!-- $('#userlocation_countusers2').attr('value',$(this).data('users')); -->
+		<!-- $('#userlocation_countpos2').attr('value',$(this).data('pos')); -->
+		<!-- $('#userlocation_address2').text($(this).data('address')); -->
+		<!-- $('#userlocation_phoneno2').attr('value',$(this).data('phone')); -->
+			
+			var did = $(this).data('type');
+
+			$('#userlocation_type2').find('option[value="'+did+'"]').prop("selected", true);
+			
+        });
+    </script>
+	<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}resturant/userlocation/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+<script>
+$(document).ready(function(e){
+	$('#userlocation_country,#userlocation_country2').change(function(){
+	
+			$('#userlocation_region,#userlocation_region2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_city,#userlocation_city2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_zone,#userlocation_zone2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_location,#userlocation_location2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var cntry = $(this).val();
+			var urlData='{{ base_url }}resturant/userlocation/related_regions/'+cntry;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+
+						   $.each(data.related_regions, function( key, value ) {
+
+								$('#userlocation_region').append('<option value="' + value.region_code + '">' + value.region_name + '</option>');
+
+								$('#userlocation_region2').append('<option value="' + value.region_code + '">' + value.region_name + '</option>');
+
+						   });						
+
+					}
+
+				});
+
+		});
+		
+		$('#userlocation_region,#userlocation_region2').change(function(){
+	
+			$('#userlocation_city,#userlocation_city2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_zone,#userlocation_zone2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_location,#userlocation_location2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var region = $(this).val();
+			var urlData='{{ base_url }}resturant/userlocation/related_cities/'+region;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+
+							$.each(data.related_cities, function( key, value ) {
+								$.each(value, function( key1, value1 ) {
+									$('#userlocation_city').append('<option value="' + value1.city_code + '">' + value1.city_name + '</option>');
+									$('#userlocation_city2').append('<option value="' + value1.city_code + '">' + value1.city_name + '</option>');
+								});
+							});						
+
+					}
+
+				});
+
+		});
+		
+		$('#userlocation_city,#userlocation_city2').change(function(){
+	
+			$('#userlocation_zone,#userlocation_zone2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+			$('#userlocation_location,#userlocation_location2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+			var city = $(this).val();
+			var urlData='{{ base_url }}resturant/userlocation/related_zone/'+city;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);						
+							$.each(data.related_zone, function( key, value ) {
+									$('#userlocation_zone').append('<option value="' + value.zone_code + '">' + value.zone_name + '</option>');
+									$('#userlocation_zone2').append('<option value="' + value.zone_code + '">' + value.zone_name + '</option>');
+							});	
+							
+
+					}
+
+				});
+
+		});
+		
+				$('#userlocation_zone,#userlocation_zone2').change(function(){	
+				
+			$('#userlocation_location,#userlocation_location2').html('<option value="">{{ constant("PLEASE SELECT")}}</option>');
+
+				var zone = $(this).val();
+				var urlData='{{ base_url }}resturant/userlocation/related_locations/'+zone;
+
+			$.ajax(
+
+				{
+					url : urlData,
+
+					type: "POST",
+
+					crossDomain: true,
+
+					success:function(data) 
+
+					{
+						var data = $.parseJSON(data);					
+							
+							$.each(data.related_locations, function( key, value ) {
+								$.each(value, function( key1, value1 ) {
+									$('#userlocation_location').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+									$('#userlocation_location2').append('<option value="' + value1.location_code + '">' + value1.location_name + '</option>');
+								});
+							});	
+
+					}
+
+				});
+
+		});
+		
+
+});
+</script>
+</body>
+</html>                     

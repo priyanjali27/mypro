@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Tabqy : Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="#" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<link href="{{base_url}}assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+<!-- Custom Theme files -->
+<link href="{{base_url}}assets/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!--js-->
+<script src="{{base_url}}assets/js/jquery-2.1.1.min.js"></script> 
+<!--icons-css-->
+<link href="{{base_url}}assets/css/font-awesome.css" rel="stylesheet"> 
+<!--Google Fonts-->
+<!--link href='//fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>-->
+<!--static chart-->
+</head>
+<body class="login-bg">	
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-4 col-sm-4 col-xs-12"></div>
+<div class="col-md-4 col-sm-4 col-xs-12 login-page">
+<div class="">
+
+		<div class="login-head">
+			<h1><img src="{{base_url}}assets/images/logo.png" alt="" class="img-responsive"></h1>
+			</div>
+    <div class="login-main">  	
+			<div class="login-block">
+					{% if error_message %} 
+             <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>
+               {{error_message}} </div>
+			   {% endif %}
+			  
+				<form action="{{base_url}}admin/admin_login/index" method="post">
+					<div class="form-group">
+					<input type="text" class=" form-control" name="user_username" value="{{cookie.admin_login}}" placeholder="Username" >
+					 <span class="text-danger">{{error_msg.user_username}}</span>
+					</div>
+					<div class="form-group">
+					<input type="password"  name="user_password" value="{{cookie.admin_password}}"  class="lock form-control" placeholder="Password">
+					 <span class="text-danger">{{error_msg.user_password}}</span>
+				</div>
+				<div class="form-group">
+					<div class="forgot-top-grids">
+						<div class="forgot-grid">
+							<ul>
+								<li>
+									<input type="checkbox" name="admin_remember" value="admin_remember" id="brand1"  {% if cookie.admin_remember == "admin_remember" %} checked {% endif %}   >
+									<label for="brand1"><span></span>Remember me</label>
+								</li>
+							</ul>
+						</div>
+						<div class="forgot">
+							<a href="{{base_url}}admin/forgot/">Forgot password?</a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+					<input type="submit" name="Sign In" value="Login">	
+				</form>
+			</div>
+      </div>
+</div>
+<div class="col-md-4 col-sm-4 col-xs-12"></div>
+
+</div>
+</div>
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	
+<!--COPY rights end here-->
+
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<!-- mother grid end here-->
+
+<style type="text/css">	input[type=date], input[type=datetime-local], input[type=email], input[type=number], input[type=password], input[type=search-md], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], textarea.md-textarea{    border-bottom: 1px solid #fff;	    height: 2em;}.login-block input[type="text"], .login-block input[type="password"], input[type=email]{	    font-size: 0.9em;     padding:10px 0px; height: 2em;   width: 100%;    color: #ffffff;     outline: none;	border:none;    border-bottom: 2px solid #ffffff !important;    border-radius: 0px;    -ms-border-radius: 5px;    -moz-border-radius: 5px;    -o-border-radius: 5px;     background:none;    color: #ffffff;    margin-bottom: 20px;	}::-webkit-input-placeholder { /* Chrome/Opera/Safari */  color: #fff !important;}::-moz-placeholder { /* Firefox 19+ */  color: #fff !important;}:-ms-input-placeholder { /* IE 10+ */   color: #fff !important;}:-moz-placeholder { /* Firefox 18- */  color: #fff !important;}</style>
+</body>
+</html>
+
+
+                      
+						

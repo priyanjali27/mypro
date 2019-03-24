@@ -1,0 +1,144 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+    {% include 'admin/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+              <div class="work-progres">
+                            <div class="chit-chat-heading">
+							<h3>{{ constant('ROLE')}}</h3>
+							</div>
+				
+           			
+							<form class="form-horizontal" method="post" id="add_role_form" name="add_role_form" enctype="multipart/form-data" >
+								<fieldset class="content-group">
+								
+								
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">{{ constant('SELECT USER')}}<span class="error_msg"  >*</span></label>
+			                        	<div class="col-lg-6">
+				                            <select name="username" class="form-control" readonly  >
+												{% for user_list in edit_data.user %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+											<div class="error_msg" ></div>
+			                            </div>
+			                        </div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">{{ constant('MODULES')}}</label>
+			                        	<div class="col-lg-6">{{ constant('ACTION')}} </div>
+			                        </div>
+									
+									
+									
+									{% for controller_list in controller_lists %}
+									{% set cid = controller_list.controllers_id %}
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">{{ controller_list.controllers_display_name }} </label>
+										<div class="col-lg-6">
+											<input type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_add"] == '1' %}checked{% endif%} > {{ constant('ADD')}}
+											<input type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_edit"] == '1' %}checked{% endif%} > {{ constant('EDIT')}}
+											<input type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_delete"] == '1' %}checked{% endif%} > {{ constant('DELETE')}}
+											
+												<input type="checkbox" name="view[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_view"] == '1' %}checked{% endif%} > {{ constant('VIEW')}}
+										</div>
+									</div>
+									{% endfor %}
+									
+								</fieldset>
+
+								
+								<div class="text-right">
+								<a href="{{ base_url }}admin/role/" type="button" class="btn btn-warning">{{ constant('BACK')}}</a>
+									<button type="submit" name="Save" class="btn btn-primary" value="Submit" >{{ constant('SUBMIT')}} <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+							</form>
+							
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  {% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add Role -->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='add_role_form']").validate({
+    // Specify validation rules
+    rules: {
+      
+		user_username: "required"
+		
+    },
+    // Specify validation error messages
+    messages: {
+        user_username: "Please enter your Name."
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	 form.submit();
+    }
+  });
+});
+</script>
+</body>
+</html>                     

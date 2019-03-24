@@ -1,0 +1,385 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								{{ constant('FAQ')}} {{ constant('CATEGORY')}}
+								  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('CATEGORY')}} {{ constant('NAME')}}</th>
+										<th>{{ constant('CREATED')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody id="depart_details">
+										{% if results %}
+									{% for key, cat in results %} 
+										<tr>									
+    									<td>{{ cat.cat_name|e }}</td>										
+    									<td>{{ cat.cat_created|e }}</td>										
+										<td>
+										{% if cat.cat_status == 1 %}
+										   <div class="active-button">Active</div>
+									     {% else %}
+										   <div class="inactive-button">Inactive</div>
+									    {% endif %}
+										</td>
+										<td>
+										<div class="market-update-right">
+                                            <span><a href="#"  data-toggle="modal" data-id="{{ base_url }}admin/faq_category/edit/{{ cat.cat_id|e }}" data-name="{{ cat.cat_name|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ cat.cat_id|e }}')"><i class="fa fa-trash"></i></a></span>
+                                        </div>
+										</td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+										<tr>									
+										<td class="record" colspan="4" >
+										{{ constant('NO RECORD FOUND')}} </td>								
+										</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+				{{ links|raw  }}
+                <div class="total-records">
+                    <div>
+						{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+						{% else %}							
+							{{ constant('RECORD')}}
+						{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add department add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('ADD')}} {{ constant('FAQ')}} {{ constant('CATEGORY')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}admin/faq_category/add" method="POST" name="faq_cat_form">
+											
+											<div class="col-md-12 md-form">
+												<label for="cat_name">{{constant('CATEGORY')}} {{constant('NAME')}}</label>
+												<input type="text" id="cat_name" name="cat_name" class="form-control">
+												
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add department add-->
+
+<!--edit department add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{ constant('FAQ')}} {{ constant('CATEGORY')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="" id="edit_faqcat_form" name="edit_faqcat_form" method="POST">
+											
+											<div class="col-md-12 md-form">
+												<label for="cat_name">{{constant('CATEGORY')}} {{constant('NAME')}}</label>
+												<input type="text" id="cat_name1" name="cat_name" class="form-control">
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit department add-->
+   <!----modal starts here--->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='faq_cat_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		cat_name: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      cat_name: "Please Enter Category Name",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="faq_cat_form"]')[0].reset();
+					$('form[name="faq_cat_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+            $('#cat_name1').attr('value',$(this).data('name'));
+			$('#edit_faqcat_form').attr('action',$(this).data('id'));
+			
+        });
+    </script>
+
+	<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_faqcat_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		cat_name: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      cat_name: "Please Enter Category Name",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="edit_faqcat_form"]')[0].reset();
+					$('form[name="edit_faqcat_form	"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/faq_category/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

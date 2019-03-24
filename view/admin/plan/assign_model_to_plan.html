@@ -1,0 +1,146 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12">
+               <div class="work-progres">
+                            <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+								{{constant('PLAN HEADING')}}
+								  <!-- <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a> -->
+							</div>
+             </div>
+      </div>	  
+  </div>	  	  
+   <div class="clearfix"> 
+   </div>	  	  	 	
+     <div class="chit-chat-layer1 modal-spacee">
+     			
+     	   <div class="clearfix"> 
+     	   </div>	
+
+     	   <div class="col-md-12 col-sm-12 col-lg-12">
+     	   	<div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">			
+     	   	<div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">					
+     	   		<div class="table-responsive">						
+					<table class="table">
+						<form action="{{ base_url }}admin/planmodel/assign_model/{{plan_id}}" method="POST" name="plan_form" enctype="multipart/form-data">
+							<div class="col-md-3 md-form" style="padding:0px;">
+								<input type="hidden" value="{{plan_id}}" name="plan"/>
+								    {{error}}
+								<label for="value_type">{{ constant('MODEL')}}&nbsp;{{ constant('NAME')}}<span class="required">*</span></label>
+								<select id="name" name="plan" class="selectpicker form-control-select" disabled>					
+									{% if all_plans %}
+									   {% for key,plan in all_plans %} 
+											{% if plan_id == plan.plan_id %}
+												<option value="{{ plan.plan_id|e}}" selected>{{ plan.plan_name|e }}</option>
+											{% else %}
+												<option value="{{ plan.plan_id|e}}">{{ plan.plan_name|e }}</option>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								</select>
+							</div>
+							<thead class="thead-inverse table-head-bg">
+								<tr>
+								<th>{{ constant('NAME')}}</th>
+								<th>{{ constant('ACTION')}}</th>
+								<th>{{ constant('QUANTITY')}}</th>	
+								</tr>
+							</thead>
+							<tbody>
+								{% if model %}
+									{% for key,plan in model %} 
+									<tr>
+									  <td>
+										{{ plan.plan_model_name|e }}
+										 <input type="hidden" class="form-control" id="model_name" name="model_name[]" value="{{ plan.plan_model_id|e }}" dir="auto">
+									  </td>
+									  <td>
+										<div class="onoffswitch">		
+																
+											<input type="checkbox" name="plan_model[]" class="onoffswitch-checkbox" id="myonoffswitch{{ plan.plan_model_id|e }}" value="{{ plan.plan_model_id|e }}" {% if plan.plan_model_id in planmodelID %}checked{% endif %}  >	
+											<label class="onoffswitch-label" for="myonoffswitch{{ plan.plan_model_id|e }}" >	<span class="onoffswitch-inner"></span>	 <span class="onoffswitch-switch"></span>			
+											</label>										
+										</div>	
+									 </td>
+									 <td>
+									 {% if plan.plan_model_type == 0%}
+										<input type="text" id="quantity" name="quantity[{{ plan.plan_model_id|e }}]" class="form-control" placeholder="Quantity" value="{{plan.pmq|e}}"  style="width: 80px;border: 1px solid #7777; text-align:center;">
+										<input type="hidden" class="form-control" id="quantity" name="quantity[]" value="{{ plan.plan_model_id|e }}" dir="auto">
+									 </td>
+									</tr>
+									{% endif %}
+									 {% endfor %}
+								 {% else %}	
+								 
+								  <tr>
+									<td class="record" colspan="4" >
+										{{ constant('NO RECORD FOUND')}} 
+									</td>								
+								 </tr>	
+								 {% endif %}
+										
+						  </tbody>
+
+                        </table>					
+     	   </div>					
+			<div class="col-md-12" style="padding:0px;">              
+				<button class="btn btn-success" value="Submit" name="update">{{constant('UPDATE')}}</button>				
+     	   	</div>					
+     	   	</div>				
+     	   		</div>		
+     	      </div>            
+          </div>		
+		  <div class="clearfix"> </div>
+<!--main page chit chating end here-->
+
+</div>
+
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+</body>
+</html>                     

@@ -1,0 +1,226 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+				{% include 'resturant/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+				<div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+               <div class="work-progres">
+							<div class="modal-content">
+			<div class="modal-header">
+			  <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+			  <h4 class="modal-title">{{constant('RESTADDRESS')}} </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<!-- Form contact -->
+										{%if(success_massage) %}
+										<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}</div>
+										
+										{% endif %}
+									<form name="resturantbrands" action="{{ base_url }}resturant/resturant/profile1" method="post">
+											<div class="row">													
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>
+														<label for="form31"> {{ constant('NAME')}} <span class="required">*</span></label>
+													<input type="text" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('RESTURANT')}} {{ constant('NAME')}}" id="resturantbrand_name"  name="resturantbrand_name" value="{{set_data.resturantbrand_name}}" class="form-control">
+												
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>
+														<label for="form21">{{ constant('DISPLAY NAME')}} <span class="required">*</span></label>
+													<input type="text" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('DISPLAY NAME')}}" id="resturantbrand_displayname" name="resturantbrand_displayname" value="{{set_data.resturantbrand_displayname}}"  class="form-control">
+												
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-envelope prefix grey-text"></i>
+													<label for="form341">{{ constant('EMAIL')}}  <span class="required">*</span></label>
+													<input type="email" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" id="resturantbrand_email" name="resturantbrand_email" value="{{set_data.resturantbrand_email}}"  class="form-control">
+												
+												</div>									
+												<div class="col-md-6 md-form">
+													<i class="fa fa-phone prefix grey-text"></i>
+													<label for="form341">{{ constant('PHONENO')}} <span class="required">*</span> </label>
+													<input type="tel" min="0" maxlength="20" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" id="resturantbrand_phoneno" name="resturantbrand_phoneno" value="{{set_data.resturantbrand_phoneno}}"  class="form-control">
+												</div>												
+											</div>
+											<div class="row">	
+												<div class="col-md-12 md-form">
+													<i class="fa fa-address-card prefix grey-text"></i>
+													<label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+													<textarea type="text" maxlength="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" id="resturantbrand_address" name="resturantbrand_address" class="md-textarea" style="height: 30px">{{set_data.resturantbrand_address}}</textarea>
+												</div>
+											</div>
+										
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+				</div>
+      </div>
+				<div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+<div class="copyrights">
+	 <p>© 2018 Tabqy. All Rights Reserved | Design by  <a href="#" target="_blank">Askonlinesolutions</a> </p>
+</div>	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+
+{% include 'resturant/lib/sidebar.html' %}
+<!--slide bar menu end here-->
+
+<style>
+	.logo {
+    width: auto;
+    position: relative;
+	left:0px;
+	top:10px;
+	}
+	
+</style>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='resturantbrands']").validate({
+    // Specify validation rules
+    rules: {
+      resturantbrand_name: "required",
+		resturantbrand_displayname: "required",
+		resturantbrand_email: {
+						required: true,
+						email: true
+						},
+		resturantbrand_phoneno: {
+						required: true,
+						number: true
+						}, 
+		resturantbrand_address: "required"
+	
+    },
+    // Specify validation error messages
+    messages: {
+        resturantbrand_name: "Please enter your Name.",
+		resturantbrand_displayname: "Please enter your Display Name.",
+		resturantbrand_email: {
+						required: "Please enter email address",
+						email: "Please enter a valid email address",
+						},
+		resturantbrand_phoneno: {
+						required: "Please enter your phoneno.",
+						number: "Your phoneno. must be numeric"
+						}, 
+		resturantbrand_address: "Please enter your Address."
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	    var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					$('form[name="resturantbrands"]')[0].reset();
+					$('form[name="resturantbrands"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					$('.alert').delay(10000).fadeOut(100);
+                   
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+   $(document).ready(function () {
+
+            $("#user_dob").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00"
+            });
+			});
+</script>
+</body>
+</html>                     

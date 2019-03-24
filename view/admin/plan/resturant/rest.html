@@ -1,0 +1,533 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+	{% include 'admin/lib/nav.html' %}
+	
+	<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+	<div class="col-md-9 col-sm-9 col-xs-12 col-lg-9">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								  Staff 
+							  <a href="#" class="hvr-icon-float-away add-latest-user"></a>
+								</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th>Image</th>
+										<th>Staff Name</th>
+										<th>Staff Roll</th>
+										<th>Current Location </th>
+										<th>Email Address</th>
+										<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>									
+    									<td><img src="http://askonlinetraning.com/tabqy1/assets/images/logo.png" class="img-staff" alt="img"></td>
+										<td>Saleem</td>
+										<td>Walter</td>
+										<td>All Location</td>
+										<td>abc@gmail.com</td>
+										<td><div class="market-update-right">
+										      <span><a href="#"  class="view-modal1"><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#" class="modal-edit" data-toggle="modal" data-target="#myModal-edit-staff"k><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#"><i class="fa fa-trash"></i></a></span></div></td>
+										</tr>
+										<tr>									
+    									<td><img src="http://askonlinetraning.com/tabqy1/assets/images/logo.png" class="img-staff" alt="img"></td>
+										<td>Saleem</td>
+										<td>Walter</td>
+										<td>All Location</td>
+										<td>abc@gmail.com</td>
+										<td><div class="market-update-right">
+										      <span><a href="#"  class="view-modal1"><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#" class="modal-edit" data-toggle="modal" data-target="#myModal-edit-staff"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#"><i class="fa fa-trash"></i></a></span></div></td>
+										</tr>
+										<tr>									
+    									<td><img src="http://askonlinetraning.com/tabqy1/assets/images/logo.png" class="img-staff" alt="img"></td>
+										<td>Saleem</td> 
+										<td>Walter</td>
+										<td>All Location</td>
+										<td>abc@gmail.com</td>
+										<td><div class="market-update-right">
+										      <span><a href="#"  class="view-modal1"><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#" data-toggle="modal" data-target="#myModal-edit-staff" class="modal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#"><i class="fa fa-trash"></i></a></span></div></td>
+										</tr>
+											</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               
+                <div class="total-records">
+                    <div>sdds</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+             </div>
+			 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="col-md-12 work-progres" style="MARGIN-TOP: 20PX;">
+				
+					<div class="col-md-12 add-staff"><a  data-toggle="modal" data-target="#myModal-staff"><span><i class="fa fa-user"></i></span>Add New Staff</a></div>
+					
+					<div class="col-md-12" style="padding:0px;">
+						<div class="staff-filter"> 
+						<div class="staff-h">Staff Filter</div>
+								<ul>
+									
+									<li class="active"><a href="#" class="color-w">All</a></li>
+									<li><a href="#" class="color-w">Admin</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+									<li><a href="#" class="color-w">Call Agent</a></li>
+								</ul>
+							</div>	
+							
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 new-role">
+				
+						<div class=""><button type="button" data-toggle="modal" data-target="#myModal-edit-role" class="btn btn-success edit-role">Edit Role</button></div>
+						
+								<a href="" data-toggle="modal" data-target="#myModal-role"><span><i class="fa fa-plus"></i></span>Add New Role</a>
+							</div>
+			 </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here--> 
+</div>
+<!-- add staff-->
+<div class="modal fade" id="myModal-staff" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add staff</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" style="padding:0px;">	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="form31">Staff Name</label>
+												<input type="text" name="user_name" class="form-control">
+												
+											</div>			
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i><label for="form21">Staff Roll </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-map-marker prefix grey-text"></i><label for="form21">Current Location </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-envelope prefix grey-text"></i><label for="form21">Email Address </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>
+										<div class="col-md-12 col-xs-12 md-form">
+												<div class="p-y-1">
+  <div class="m-b-1">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary btn-block" style="background-color:#9f0660;" onclick="document.getElementById('inputFile').click()">Add Image</button>
+      <div class="form-group inputDnD">
+        <label class="sr-only" for="inputFile">File Upload</label>
+        <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file">
+      </div>
+    </div>
+  </div>
+  </div>
+												
+											</div>											
+											</div>
+											
+        </div>
+        <div class="modal-footer" style="border:none;">
+         <div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">Submit</button>
+												<button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cancel</button>
+											</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- add staff-->
+
+<!-- add role-->
+<div class="modal fade" id="myModal-role" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Role</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" style="padding:0px;">	
+											<div class="col-md-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="form31">Name</label>
+												<input type="text"  name="user_name" class="form-control">
+												
+											</div>
+																						
+											</div>
+											
+        </div>
+        <div class="modal-footer" style="border:none;">
+          <div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">Submit</button>
+												<button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cancel</button>
+											</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- add  role-->
+
+
+
+<!-- edit staff-->
+<div class="modal fade" id="myModal-edit-staff" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit staff</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" style="padding:0px;">	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="form31">Staff Name</label>
+												<input type="text" name="user_name" class="form-control">
+												
+											</div>			
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i><label for="form21">Staff Roll </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-map-marker prefix grey-text"></i><label for="form21">Current Location </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>	
+											<div class="col-md-6 col-xs-12 md-form">
+												<i class="fa fa-envelope prefix grey-text"></i><label for="form21">Email Address </label>
+												<input type="text"  name="user_username" class="form-control">
+												
+											</div>
+										<div class="col-md-12 col-xs-12 md-form">
+												<div class="p-y-1">
+  <div class="m-b-1">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary btn-block" style="background-color:#9f0660;" onclick="document.getElementById('inputFile').click()">Add Image</button>
+      <div class="form-group inputDnD">
+        <label class="sr-only" for="inputFile">File Upload</label>
+        <input type="file" class="form-control-file text-primary font-weight-bold" id="inputFile" accept="image/*" onchange="readUrl(this)" data-title="Drag and drop a file">
+      </div>
+    </div>
+  </div>
+  </div>
+												
+											</div>											
+											</div>
+											
+        </div>
+        <div class="modal-footer" style="border:none;">
+         <div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">Submit</button>
+												<button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cancel</button>
+											</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- edit staff-->
+
+<!-- edit role-->
+<div class="modal fade" id="myModal-edit-role" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Role</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12" style="padding:0px;">	
+											<div class="col-md-6 col-xs-12 md-form" style="padding:0px;">
+												<select name="customer_gender" class="selectpicker form-control-select valid" style="margin-bottom:0px;">
+													<option value="">Role Name </option>
+													<option value="">Male</option>
+													<option value="">Female</option>
+													<option value="">Transgender</option>
+												</select>
+											</div> 	
+											
+											<div class="col-md-6 col-xs-12 md-form" style="padding:0px;">
+												<select name="customer_gender" class="selectpicker form-control-select valid" style="margin-bottom:0px;">
+													<option value="">Defult Page </option>
+													<option value="">Male</option>
+													<option value="">Female</option>
+													<option value="">Transgender</option>
+												</select>
+											</div> 
+											
+											<div class="col-md-12 col-xs-12 md-form">
+												
+												<div style="text-align:center">
+													<div class="md-checkbox md-checkbox-inline">
+													  <input  type="checkbox">
+													  <label for="i10">Inline & Centered</label>
+													</div>
+													<div class="md-checkbox md-checkbox-inline">
+													  <input  type="checkbox">
+													  <label for="i10">Inline & Centered</label>
+													</div>
+													<div class="md-checkbox md-checkbox-inline">
+													  <input  type="checkbox">
+													  <label for="i10">Inline & Centered</label>
+													</div>
+												  </div>  
+												
+											</div>
+											<div class="col-md-12 col-xs-12">
+												<div class="col-sm-6 col-xs-12">
+												<div class="check-heading">Heading</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												
+												</div>
+												<div class="col-sm-6 col-xs-12">
+												<div class="check-heading">Heading</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												<div class="col-md-12 col-sm-12" style="padding:0px;">
+														<div class="col-sm-5 col-md-5 col-xs-12">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Modal</label>
+															</div>
+														</div>
+														<div class="col-sm-7 col-md-7 col-xs-12">
+														<div style="text-align:left">
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Edit</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">Add</label>
+															</div>
+															<div class="md-checkbox md-checkbox-inline">
+															  <input  type="checkbox">
+															  <label for="i10" style="padding-left:0px;">View</label>
+															</div>
+														</div>
+														</div>
+												</div>
+												
+												</div>
+											</div>
+											
+											
+																				
+											</div>
+											
+        </div>
+        <div class="modal-footer" style="border:none;">
+         <div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">Submit</button>
+												<button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cancel</button>
+											</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- edit role-->
+
+	<script>
+		function readUrl(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var imgData = e.target.result;
+      var imgName = input.files[0].name;
+      input.setAttribute("data-title", imgName);
+      console.log(e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+	</script>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  	{% include 'admin/lib/sidebar.html' %}
+</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

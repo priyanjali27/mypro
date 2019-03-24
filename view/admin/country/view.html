@@ -1,0 +1,565 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								{{constant('MANAGE')}} {{ constant('COUNTRY')}}
+								  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('COUNTRY')}}</th>										
+										<th>{{ constant('COUNTRY')}} {{ constant('CODE')}}</th>										
+										<th>{{ constant('CURRENCY')}} {{ constant('CODE')}}</th>										
+										<th>{{ constant('PHONE')}} {{ constant('CODE')}}</th>
+										<th>{{ constant('CREATED')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody>	
+										{% if results %}
+											{% for key,country in results %} 
+												<tr>									
+												<td>{{ country.country_name|e }}</td>												
+												<td>{{ country.country_code|e }}</td>												
+												<td>{{ country.country_currency_code|e }}</td>												
+												<td>{{ country.country_phone_code|e }}</td>
+												<td>{{ country.country_created|e }}</td>												
+												<td class="status {{ country.country_id|e }}">
+												{% if country.country_status == 1 %}
+												   <div class="active-button" id="{{ country.country_id|e }}" onclick="statusFunction({{ country.country_id|e }},0)">Active</div>
+												 {% else %}
+												   <div class="inactive-button" id="{{ country.country_id|e }}" onclick="statusFunction({{ country.country_id|e }},1)">Inactive</div>
+												{% endif %}
+												</td>
+												<td>
+												<div class="market-update-right">
+													<span>
+										{% for languages in language %}
+                                                        <a href="#" class="modal-edit text-rest-icon" data-rid="{{ country.country_id }}" data-id="{{ base_url }}admin/country/edit/{{ country.country_id|e }}" data-language_code="{{ languages.language_code }}" data-toggle="modal" data-target="#myModal-edit" style='{% if languages.language_code == session.lang_code %}color:green;{% else %}color:red{% endif %}'>{{ languages.language_code }}</a> 
+														{% endfor %} &nbsp;
+													<!--<a href="#"  data-toggle="modal" data-id="{{ base_url }}admin/country/edit/{{ country.country_id|e }}" data-cid="{{ country.country_id|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit"></i></a></span>-->
+													<span><a href="#" onclick="confirmDeleteModal('{{ country.country_id|e }}')"><i class="fa fa-trash"></i></a></span>
+												</div>
+												</td>
+												</tr>
+											{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add country-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{constant('ADD')}} {{constant('COUNTRY')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form action="{{ base_url }}admin/country/add" method="POST" name="country_form" enctype="multipart/form-data">								
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-globe prefix grey-text"></i>
+									<label for="country_name">{{constant('COUNTRY')}} {{constant('NAME')}}</label>
+									<input type="text" placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('NAME')}}" id="country_name" name="country_name" class="form-control">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-code prefix grey-text"></i>
+									<label for="country_code">{{constant('COUNTRY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" style="text-transform:uppercase" placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('CODE')}}" id="country_code" name="country_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-phone prefix grey-text"></i>
+									<label for="country_phone_code">{{constant('PHONE')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" placeholder="{{constant('ENTER')}} {{constant('PHONE')}} {{constant('CODE')}}" id="country_phone_code" name="country_phone_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-gg prefix grey-text"></i>
+									<label for="country_currency_code">{{constant('CURRENCY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="10" placeholder="{{constant('ENTER')}} {{constant('CURRENCY')}} {{constant('CODE')}}" id="country_currency_code" name="country_currency_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-file prefix grey-text"></i>													
+									<input type="file" id="country_file" name="country_file" class="">
+								</div>
+
+								<div class="col-md-6 md-form" style="padding:0px;">
+                      <label for="language">Language</label>
+									{% if language %}
+									{% for key,lan in language %} 
+									{{ lan.language_code|e }}
+								<input type="checkbox" name="country_language_assign[]" id="country_language_assign" class="country_language_assign" value="{{ lan.language_code|e }}"> 
+									{% endfor %}
+								{% else %}	
+								{% endif %}	
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+									<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+<!--Add country-->
+
+<!--edit country-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{constant('EDIT')}} {{constant('COUNTRY')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form action="" id="edit_country_form" name="edit_country_form" method="POST" enctype="multipart/form-data">	
+											<input type="hidden" name="language_code" value="" class="edit_language_code">	
+<input type="hidden" name="country_id" value="" class="country_id">																		
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-globe prefix grey-text"></i>
+									<label for="country_name">{{constant('COUNTRY')}} {{constant('NAME')}}</label>
+									<input type="text" id="country_name1" name="country_name" class="form-control" placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('NAME')}}">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-code prefix grey-text"></i>
+									<label for="form31">{{constant('COUNTRY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" readonly placeholder="{{constant('ENTER')}} {{constant('COUNTRY')}} {{constant('CODE')}}" id="country_code1" name="country_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form" style="padding:0px;">	
+									<i class="fa fa-phone prefix grey-text"></i>
+									<label for="form31">{{constant('PHONE')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="4" placeholder="{{constant('ENTER')}} {{constant('PHONE')}} {{constant('CODE')}}" id="country_phone_code1" name="country_phone_code" class="form-control">
+								</div>
+								<div class="col-md-6 md-form">
+									<i class="fa fa-gg prefix grey-text"></i>
+									<label for="form31">{{constant('CURRENCY')}} {{constant('CODE')}}</label>
+									<input type="text" maxlength="10" placeholder="{{constant('ENTER')}} {{constant('CURRENCY')}} {{constant('CODE')}} " id="country_currency_code1" name="country_currency_code" class="form-control">
+								</div>	
+								<div class="col-md-6 md-form" style="padding:0px;">
+									<i class="fa fa-file prefix grey-text"></i>											
+									<input type="file" id="country_file2" name="country_file" class="">											
+								</div>
+								<div class="col-md-6 md-form" style="padding:0px;">
+								<label for="language">Language</label>
+								{% if language %}
+									{% for key,lan in language %} 
+									{{ lan.language_code|e }}
+								<input type="checkbox" name="country_language_assign[]" class="country_language_assign1" id="country_language_assign_{{ lan.language_code|e }}" value="{{ lan.language_code|e }}">
+								{% endfor %}
+								{% else %}	
+								{% endif %}	
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+									<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+
+<!--edit country-->
+<!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+		<div class="delete_massage"></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">{{constant('DELETE')}} </h4>
+                </div>
+            <div class="delete_message"></div>
+            <div class="modal-body">
+                <p>{{constant('SURE DELETE')}}</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+<script>
+var toggle = true;            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+function statusFunction(id,value){
+		var urlData='{{ base_url }}admin/country/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.country_status == 1){															
+							$('td.status.'+value.country_id).html("<div id="+value.country_id+" class='active-button' onclick='statusFunction("+value.country_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.country_id).html("<div id="+value.country_id+" class='inactive-button' onclick='statusFunction("+value.country_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='country_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		country_name: "required",
+		country_code: "required",
+		country_phone_code: "required",
+		country_currency_code: "required",
+		country_file: "required",
+        "country_language_assign[]" :"required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+		country_name: "Please Enter Country Name",
+		country_code: "Please Enter Country Code",
+		country_phone_code: "Please Enter Phone Code",
+		country_currency_code: "Please Enter Currency Code",
+		country_file: "Please Upload country flag.",
+		"country_language_assign[]":"Please select Language",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	var checkedVals = $('.country_language_assign:checkbox:checked').map(function() {
+    return this.value;
+}).get();
+var country_language_assign=checkedVals.join(",");
+
+		  var urlData = $(form).attr('action');
+		  var input = document.getElementById("country_file");
+          file = input.files[0];
+		  if(file != undefined){
+			formData= new FormData();
+			if(!!file.type.match(/image.*/)){
+				formData.append('country_name', $('#country_name').val());
+				formData.append('country_code', $('#country_code').val());
+				formData.append('country_phone_code', $('#country_phone_code').val());
+				formData.append('country_currency_code', $('#country_currency_code').val());
+				formData.append("image", file);
+				formData.append('country_language_assign', country_language_assign);
+				
+			$.ajax(
+					{
+						url : urlData,
+						type: "POST",
+						crossDomain: true,
+						data : formData,
+						processData: false,
+						contentType: false,
+						success:function(data) 
+						{
+						  var data = $.parseJSON(data);
+							if(data.error == 'true'){
+							   $.each(data.error_msg, function( index, value ) {
+								$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+							   });
+							}else if (data.error == 'permission') {
+                                                            $('.alert').delay(500).fadeOut(100);
+                                                            $('form[name="country_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>'); 
+							}else{
+							$('form[name="country_form"]')[0].reset();
+							$('form[name="country_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+							if($('.alert').delay(5000).fadeOut(100)){
+                                                            window.location.reload();
+							}
+							
+							}
+						}
+					});
+				}
+			}
+		}
+  });
+});
+
+
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+            $('.data_images').remove();
+			$(".country_language_assign1").prop("checked", false);
+			$('#edit_country_form').attr('action',$(this).data('id'));
+			var cid = $(this).data('rid');	
+			var lang_code = $(this).data('language_code');	
+			$('.edit_language_code').val(lang_code);
+			var urlData = "{{ base_url }}admin/country/edit_view/"+cid+"/"+lang_code;
+		
+			$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				success:function(data) 
+				{		  			
+				  var data = $.parseJSON(data);					  
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index+'1').after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');
+						$('#'+index+'2').after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');
+                       });
+					   
+					}else{
+						$.each(data.edit_view, function( index, value ) {
+						$('#country_name1').val(value.country_language_country_name);
+						$('#country_code1').val(value.country_code);
+						$('#country_phone_code1').val(value.country_phone_code);
+						$('#country_currency_code1').val(value.country_currency_code);
+						$('#country_file2').after('<img class="data_images" width="100" src="{{base_url}}upload/flagimages/'+value.country_file+'"><span class="data_images">'+value.country_file+'</span>');
+						$('#country_language_assign').val(value.country_language_assign);
+						var str=value.country_language_assign;
+						var res = str.split(",");
+						 for(i=0; i < res.length; i++){
+						var checkedVals = $('.country_language_assign1:checkbox').map(function() {
+							 if(res[i]==this.value){
+							 var val=this.value;
+							$("#country_language_assign_"+val).prop("checked", true);
+}
+							
+							 
+						}).get();
+						}
+
+					});						
+            		}
+				}
+			});
+			
+        });
+    </script>
+
+	<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_country_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		country_name: "required",
+		country_code: "required",
+		country_phone_code: "required",
+		country_currency_code: "required",
+		"country_language_assign[]" :"required",
+    },
+    // Specify validation error messages
+    messages: {
+      country_name: "Please Enter Country Name",
+      country_code: "Please Enter Country Code",
+      country_phone_code: "Please Enter Phone Code",
+      country_currency_code: "Please Enter Currency Code",
+      "country_language_assign[]" :"Please select language",
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	var checkedVals = $('.country_language_assign1:checkbox:checked').map(function() {
+    return this.value;
+}).get();
+var country_language_assign=checkedVals.join(",");
+ 
+		 	var input = document.getElementById("country_file2");
+			file = input.files[0];
+
+			formData= new FormData();
+			 // alert(country_file2)
+			  if(file != undefined){				
+				if(!!file.type.match(/image.*/)){
+					formData.append("image", file);
+					}
+				}
+				formData.append('country_name', $('#country_name1').val());
+				//formData.append('country_code', $('#country_code1').val());
+				formData.append('country_phone_code', $('#country_phone_code1').val());
+				formData.append('country_currency_code', $('#country_currency_code1').val());
+				formData.append('country_language_assign', country_language_assign);		
+//	formData.append('language_code', $('.language_code').val());
+formData.append('language_code',$('.edit_language_code').val());
+ var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				processData: false,
+				contentType: false,
+				success:function(data) 
+				{					
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) { 
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');						
+						$('#'+index+'1').after('<label id="'+index+'-error" class="error" for="'+index+'">'+value+'</label>');
+                                        });
+					}else if (data.error == 'permission') {
+                                            $('.alert').delay(500).fadeOut(100);
+                                            $('form[name="edit_country_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>'); 
+					}else{
+                                            $('form[name="edit_country_form"]')[0].reset();
+                                            $('form[name="edit_country_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+                                            if($('.alert').delay(3000).fadeOut(100)){
+                                                window.location.reload();
+                                            }
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id " + id + " Deleted successfully!");
+  var urlData='{{ base_url }}admin/country/delete/'+id;
+   $.ajax({
+                url: urlData,
+                type: "POST",
+                success: function(result) {
+                    var data = $.parseJSON(result);
+                   if (data.error == 'false') {
+                        $('#deleteModal').modal('hide'); // now close modal
+                        window.location.reload();
+                    } else {
+
+                        $('.delete_message').html('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                    }
+                }
+            });
+			
+  
+}  
+
+</script></body>
+</html>                     

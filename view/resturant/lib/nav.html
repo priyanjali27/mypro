@@ -1,0 +1,117 @@
+<div class="header-main">
+    <div class="header-left restaurant-header-left">
+	<div class="col-md-4 md-form"> 
+        <div class="logo-name">
+            <a href="{{base_url}}resturant/dashboard">
+                {{session.resturant_userdata.company_name}}<br/>
+                {{company_data.company_cr_no}}
+            </a> 								
+        </div></div>
+        <div class="col-md-4 md-form">
+            <strong>Telephone</strong><br/>
+        {{company_data.company_phone}}
+        </div> 
+        <div class="col-md-4 md-form">          
+            <strong>Country</strong>
+            <select id="country_nav" name="country_nav" class="selectpicker form-control-select">                                                              
+                    {% for key,coun in rel_countries %} 
+                        {% if coun.country_status == 1 %}
+                            {% if session.selected_country == coun.country_code %}
+                                <option selected value="{{ coun.country_code|e}}">{{ coun.country_language_country_name|e }}</option>
+                            {% else %}
+                            <option value="{{ coun.country_code|e}}">{{ coun.country_language_country_name|e }}</option>
+                            {% endif %} 
+                        {% endif %} 
+                    {% endfor %}                                               
+            </select>
+        </div>
+        <!--search-box-->
+        {% if(session.resturant_userdata.superadmin)=='1' %}
+        <a class="btn btn-default" href="{{base_url}}admin/user/restaurant_logout">BACK</a>
+        {%endif%}
+        <!--//end-search-box-->
+        <div class="clearfix"> </div>
+    </div>
+    <div class="header-right restaurant-header-right">
+        <div class="profile_details">		
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">	
+                            <span class="prfil-img"><img src="images/p1.png" alt=""> </span> 
+                            <div class="user-name">
+                                <p>{{session.resturant_userdata.user_name}}</p>
+                                <span>
+                                    {{session.resturant_userdata.user_role_name}}
+                                </span>
+                            </div>
+                            <i class="fa fa-angle-down lnr"></i>
+                            <i class="fa fa-angle-up lnr"></i>
+                            <div class="clearfix"></div>	
+                        </div>	
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        <li><a href="{{base_url}}resturant/user/profile"><i class="fa fa-user"></i>{{ constant('Global Settings')}}</a> </li> 
+                        <li> <a href="{{base_url}}resturant/user/change_password"><i class="fa fa-lock"></i> {{ constant('CHANGE PASSWORD')}}</a> </li>
+                        <li> <a href="{{base_url}}resturant/terms"><i class="fa fa-cogs"></i> {{ constant('TERMS & CONDITIONS') }}</a> </li> 
+                        <li><a href="{{ base_url }}resturant/logout"><i class="fa fa-sign-out"></i> {{ constant('LOGOUT')}}</a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="profile_details">		
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">	
+                            <span class="prfil-img">	
+                                {% for key, lang in language %}
+                                {% if( lang.language_code == session.lang_code) %}
+                                <img width="50" src="{{ base_url }}upload/lang_flags/{{lang.language_flag}}" alt="">  
+                            </span> 
+                            <div class="user-name">
+                                <p> {{lang.language_name}}</p>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            <i class="fa fa-angle-down lnr"></i>
+                            <div class="clearfix"></div>	
+                        </div>	
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        {% for key, lang in language %}
+                        <li value="{{lang.language_code}}">
+                            <a href="{{base_url}}resturant/language/change_language/{{lang.language_code}}" class="{{ lang.language_name }}">
+                            <img width="50" src="{{ base_url }}upload/lang_flags/{{lang.language_flag}}" alt=""> {{ lang.language_name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="clearfix"> </div>				
+    </div>
+    <div class="clearfix"> </div>	
+</div>
+<!--heder end here-->
+<!-- script-for sticky-nav -->
+<script>
+    $(document).ready(function () {
+        var navoffeset = $(".header-main").offset().top;
+        $(window).scroll(function () {
+            var scrollpos = $(window).scrollTop();
+            if (scrollpos >= navoffeset) {
+                $(".header-main").addClass("fixed");
+            } else {
+                $(".header-main").removeClass("fixed");
+            }
+        });
+    });
+    $('#country_nav').on('change', function(){
+       var countryval = $(this).val();
+       window.location = "{{base_url}}resturant/dashboard/change_country/" +countryval;
+    });
+</script>
+<!-- /script-for sticky-nav -->
+<!--inner block start here-->

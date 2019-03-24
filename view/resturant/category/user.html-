@@ -1,0 +1,168 @@
+{% include 'admin/lib/header.html' %}
+<body>
+
+	<!-- Main navbar -->
+	{% include 'admin/lib/nav.html' %}
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			{% include 'admin/lib/sidebar.html' %}
+			<!-- /main sidebar -->
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content">
+
+
+				<!--  Page content -->
+		{% if (action == 'add' or action == 'edit')   %}		
+				<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">{{ constant('CATEGORY')}}
+							
+							</h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+
+						<div class="panel-body">
+							
+							<form class="form-horizontal" action="{{ base_url }}admin/category/{{action}}/{{category_id}}" method="post">
+								<fieldset class="content-group">
+									<input type="hidden" name="category_id" class="form-control" value="{{category_id}}" placeholder="">
+									<div class="form-group">
+										<label class="control-label col-lg-2">{{ constant('NAME')}} <span class="error_msg"  >*</span></label>
+										<div class="col-lg-10">
+											<input type="text" name="category_name" value="{{set_data.category_name}}"class="form-control" placeholder="{{constant('ENTER YOUR') }}  {{constant('NAME') }}" dir="auto">
+											<div class="error_msg">{{ error_msg.category_name|e }}</div>
+										</div>
+										
+									</div>
+									<div class="text-right">
+									<a href="{{ base_url }}admin/category/" type="button" class="btn btn-warning">{{ constant('BACK')}}</a>
+									<button type="submit" class="btn btn-primary" name="submit">{{ constant('SUBMIT')}} <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+									
+							</form>
+						</div>
+					</div>
+					
+				{% else %}	
+					<div class="panel panel-flat">
+						
+
+						<div class="panel-body">
+							
+							
+							<form class="form-horizontal" action="{{ base_url }}admin/category/index/{{page_number}}/{{search}}" method="post">
+								<fieldset class="content-group">
+								
+									<div class="form-group">
+										<div class="col-lg-3">
+											<input type="text" name="search" value="{{searched}}"class="form-control" placeholder="{{constant('KEYWORD') }}  " dir="auto" >
+											<div class="error_msg">{{ error_msg.search|e }}</div>
+										</div>
+										<button type="submit" class="btn btn-primary" name="submit">{{ constant('SEARCH')}} <i class="icon-arrow-right14 position-right"></i></button>
+										<a href="{{ base_url }}admin/category/" class="btn btn-warning" >{{ constant('BACK')}}</a>
+									</div>
+									
+									
+								</form>	
+							
+							
+						</div>
+					</div>	
+     			<!---- Data Table start ----->	
+				
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">{{ constant('CATEGORY')}} <a href="{{ base_url}}admin/category/add" class="btn btn-primary btn-icon" ><i class="icon-plus2"></i></a> </h5>
+							<p class="message">{{ success_massage }}<p>
+							<div class="text-right">
+							{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+						</div>
+             		    <div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('CREATED')}}</th>
+									    <th>{{ constant('STATUS')}}</th>
+										<th class="text-center"><i class="icon-menu-open2"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% if results %}
+									{% for key, category in results %} 
+										<tr>									
+    									<td>{{ category.category_name|e }}</td>
+										<td>{{ category.category_created|e }}</td>
+										
+										<td><span class="label label-success">
+										{% if category.category_status == 1 %}
+										<p>Active</p>
+									     {% else %}
+										<p>Inactive</p>
+									    {% endif %}</span>
+										</td>
+										<td>
+										<a href="{{ base_url }}admin/category/edit/{{ category.category_id|e }}" type="button" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"><i class=" icon-pencil5"></i></a>
+									
+											<a href="{{ base_url }}admin/category/delete/{{ category.category_id|e }}" class="btn border-warning text-warning-600 btn-flat btn-icon" onclick='return confirm("{{ constant('SURE DELETE')}}")' ><i class=" icon-cancel-square2"></i></a></td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+							<tr>									
+							<td class="record" colspan="7" >
+							{{ constant('NO RECORD FOUND')}} </td>								
+							</tr>							
+							{% endif %}		
+								</tbody>
+							</table>
+							{{ links|raw  }}
+						</div>
+					</div>
+					<!-- /basic responsive table -->
+{% endif %}
+					
+					
+					
+					
+					
+					<!-- /// Page content -->
+					
+
+				{% include 'admin/lib/footer.html' %}
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+    {% include 'admin/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								  Manage Role
+								  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('EMAIL')}}</th>
+										<th>{{ constant('USERNAME')}}</th>
+										<th >{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% if list_datas %}
+								{% for list_data in list_datas %} 
+								   <tr>
+										   
+									<td>{{ list_data.user_name }}</td>
+									<td>{{ list_data.user_email }}</td>
+								    <td>{{ list_data.user_username }}</td>
+									
+									<td>
+									
+									 <div class="market-update-right">
+                                            <span><a href="{{ base_url }}admin/role/view/{{ list_data.user_id }}" ><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="{{ base_url }}admin/role/update/{{ list_data.user_id }}"   class="edit-modal"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ list_data.userprivilege_user_id|e }}')"><i class="fa fa-trash"></i></a></span>
+                                        </div>
+										</a>
+										
+									</td>
+								 </tr>
+						    {% endfor %}
+						    {% else %}									
+							<tr>									
+							<td class="record" colspan="4" >{{ constant('NO RECORD FOUND')}}</td>								
+							</tr>							
+							{% endif %}
+									
+										
+                                              
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if list_datas %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  {% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add Role -->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Add Role</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}admin/role/add"  method="POST" name="add_role_form">
+											
+                                                
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <select name="user_username" id="user_username" class="selectpicker form-control-select"  id="resturantbrand_type" >
+				                                <option value="">{{ constant('PLEASE SELECT')}}</option>
+												{% for user_list in user_lists %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+                                                
+                                                </div>
+                                             	{% for controller_list in controller_lists %}
+                                                <div class="col-md-12 col-sm-12 col-xs-12 md-form check-buttom">
+                                                        <p>{{controller_list.controllers_display_name }}</p>
+                                                       
+                                                        <div class="checkbox checkbox-primary checkbox-inline">
+                                                            <input id="checkbox2" type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" >
+                                                            <label for="checkbox2">
+                                                                            {{ constant('ADD')}}
+                                                                        </label>
+                                                          </div>
+
+                                                          <div class="checkbox checkbox-primary checkbox-inline">
+                                                                <input id="checkbox2" type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}">
+                                                                <label for="checkbox2">
+                                                                                {{ constant('EDIT')}}
+                                                                            </label>
+                                                              </div>
+
+
+                                                              <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('DELETE')}}
+                                                                                </label>
+                                                                  </div>
+                                                                  <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="view[]" value="{{ controller_list.controllers_id }}">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('VIEW')}}
+                                                                                </label>
+                                                                  </div>
+                                                    </div>
+													{% endfor %}
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+                                                    	<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											
+                                                </div>
+                                            </form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add Role -->
+
+<!--edit role -->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Edit Role</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+                                        <form>
+											
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-user prefix grey-text"></i>
+                                                <input type="text" id="form31" class="form-control">
+                                                <label for="form31">Name</label>
+                                            </div>
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-user prefix grey-text"></i>
+                                               <select name="resturantbrand_type" id="resturantbrand_type2" class="selectpicker form-control-select"  id="resturantbrand_type" >
+				                                <option value="">{{ constant('PLEASE SELECT')}}</option>
+												{% for user_list in user_lists %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+                                                <label for="form21">Username</label>
+                                            </div>
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-envelope prefix grey-text"></i>
+                                                <input type="email" id="form321" class="form-control">
+                                                <label for="form341">Email</label>
+                                            </div>
+                                        
+										  	{% for controller_list in controller_lists %}
+                                                <div class="col-md-12 col-sm-12 col-xs-12 md-form check-buttom">
+                                                        <p>{{controller_list.controllers_display_name }}</p>
+                                                       
+                                                        <div class="checkbox checkbox-primary checkbox-inline">
+                                                            <input id="checkbox2" type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" >
+                                                            <label for="checkbox2">
+                                                                            {{ constant('ADD')}}
+                                                                        </label>
+                                                          </div>
+
+                                                          <div class="checkbox checkbox-primary checkbox-inline">
+                                                                <input id="checkbox2" type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}">
+                                                                <label for="checkbox2">
+                                                                                {{ constant('EDIT')}}
+                                                                            </label>
+                                                              </div>
+
+
+                                                              <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('DELETE')}}
+                                                                                </label>
+                                                                  </div>
+                                                                  <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="view[]" value="{{ controller_list.controllers_id }}">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('VIEW')}}
+                                                                                </label>
+                                                                  </div>
+                                                    </div>
+													{% endfor %}
+                                        </form>
+                                    <!-- Form contact -->
+                                </div>
+                            </div>
+                    </div>
+        </div>
+        
+            
+            </form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit role -->
+
+<!--View Role-->
+
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">View Role</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+                                        <form>
+											
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-user prefix grey-text"></i>
+                                                <input type="text" id="user_name"  class="form-control" placeholder="Name" readonly>
+                                                <label for="form31">{{ constant('NAME')}}</label>
+                                            </div>
+                                          
+                                            <div class="col-md-6 md-form">
+                                                <i class="fa fa-envelope prefix grey-text"></i>
+                                                <input type="email" id="email" class="form-control" placeholder="Email" readonly>
+                                                <label for="form341">{{ constant('EMAIL')}}</label>
+                                            </div>
+                                          {% for controller_list in controller_lists %}
+                                                <div class="col-md-12 col-sm-12 col-xs-12 md-form check-buttom">
+                                                        <p>{{controller_list.controllers_display_name }}</p>
+                                                       
+                                                        <div class="checkbox checkbox-primary checkbox-inline">
+                                                            <input id="checkbox2" type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" >
+                                                            <label for="checkbox2">
+                                                                            {{ constant('ADD')}}
+                                                                        </label>
+                                                          </div>
+
+                                                          <div class="checkbox checkbox-primary checkbox-inline">
+                                                                <input id="checkbox2" type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}">
+                                                                <label for="checkbox2">
+                                                                                {{ constant('EDIT')}}
+                                                                            </label>
+                                                              </div>
+
+
+                                                              <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('DELETE')}}
+                                                                                </label>
+                                                                  </div>
+                                                                  <div class="checkbox checkbox-primary checkbox-inline">
+                                                                    <input id="checkbox2" type="checkbox" name="view[]" value="{{ controller_list.controllers_id }}">
+                                                                    <label for="checkbox2">
+                                                                                    {{ constant('VIEW')}}
+                                                                                </label>
+                                                                  </div>
+                                                    </div>
+													{% endfor %}
+                                        </form>
+                                    <!-- Form contact -->
+                                </div>
+                            </div>
+                    </div>
+        </div>
+        
+            
+           
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--view Role -->
+
+
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='add_role_form']").validate({
+    // Specify validation rules
+    rules: {
+      
+		user_username: "required"
+		
+    },
+    // Specify validation error messages
+    messages: {
+        user_username: "Please enter your Name."
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	   var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  $("form[name='add_role_form']").before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					  $('.alert').delay(10000).fadeOut(100);
+					   
+					}else{
+					$("form[name='add_role_form']")[0].reset();
+					$("form[name='add_role_form']").before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+				    window.location.reload();
+					}
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+        $(document).ready(function () {
+            $(document).on('click','.view-only',function(){
+			$('#user_name').attr('value',$(this).data('name'));
+			$('#email').attr('value',$(this).data('email'));
+			
+			});
+        });
+    </script>
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/role/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

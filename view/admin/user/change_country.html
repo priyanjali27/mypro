@@ -1,0 +1,147 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+				<div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+               <div class="work-progres">
+							<div class="modal-content">
+			<div class="modal-header">
+			  <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+			  <h4 class="modal-title">{{constant('COUNTRY')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							{%if(success_massage) %}
+								<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}</div>
+							{% endif %}
+							<!-- Form contact -->
+					           <form name="country_box" action="{{ base_url }}admin/user/change_country" method="post">                                    
+                                    <div class="col-md-12 md-form">
+                                        <i class="fa fa-globe prefix grey-text"></i>
+                                        <label for="countries">{{ constant('COUNTRY')}}<span class="required">*</span></label>
+                                   
+
+							         <select id="user_default_country" name="user_default_country" class="selectpicker form-control-select2">                  
+							         	<option value="">{{constant('PLEASE SELECT')}}</option>                                             
+
+							                {% for key,country in all_countries %} 
+
+
+							                {% if country.country_status == 1 %}
+							                {%if ( session.selected_country == country.country_code) or ( session.userdata.user_default_country  == country.country_code ) %}
+							                <option selected value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+							                {% else %}
+							                <option value="{{ country.country_code|e}}">{{ country.country_language_country_name|e }}</option>
+							                {% endif %} 
+							                {% endif %} 
+							                {% endfor %}                                               
+							            </select>
+
+                       
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-success">{{ constant('SUBMIT')}}</button>                                        
+                                    </div>
+                                </form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>			
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+</div>
+    <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    {% include 'admin/lib/sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+<!--slide bar menu end here-->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='country_box']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		user_default_country: "required",
+		
+		   
+		
+    },
+    // Specify validation error messages
+    messages: {
+      user_default_country: "Please Select default country",
+	
+		
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     form.submit();
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+</body>
+</html>                     

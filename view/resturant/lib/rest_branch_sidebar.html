@@ -1,0 +1,60 @@
+<div class="sidebar-menu side-menu-r">
+		  	<div class="logo">
+		  		<div class="logo-name">
+					 <a href="{{base_url}}resturant/dashboard"> <!--<h1>Shoppy</h1>--> 
+					<img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+				  </a>  								
+				</div>
+			</div>		
+
+		    <div class="menu" >
+		      	<ul id="menu" class="menu-new width-li">
+			 			   
+           			<li id="menu-home" {% if title=="Resturant"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Manage')}}" href="{{base_url}}resturant/resturant" style="border-top:1px solid #fff;"><i class="fa fa-drivers-license"></i></a></li>
+                	
+					<li {% if title=="Fee"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('FEE MANAGEMENT')}}" href="{{base_url}}resturant/commission/"><i class="fa fa-car"></i></a></li> 
+                 	
+	  	        </ul>
+
+			    {% if title=="Resturant"  %}
+			        <ul id="menu" class="menu-new width-ri">
+
+			            <li class="main-manage"><a href="javascript:;">{{ constant('Manage')}}</a><li>
+
+			            <li id="menu-home" {% if heading=="Resturant List"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('Manage Branches')}}" href="{{base_url}}resturant/resturant/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-list"></i><span>{{ constant('Manage Branches')}}</span></a></li>
+			           <li id="menu-home" {% if heading=="DiscountList"  %} class="active"  {% endif %}><a data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('DISCOUNT')}} " href="{{ base_url }}resturant/Discount/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-arrows"></i><span> {{ constant('DISCOUNT')}} {{constant('Manage')}}</span></a></li>
+    			        <li id="menu-home" {% if heading=="Point"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('POINT')}} " href="{{base_url}}resturant/point/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-tasks"></i><span>{{constant('POINT MANAGEMENT')}} </span></a></li>
+			            <li id="menu-home" {% if heading=="Tax"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('TAX')}} " href="{{base_url}}resturant/tax/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-bank"></i><span>{{constant('TAX MANAGEMENT')}} </span></a></li>
+		       		</ul>
+
+			    {% endif %}
+
+			   
+			  
+			    {% if title=="Fee"  %}
+			  		<ul id="menu" class="menu-new width-ri">
+			  			<li class="main-manage"><a href="javascript:;">{{ constant('FEE MANAGEMENT')}}</a><li>
+						<li id="menu-home" {% if heading=="Commission"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('COMMISSION MANAGEMENT')}}" href="{{base_url}}resturant/commission/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-window-restore"></i><span>{{ constant('COMMISSION MANAGEMENT')}}</span></a></li>
+						<li id="menu-home" {% if heading=="Delivery"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('DELIVERY DRIVER MANAGEMENT')}} " href="{{base_url}}resturant/delivery/index/{{restaurant_id}}" class="active-sub"><i class="fa fa-motorcycle"></i><span>{{constant('DELIVERY DRIVER MANAGEMENT')}} </span></a></li>
+		      		</ul>
+			    {% endif %}
+			  
+			   
+			    
+
+			    {% if title=="Error"  %}
+				    <ul id="menu" class="menu-new width-ri">
+			          <li id="menu-home" ><a href="#" class="active-sub"><span>&nbsp;</span></a></li>
+			        </ul>
+			  	{% endif %}
+		    </div>
+	</div>
+	<div class="clearfix"> </div>
+<style>
+	.logo {
+		width: auto;
+		position: relative;
+		left:0px;
+		top:10px;
+	}
+</style>

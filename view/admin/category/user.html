@@ -1,0 +1,500 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'admin/lib/nav.html' %}
+				
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								 {{constant('CATEGORY MANAGEMENT')}}
+						  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a></div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+									<th>{{ constant('NAME')}}</th>
+										<th>Image</th>
+										<th>{{constant('RESTURANT')}}</th>
+										<th>{{ constant('CREATED')}}</th>
+									    <th>{{ constant('STATUS')}}</th>
+										 <th>{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									{% if results %}
+									{% for key, category in results %} 
+										<tr>									
+    								<td>{{ category.category_name|e }}</td>
+									<td><img width="100" src="{{base_url}}upload/catimages/{{ category.category_image|e }}"></td>
+									<td>{{ category.resturantbrand_name|e }}</td>
+										<td>{{ category.category_created|e }}</td>
+										
+										<td class="status {{ category.category_id|e }}">
+											{% if category.category_status == 1 %}
+												<div class="active-button" id="{{ category.category_id|e }}" onclick="statusFunction({{ category.category_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" id="{{ category.category_id|e }}" onclick="statusFunction({{ category.category_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<td>
+										 <div class="market-update-right">
+                                           
+                                            <span><a href="#"  data-toggle="modal"  data-id="{{ base_url }}admin/category/edit/{{ category.category_id|e }}" data-brand="{{ category.category_brand_id|e }}" data-idd="{{ category.category_id|e }}" data-image="{{category.category_image|e}}" data-name="{{ category.category_name|e }}"   data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ category.category_id|e }}')"><i class="fa fa-trash"></i></a></span>
+                                        </div></td>
+										</tr>
+										{% endfor %}
+										{% else %}									
+										<tr>									
+										<td class="record" colspan="7" >
+										{{ constant('NO RECORD FOUND')}} </td>								
+										</tr>							
+										{% endif %}
+
+
+										</tbody>
+										</table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'admin/lib/rest_sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add User -->
+
+
+
+<!--view user -->
+<!--latest user add-->
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('CATEGORY MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="editregistration" method="POST" action="{{ base_url }}admin/category/add/" id="edit_dept_form" >
+										 <div class="col-md-12" style="padding:0px;">
+
+														<i class="fa fa-500px prefix grey-text"></i>
+														 <select name="category_brand_id" class="selectpicker form-control-select"  id="category_brand_id" >
+				                                <option value="">{{ constant('PLEASE SELECT')}}</option>
+												{% set selector = '' %}
+												
+												{% for key, resturant_branch in resturants %} 
+												
+												 {% if (resturant_branch.resturantbrand_id) == set_data.resturantbrand_type %}
+													   <option value="{{resturant_branch.resturantbrand_id}}" selected
+										>{{resturant_branch.resturantbrand_name}}</option>
+													{% else %}
+				                                <option value="{{resturant_branch.resturantbrand_id}}" 
+										>{{resturant_branch.resturantbrand_name}}</option>
+										{% endif %}
+												{% endfor %}
+				                                
+				                            </select>
+													</div>	
+												<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-user prefix grey-text"></i>
+													<label for="form31">{{ constant('CATEGORY NAME')}}</label>
+												<input type="text" id="category_name" name="category_name" class="form-control">
+											
+										</div>
+										<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-file prefix grey-text"></i>
+													
+												<input type="file" id="category_file" name="category_file" class="">
+											
+										</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+<!--latest user add-->
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('CATEGORY MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="edit_registration" method="POST" action="" id="edit_dept_form1" >
+ <div class="col-md-12" style="padding:0px;">
+
+														<i class="fa fa-500px prefix grey-text"></i>
+														 <select name="category_brand_id" class="selectpicker form-control-select"  id="category_brand_id1" >
+				                                <option value="">{{ constant('PLEASE SELECT')}}</option>
+												{% set selector = '' %}
+												
+												{% for key, resturant_branch in resturants %} 
+												
+												 {% if (resturant_branch.resturantbrand_id) == set_data.resturantbrand_type %}
+													   <option value="{{resturant_branch.resturantbrand_id}}" selected
+										>{{resturant_branch.resturantbrand_name}}</option>
+													{% else %}
+				                                <option value="{{resturant_branch.resturantbrand_id}}" 
+										>{{resturant_branch.resturantbrand_name}}</option>
+										{% endif %}
+												{% endfor %}
+				                                
+				                            </select>
+													</div>												
+											<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-user prefix grey-text"></i>
+													<label for="form31">{{ constant('CATEGORY NAME')}}</label>
+												<input type="text" id="category_name2" name="category_name" class="form-control">
+											
+										</div>
+										<div class="col-md-12 md-form" style="padding:0px;">
+												<i class="fa fa-file prefix grey-text"></i>
+													
+												<input type="file" id="category_file2" name="category_file" class="">
+											
+										</div>
+										
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+function statusFunction(id,value){
+		var urlData='{{ base_url }}admin/category/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.category_status == 1){															
+							$('td.status.'+value.category_id).html("<div id="+value.category_id+" class='active-button' onclick='statusFunction("+value.category_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.category_id).html("<div id="+value.category_id+" class='inactive-button' onclick='statusFunction("+value.category_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='editregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		category_name: "required",
+		category_file: "required",
+		category_brand_id:"required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      category_name: "Please enter your Category Name.",
+       category_file: "Please enter your Category File.",
+	   category_brand_id:"Please select restaurant Brand.",
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	    var input = document.getElementById("category_file");
+          file = input.files[0];
+		  if(file != undefined){
+    formData= new FormData();
+    if(!!file.type.match(/image.*/)){
+      
+	var category_name=  $('#category_name').val();
+	formData.append("image", file);
+	formData.append("category_name", category_name);
+	var category_brand_id= $('#category_brand_id').val();
+	formData.append("category_brand_id", category_brand_id);
+	   var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					     $('form[name="editregistration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(5000).fadeOut(100)){
+                           
+						   }
+					   }
+					}else{
+					$('form[name="editregistration"]')[0].reset();
+					$('form[name="editregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(5000).fadeOut(100)){
+                  $("#myModal .close").click();
+				  window.location.reload();
+					 }
+            		}
+				}
+			});
+			}else{
+			alert('Not a valid image!');
+    }
+	}
+	}
+  });
+});
+</script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_registration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		category_name: "required",
+	     category_brand_id:"required",
+    },
+    // Specify validation error messages
+    messages: {
+      category_name: "Please enter your Category Name",
+	   category_brand_id:"Please select restaurant Brand.",
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	   var input = document.getElementById("category_file2");
+          file = input.files[0];
+		  formData= new FormData();
+		  if(file != undefined){
+    
+    if(!!file.type.match(/image.*/)){
+    formData.append("image", file);
+	}
+	  }
+	var category_name= $('#category_name2').val();
+	formData.append("category_name", category_name);
+	var category_brand_id1= $('#category_brand_id1').val();
+	formData.append("category_brand_id", category_brand_id1);
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					     $('form[name="edit_registration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(5000).fadeOut(100)){
+                           
+						   }
+					   }
+					}else{
+					$('form[name="edit_registration"]')[0].reset();
+					$('form[name="edit_registration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(5000).fadeOut(100)){
+                  $("#myModal-edit .close").click();
+				  window.location.reload();
+					 }
+            		}
+				}
+			});
+ 
+    
+	}
+  });
+});
+</script>
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/category/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+	  $('.data_images').remove();
+            $('#category_name2').attr('value',$(this).data('name'));
+			$('select#category_brand_id1').find('option[value="'+$(this).data('brand')+'"]').prop("selected", true);			
+            $('#edit_dept_form1').attr('action',$(this).data('id'));
+			$('#category_name2').after('<img class="data_images" width="100" src="{{base_url}}upload/catimages/'+$(this).data('image')+'">');
+     
+
+			
+        });
+    </script>
+</body>
+</html>                     

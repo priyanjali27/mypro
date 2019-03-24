@@ -1,0 +1,166 @@
+<div class="sidebar-menu">
+		  	<div class="logo"> <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#"> <span id="logo" ></span> 
+			      <!--<img id="logo" src="" alt="Logo"/>--> 
+			  </a> </div>		  
+		    <div class="menu">
+		  <ul id="menu">
+
+		  
+
+		  <li ><a href="{{ base_url }}admin/resturant/brands/{{company_id}}" title="{{ constant('BACK')}}"><i class="fa fa-arrow-left"></i><span>{{ constant('BACK')}} </span> </a></li>
+          <li ><a href="#"  style="border:1px 0px 1px 0px solid white;" title="{{ constant('BRAND SETTINGS')}}"><span>{{ constant('BRAND SETTINGS')}} </span> </a></li>
+
+          <li id="menu-home" {% if title=="Brand Dashboard" %} class="active_sub" {% endif %}><a href="{{ base_url }}admin/branddashboard/index/{{restaurant_id}}/{{country_id}}/{{company_id}}"><i class="fa fa-dashboard"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+		  
+		   <li><a href="#" data-toggle="modal" data-target="#myModal-country" class="country_restaurant" data-id="{{ resturant.resturantbrand_id|e }}"><i class="fa fa-plus"></i><span>{{constant('ADD SETTINGS')}}</span></a>
+		   </li>
+
+     <li {% if title=="User" %} class="active" {% endif %}><a href="{{ base_url }}admin/brandUsers/index/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('STAFF MANAGEMENT')}}">
+     	<i class="fa fa-motorcycle"></i><span>{{ constant('STAFF MANAGEMENT')}}</span></a></li>	
+
+	<li {% if title=="Brand" %} class="active" {% endif %}><a href="{{ base_url }}admin/resturant/branches/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('RESTURANT MANAGEMENT')}}"><i class="fa fa-group"></i><span>{{ constant('RESTURANT MANAGEMENT')}}</span></a></li>	
+	<li {% if title=="Fee" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('FEE MANAGEMENT')}}"><i class="fa fa-car"></i><span>{{ constant('FEE MANAGEMENT')}} </span> </a>
+	<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="Fee" %} style="display:block"  {% endif %}>
+		<li {% if heading=="Commission" %} class="active" {% endif %}><a href="{{ base_url }}admin/commission/commission/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('COMMISSION MANAGEMENT')}}"><i class="fa fa-window-restore"></i><span>{{ constant('COMMISSION MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Delivery" %} class="active" {% endif %}><a href="{{ base_url }}admin/delivery/delivery/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('DELIVERY DRIVER MANAGEMENT')}}"><i class="fa fa-motorcycle"></i><span>{{ constant('DELIVERY DRIVER MANAGEMENT')}}</span></a></li>
+	   
+	</ul>
+	</li>
+	<li {% if title=="Menu" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('MENU MANAGEMENT')}}"><i class="fa fa-car"></i><span>{{ constant('MENU MANAGEMENT')}} </span> </a>
+	<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="Menu" %} style="display:block"  {% endif %}>
+		<li {% if heading=="Category" %} class="active" {% endif %}><a href="{{ base_url }}admin/category/resturant/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('CATEGORY MANAGEMENT')}}"><i class="fa fa-window-restore"></i><span>{{ constant('CATEGORY MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Menu" %} class="active" {% endif %}><a href="{{ base_url }}admin/menus/resturant/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('MENU MANAGEMENT')}}"><i class="fa fa-motorcycle"></i><span>{{ constant('MENU MANAGEMENT')}}</span></a></li>
+	    	
+	</ul>
+	</li>
+	<li {% if title=="System Tool Settings" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('SYSTEM TOOL')}} "><i class="fa fa-asterisk"></i><span>{{ constant('SYSTEM TOOL')}} </span> </a>
+	<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="System Tool Settings" %} style="display:block"  {% endif %}>
+	   
+		<li {% if heading=="Discount" %} class="active" {% endif %}><a href="{{ base_url }}admin/discount/resturant/{{restaurant_id}}/{{country_id}}/{{company_id}}" tittle="{{ constant('DISCOUNT MANAGEMENT')}}"><i class="fa fa-binoculars"></i><span>{{ constant('DISCOUNT MANAGEMENT')}}</span></a></li>
+		<li {% if heading=="Point" %} class="active" {% endif %}><a href="{{ base_url }}admin/point/resturant/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('POINT MANAGEMENT')}}"><i class="fa fa-file-powerpoint-o"></i><span>{{ constant('POINT MANAGEMENT')}}</span></a></li>
+		<li {% if heading=="Tax" %} class="active" {% endif %}><a href="{{ base_url }}admin/tax/resturant/{{restaurant_id}}/{{country_id}}/{{company_id}}" title="{{ constant('TAX MANAGEMENT')}}"><i class="fa fa-file-powerpoint-o"></i><span>{{ constant('TAX MANAGEMENT')}}</span></a></li>
+	
+	</ul>
+	</li>
+
+</ul> </div>
+	 </div>
+	<div class="clearfix"> </div>
+	<style>
+	<!-- #menu-comunicacao-sub li a span{ -->
+    <!-- position: RELATIVE !important; -->
+    <!-- OPACITY:1 !important; -->
+<!-- } -->
+	</style>
+	<div class="modal fade" id="myModal-country" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title"> {{constant('ADD SETTINGS')}} </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="resturantcountry" action="{{ base_url }}admin/resturant/country" method="post"  enctype="multipart/form-data">
+											<input type="hidden" id="brand_id" name="brand_id" value="{{restaurant_id}}">
+											<input type="hidden" id="company_id" name="company_id" value="{{company_id}}">
+											
+
+												<div class="col-md-12 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="resturantbrand_country">{{constant('COUNTRY')}}</label>
+													<select id="country_id" name="country_id" class="selectpicker form-control-select">
+													<option value="">{{constant('PLEASE SELECT')}}</option>
+													{% if related_country %}
+														{% for key,country in related_country %} 
+															{% if country.country_status == 1 %}
+													  <option value="{{ country.country_language_language_code|e}}">{{ country.country_language_country_name|e }}</option>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>
+												</div>
+												
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+	
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='resturantcountry']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		country_id: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+       
+		country_id :"Please Select Country",
+		
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) { 
+         var formData=$(form).serialize();
+	    var brand_id = $("#brand_id").attr('value');
+		var country_id = $("#country_id").val();
+		var company_id = $("#company_id").val();
+
+		var url='{{ base_url }}';
+		var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data : formData,
+				
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					$('form[name="resturantcountry"]')[0].reset();
+					
+    
+					 window.location.href = url+"admin/user/resturant/"+brand_id+"/"+country_id+"/"+company_id;
+            		}
+				}
+			});
+    }
+  });
+});
+</script>

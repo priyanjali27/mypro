@@ -1,0 +1,502 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12">
+         <div class="work-progres">
+             <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+				Plan Heading
+				<a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+			 </div>
+         </div>
+    </div>	  
+</div>	  	
+    <div class="clearfix"></div>	  	  	 	
+         <div class="chit-chat-layer1 modal-spacee">
+         	<div class="col-md-12 col-sm-12 col-lg-12">						
+         	  <form action="{{ base_url }}admin/plan/add_detail" method="POST" enctype="multipart/form-data">
+         		<div class="col-md-3 md-form" style="padding:0px;">
+				 <label for="value_type">{{ constant('MODEL')}}&nbsp;{{ constant('NAME')}}<span class="required">*</span>
+				 </label>
+				   <select id="name" name="plan" class="selectpicker form-control-select">
+						<option value="">{{ constant('PLEASE SELECT')}}
+						</option>			
+						{% if resultss %}
+							{% for key,model in resultss %} 							
+								<option value="{{ model.plan_id|e }}">{{ model.plan_name|e }}</option>
+							{% endfor %}
+						{% else %}
+								<option value="">{{constant('PLEASE SELECT')}}</option>
+					  {% endif %}
+				   </select>
+			   </div>	 
+         	   <div class="col-md-12 col-sm-12 col-xs-12">					
+         		<div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding: 10px;">		  <div class="col-md-12 col-sm-12 col-xs-12  main-modal-ck">		
+         			<div class="col-md-12 col-sm-12 col-xs-12">
+         		     	<table class="table">
+						  <thead class="thead-inverse table-head-bg">
+							<tr>
+							<th>{{ constant('NAME')}}</th>
+						    <th>{{ constant('ACTION')}}</th>
+							<th>{{ constant('QUANTITY')}}</th>	
+							</tr>
+						  </thead>
+						  <tbody>
+							{% if results %}
+							{% for key,plan in results %} 
+							<tr>
+							  <td>{{ plan.plan_model_name|e }}
+								 <input type="hidden" class="form-control" id="model_name" name="model_name[]" value="{{ plan.plan_model_id|e }}" dir="auto">
+							  </td>
+							  <td>
+							  	<div class="onoffswitch">
+							  	  <input type="checkbox" name="plan_model[]" class="onoffswitch-checkbox" id="myonoffswitch{{ plan.plan_model_id|e }}" value="{{ plan.plan_model_id|e }}">	
+			                        <label class="onoffswitch-label" for="myonoffswitch{{ plan.plan_model_id|e }}">	<span class="onoffswitch-inner"></span>	 <span class="onoffswitch-switch"></span>			
+			                        </label>						
+         	 				     </div>	
+         	 				 </td>
+         	 				 <td>
+         	 				 	 <input type="text" id="quantity" name="quantity[{{ plan.plan_model_id|e }}]" class="form-control" placeholder="Quin" value=""  style="width: 80px;border: 1px solid #7777; text-align:center;">
+         	 					<input type="hidden" class="form-control" id="quantity" name="quantity[]" value="{{ plan.plan_model_id|e }}" dir="auto">
+         	 				 </td>
+						    </tr>
+						     {% endfor %}
+							 {% else %}									
+							  <tr>
+							  	<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} 
+								</td>								
+							 </tr>	
+							 {% endif %}
+										
+						  </tbody>
+                        </table>			
+         			</div>															
+         	 	</div>
+
+         	 		<div class="clearfix"> </div>	
+                     <div class="col-md-12 col-sm-12 col-xs-12 main-modal-ck">		
+                       <div class="col-md-8 col-sm-8 col-xs-7">										
+         	 		    		</div>					
+         	 		    								
+         	 		    			</div>					
+         	 		    			<div class="col-md-12" style="padding:0px;">						<button class="btn btn-success" value="Submit" name="add">{{constant('SUBMIT')}}</button>				
+         	 		    				</div>									
+         	 		    			</div>				
+         	 		    		</div>            
+         	 		    		 </div>          
+         	 		    		   </form>		
+         	 		    		<div class="clearfix"> </div>																		               
+         	 		    		 <div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">		<div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">
+         	 		    		 	<div class="table-responsive">	
+     	                	<table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('PRICE')}}</th>										
+										<th>{{ constant('DESCRIPTION')}}</th>										
+																				
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody>	
+										{% if resultss %}
+											{% for key,plan_add in resultss %} 
+												<tr>									
+												<td>{{ plan_add.plan_name|e }}</td>
+												<td>{{ plan_add.plan_price|e }}</td>
+												<td>{{ plan_add.plan_description|e }}</td>																		
+												<td>
+												<div class="market-update-right">
+													
+													<span><a href="{{ base_url }}admin/plan/edit_detail/{{plan_add.plan_id|e}}"><i class="fa fa-edit"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ plan_add.plan_id|e }}')"><i class="fa fa-trash"></i></a></span>
+												</div>
+												</td>
+												</tr>
+											{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            </div>            
+         	 		    	</div>	</div>   		 </div> 
+
+
+
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add paymentmethod add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Plan Heading</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}admin/paymentmethod/add" method="POST" name="paymentmethod_form">
+											
+											<div class="col-md-12 md-form">
+												<label for="form31">Name</label>
+												<input type="text" placeholder="Enter Name"  name="name" class="form-control">
+											</div>													<div class="col-md-12 md-form">												<label for="form31">Description</label>												<textarea  type="text"  class="md-textarea form-control" rows="3" placeholder="Description" style="    padding-top:10px;"></textarea>											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add paymentmethod add-->
+
+<!--edit paymentmethod add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('NAME')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="" id="edit_plan_form" name="edit_plan_form" method="POST">
+											
+											<div class="col-md-6 md-form">
+												<label for="Name">{{ constant('PLAN')}} {{constant('NAME')}}</label>
+												<input type="text" id="name1" placeholder="{{ constant('ENTER')}} {{ constant('PLAN')}} {{ constant('NAME')}}" maxlength="50" name="name" class="form-control" >
+												
+											</div>
+											<div class="col-md-6 md-form">
+												<label for="price">{{ constant('PRICE')}}</label>
+												<input type="text" id="price1" placeholder="{{ constant('ENTER')}} {{ constant('PRICE')}} " maxlength="50" name="price" class="form-control" >
+												
+											</div>
+											<div class="col-md-12 md-form">
+												<label for="description">{{ constant('DESCRIPTION')}}</label>
+												<input type="text" id="description1" placeholder="{{ constant('ENTER')}} {{ constant('DESCRIPTION')}} " maxlength="50" name="description" class="form-control" >
+												
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit department add-->
+   <!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='paymentmethod_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		paymentmethod_name: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      paymentmethod_name: "Please Enter paymentmethod Name",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="paymentmethod_form"]')[0].reset();
+					$('form[name="paymentmethod_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+            $('#paymentmethod_name1').attr('value',$(this).data('name'));
+			$('#edit_paymentmethod_form').attr('action',$(this).data('id'));
+			
+        });
+    </script>
+
+
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted successfully!");
+  var urlData='{{ base_url }}admin/paymentmethod/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_plan_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		name: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      name: "Please enter plan title",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+					    	//alert(data);
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="plan_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="edit_plan_form"]')[0].reset();
+					$('form[name="edit_plan_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+</script>
+<script language="javascript">
+    $(".modal-edit").click(function(e) {  
+		e.preventDefault();
+		$('#edit_plan_form').attr('action',$(this).data('href'));
+		var cid = $(this).data('cid');	
+		var urlData = "{{ base_url }}/admin/plan/edit_view/"+cid;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				success:function(data) 
+				{			  			
+				  var data = $.parseJSON(data);					  
+						$.each(data.edit_view, function( index, value ) {
+								$('#name1').val(value.plan_name);
+								$('#price1').val(value.plan_price);
+								$('#description1').val(value.plan_description);
+								
+					});						
+				}
+			});
+        });
+</script>
+<script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+	  		$('label.error').css('display','none');
+			$('.form-control').removeClass('error');
+			$('select').removeClass('error');
+			$('form[name="edit_plan_form"]')[0].reset();
+
+            $('#name1').attr('value',$(this).data('name'));
+            $('#price1').attr('value',$(this).data('price'));
+            $('#description1').attr('value',$(this).data('description'));
+			$('#edit_plan_form').attr('action',$(this).data('id'));
+			
+        });
+    </script>
+</body>
+</html>                     

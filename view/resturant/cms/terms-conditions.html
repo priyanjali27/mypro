@@ -1,0 +1,89 @@
+{% include 'resturant/lib/header.html' %}
+
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+  {% include 'resturant/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+
+				<div class="col-md-12 col-sm-12 col-lg-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+						<div class="modal-header">
+						  <h4 class="modal-title">Terms Conditions</h4>
+						</div>
+						
+						<div class="tearms-mrg">
+							<h2>INDIVIDUAL LICENSE</h2>
+<h2>IMPORTANT!!!: PLEASE READ CAREFULLY THIS AGREEMENT AND ANY REPLACEMENT OR AMENDMENT HEREOF BEFORE DOWNLOADING THE APPLICATION AND/OR ANY UPDATE THEREOF, AS APPLICABLE.</h2>
+							
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+							
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+							
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+							
+							
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+							
+							<p>This agreement (hereinafter referred to as “the agreement”) is a mandatory, legal and valid agreement between the Provider (hereinafter referred to as “the Provider”), having the (contact) details mentioned below at the clause XXXIII and you (hereinafter referred to as “you” or the “user” or the “supplier” or the “supplier of products and/or services”), as end user of the Provider’s solution (hereinafter referred to as the “solution” or “the Provider’s solution“ or the “application” or “the software”) and supplier of products and/or services that wishes to supply different products and/or services (hereinafter referred to as the “products” and/or “services”) to different clients (hereinafter referred to as the “clients”</p>
+						</div>
+				</div>
+      </div>
+							   
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'resturant/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+{% include 'resturant/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{ base_url }}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{ base_url }}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{ base_url }}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+
+</body>
+</html>                     

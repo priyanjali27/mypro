@@ -1,0 +1,252 @@
+<div class="modal fade" id="myModal-staff" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{constant('USER')}}</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="card form-white" style="box-shadow: none;">
+                    <div class="card" style="box-shadow:none">
+                        <div class="card-body">
+                            <!-- Form contact -->
+                            <form name="userregistration" method="POST" action="{{ base_url }}resturant/staffrole/addstaff/{{restaurant_id}}">
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="user_name">{{ constant('NAME')}}</label>
+                                        <input type="text" id="user_name" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('NAME')}}" name="user_name" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="user_username">{{ constant('USERNAME')}}</label>
+                                        <input type="text" id="user_username" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('USERNAME')}}" name="user_username" class="form-control">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-envelope prefix grey-text"></i>
+                                        <label for="user_email">{{ constant('EMAIL')}}</label>
+                                        <input type="email" id="user_email" maxlength="70" placeholder="{{constant('ENTER')}} {{constant('EMAIL')}}" name="user_email" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-phone prefix grey-text"></i>
+                                        <label for="user_phoneno">{{ constant('PHONENO')}}</label>
+                                        <input type="number" id="user_phoneno" name="user_phoneno" maxlength="15" placeholder="{{constant('ENTER')}} {{constant('PHONENO')}}" class="form-control">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 md-form">
+                                    <i class="fa fa-male prefix grey-text"></i>
+                                    <label for="user_gender">{{ constant('GENDER')}}</label>
+                                    <select name="user_gender" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+                                        <option value="">{{constant('PLEASE SELECT') }} </option>
+                                        <option value="Male" {% if set_data.user_gender=="Male" %} selected="selected" {% endif %}>Male</option>
+                                        <option value="Female" {% if set_data.user_gender=="Female" %} selected="selected" {% endif %}>Female</option>
+                                        <option value="Transgender" {% if set_data.user_gender=="Transgender" %} selected="selected" {% endif %}>Transgender</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-12 md-form">
+                                        <i class="fa fa-address-card prefix grey-text"></i>
+                                        <label for="user_address">{{ constant('ADDRESS')}}</label>
+                                        <textarea id="user_address" maxlength="500" placeholder="{{constant('ENTER')}} {{constant('ADDRESS')}}" name="user_address" class="md-textarea" style="height:30px"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-building prefix grey-text"></i>
+                                        <label for="user_city">{{ constant('CITY')}}</label>
+                                        <input type="text" id="user_city" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('CITY')}}" name="user_city" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-tag prefix grey-text"></i>
+                                        <label for="user_address">{{ constant('STAFF')}} {{ constant('ROLE')}}</label>
+                                        <select name="user_staffrole" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+                                            <option value="">{{constant('PLEASE SELECT') }} </option>
+                                            {% for role in roles %}
+                                            <option value="{{ role.usertype_id }}">{{ role.usertype_name }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-calendar prefix grey-text"></i>
+                                        <label for="user_dob">{{ constant('DOB')}}</label>
+                                        <input type="text" id="user_dob" placeholder="{{constant('ENTER')}} {{constant('DOB')}}" name="user_dob" class="form-control dobs">
+
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-map-pin prefix grey-text"></i>
+                                        <label for="user_zipcode">{{ constant('ZIPCODE')}}</label>
+                                        <input type="text" id="user_zipcode" maxlength="7" placeholder="{{constant('ENTER')}} {{constant('ZIPCODE')}}" name="user_zipcode" class="form-control">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+                                </div>
+                            </form>
+                            <!-- Form contact -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--latest user add-->
+
+<div class="modal fade" id="myModal-staff-edit" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{constant('EDIT')}} {{constant('USER')}}</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="card form-white" style="box-shadow: none;">
+                    <div class="card" style="box-shadow:none">
+                        <div class="card-body">
+                            <!-- Form contact -->
+                            <form name="editregistration" method="POST" action="" id="edit_dept_form">
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="form31">{{ constant('NAME')}}</label>
+                                        <input type="text" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('NAME')}}" id="user_name2" name="user_name" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="form21">{{ constant('USERNAME')}}</label>
+                                        <input type="text" id="user_username2" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('USERNAME')}}" name="user_username" class="form-control">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-envelope prefix grey-text"></i>
+                                        <label for="user_email">{{ constant('EMAIL')}}</label>
+                                        <input type="email" maxlength="70" placeholder="{{constant('ENTER')}} {{constant('EMAIL')}}" id="user_email2" name="user_email" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-phone prefix grey-text"></i>
+                                        <label for="user_phoneno">{{ constant('PHONENO')}}</label>
+                                        <input type="number" id="user_phoneno2" maxlength="15" placeholder="{{constant('ENTER')}} {{constant('PHONENO')}}" name="user_phoneno" class="form-control">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-male prefix grey-text"></i><label for="user_gender">{{ constant('GENDER')}}</label>
+                                        <select name="user_gender" id="user_gender2" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+                                            <option value="">{{constant('PLEASE SELECT') }} </option>
+                                            <option value="Male" {% if set_data.user_gender=="Male" %} selected="selected" {% endif %}>Male</option>
+                                            <option value="Female" {% if set_data.user_gender=="Female" %} selected="selected" {% endif %}>Female</option>
+                                            <option value="Transgender" {% if set_data.user_gender=="Transgender" %} selected="selected" {% endif %}>Transgender</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-tag prefix grey-text"></i><label for="user_address">{{ constant('STAFF')}} {{ constant('ROLE')}}</label>
+                                        <select name="user_staffrole" class="selectpicker form-control-select" id="user_staffrole2" data-show-subtext="true" data-live-search="true">
+                                            <option value="">{{constant('PLEASE SELECT') }} </option>
+
+                                            {% for role in roles %}
+                                            <option value="{{ role.usertype_id }}">{{ role.usertype_name }}</option>
+                                            {% endfor %}
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-12 md-form">
+                                        <i class="fa fa-address-card prefix grey-text"></i>
+                                        <label for="user_address">{{ constant('ADDRESS')}}</label>
+                                        <textarea maxlength="500" name="user_address" placeholder="{{constant('ENTER')}} {{constant('ADDRESS')}}" id="user_address2" class="md-textarea" style="height: 30px"></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-building prefix grey-text"></i>
+                                        <label for="user_city">{{ constant('CITY')}}</label>
+                                        <input type="text" id="user_city2" maxlength="50" placeholder="{{constant('ENTER')}} {{constant('CITY')}}" name="user_city" class="form-control">
+
+                                    </div>
+
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-calendar prefix grey-text"></i>
+                                        <label for="user_dob">{{ constant('DOB')}}</label>
+                                        <input type="text" id="user_dob2" name="user_dob" placeholder="{{constant('ENTER')}} {{constant('DOB')}}" class="form-control dobs">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding:0px;">
+                                    <div class="col-md-6 md-form">
+                                        <i class="fa fa-map-pin prefix grey-text"></i>
+                                        <label for="user_zipcode">{{ constant('ZIPCODE')}}</label>
+                                        <input type="text" id="user_zipcode2" maxlength="7" placeholder="{{constant('ENTER')}} {{constant('ZIPCODE')}}" name="user_zipcode" class="form-control">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+                                </div>
+                            </form>
+                            <!-- Form contact -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".dobs").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        beforeShow: function (input, inst) {
+            $(document).off('focusin.bs.modal');
+        },
+        onClose: function () {
+            $(document).on('focusin.bs.modal');
+        },
+        dateFormat: "yy-mm-dd",
+        yearRange: "-90:+00",
+        maxDate: 0        
+    });
+});
+</script>

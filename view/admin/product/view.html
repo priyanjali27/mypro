@@ -1,0 +1,116 @@
+{% include 'admin/lib/header.html' %}
+<body>
+
+	<!-- Main navbar -->
+	{% include 'admin/lib/nav.html' %}
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			{% include 'admin/lib/sidebar.html' %}
+			<!-- /main sidebar -->
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content">
+
+					<div class="success_msg" style="text-align:center;" >{{ success }}</div>
+					<div class="error_msg" style="text-align:center;" >{{ error }} </div>
+					
+					<!--  Page content -->
+					
+					
+					
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Form Role  </h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+
+						<div class="panel-body">
+							
+							<form class="form-horizontal" method="post" enctype="multipart/form-data" >
+								<fieldset class="content-group">
+								
+								
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Select User <span class="error_msg"  >*</span></label>
+			                        	<div class="col-lg-6">
+				                            <select name="username" class="form-control" disabled  >
+												{% for user_list in edit_data.user %}
+				                                <option value="{{ user_list.user_id }}">{{ user_list.user_username }}</option>
+				                                {% endfor %}
+				                            </select>
+											<div class="error_msg" ></div>
+			                            </div>
+			                        </div>
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">Modules</label>
+			                        	<div class="col-lg-6">Action </div>
+			                        </div>
+									
+									
+									
+									{% for controller_list in controller_lists %}
+									{% set cid = controller_list.controllers_id %}
+									
+									<div class="form-group">
+										<label class="control-label col-lg-3 col-lg-offset-1">{{ controller_list.controllers_display_name }} </label>
+										<div class="col-lg-6">
+											<input type="checkbox" name="add[]" value="{{ controller_list.controllers_id }}" class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_add"] == '1' %}checked{% endif%} disabled > Add
+											<input type="checkbox" name="edit[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_edit"] == '1' %}checked{% endif%} disabled > Edit
+											<input type="checkbox" name="delete[]" value="{{ controller_list.controllers_id }}"  class="" {% if edit_data.user['0'].user_id == checkdata[cid] and checkdata[cid~"_delete"] == '1' %}checked{% endif%} disabled > Delete
+										</div>
+									</div>
+									{% endfor %}
+									
+								</fieldset>
+
+								
+								<div class="text-right">
+									<a href="{{ base_url }}admin/role/" type="button" class="btn btn-warning">Back</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					<!-- /// Page content -->
+					
+
+				{% include 'admin/lib/footer.html' %}
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>

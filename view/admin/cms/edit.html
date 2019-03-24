@@ -1,0 +1,181 @@
+{% include 'admin/lib/header.html' %}
+<script src="{{base_url}}assets/ckeditor/ckeditor.js" type="text/javascript"></script>
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+    {% include 'admin/lib/nav.html' %}
+<div class="inner-block">
+    {% if permission_issue %}
+    <div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{permission_issue}}</div>
+{% endif %}
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres">
+		<div class="">
+			<div class="chit-chat-heading">
+				<h3>{{ constant('EDIT')}} {{ constant('PAGE')}}</h3>
+			</div>           			
+			<form action="{{ base_url }}admin/cms/edit/{{edit_data[0].page_id|e}}/{{edit_data[0].language_code|e}}" method="POST" name="edit_cms_form" enctype="multipart/form-data">								
+				<div class="col-md-3 md-form">
+					<label for="page_title">{{constant('PAGE')}} {{constant('TITLE')}}</label>
+				</div>
+				<div class="col-md-9 md-form">
+					<input type="text" id="page_title" placeholder="{{constant('ENTER')}} {{constant('PAGE')}} {{constant('TITLE')}}" value="{{edit_data[0].page_language_page_title|e}}" name="page_title" class="form-control">
+				</div>				
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('PAGE')}} {{constant('SLUG')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_slug" placeholder="{{constant('ENTER')}} {{constant('PAGE')}} {{constant('SLUG')}}" value="{{edit_data[0].page_slug|e}}" name="page_slug" class="form-control" readonly>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_desc">{{constant('PAGE')}} {{constant('DESCRIPTION')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">										
+					<textarea id="page_desc" name="page_desc" class="form-control ckeditor">{{edit_data[0].page_language_page_desc|e}}</textarea>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_banner">{{constant('BANNER IMAGE')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">
+					{% if edit_data[0].page_banner_image|e %}
+					<div class="col-md-2 md-form">
+						<img src="{{base_url}}upload/cms_images/{{edit_data[0].page_banner_image|e}}" style="max-width:100px;" height="100" width="100">
+					</div>
+					{% endif %}
+					<div class="col-md-7 md-form">
+						<input type="file" id="page_banner" class="" name="page_banner" aria-describedby="fileHelp" dir="auto" accept="image/*">
+						{{edit_data[0].page_banner_image|e}}
+					</div>
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('META')}} {{constant('TITLE')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_meta_title" placeholder="{{constant('ENTER')}} {{constant('META')}} {{constant('TITLE')}}" value="{{edit_data[0].page_meta_title|e}}" name="page_meta_title" class="form-control">
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_slug">{{constant('META')}} {{constant('KEY')}}</label>								
+				</div>
+				<div class="col-md-9 md-form">										
+					<input type="text" id="page_meta_key" placeholder="{{constant('ENTER')}} {{constant('META')}} {{constant('KEY')}}" value="{{edit_data[0].page_meta_key|e}}" name="page_meta_key" class="form-control">
+				</div>
+				<div class="col-md-3 md-form">
+					<label for="page_desc">{{constant('META')}} {{constant('DESCRIPTION')}}</label>										
+				</div>
+				<div class="col-md-9 md-form">										
+					<textarea id="page_meta_desc" name="page_meta_desc" class="form-control ckeditor">{{edit_data[0].page_meta_desc|e}}</textarea>
+				</div>
+				<div class="col-md-12 text-center">
+					<button class="btn btn-success" value="Submit" name="update">{{constant('SUBMIT')}}</button>
+					<a type="button" href="{{ base_url }}admin/cms" class="btn btn-default">{{constant('CANCEL')}}</a>
+				</div>									
+			</form>						
+		</div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  {% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add Role -->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_cms_form']").validate({
+    // Specify validation rules
+    rules: {      
+		page_title: "required",		
+    },
+    // Specify validation error messages
+    messages: {
+        page_title: "Please enter page title.",  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+		var messageLength=CKEDITOR.instances['page_desc'].getData().replace(/<[^>]*>/gi, '').length;
+		if(!messageLength) {
+	          $('#page_desc').after('<label id="page_desc-error" class="error" for="page_desc">Please enter page description.</label>');
+               $(window).scrollTop(300);
+			   return false;
+        }else{
+		$('#page_desc-error').remove();
+		}
+	 form.submit();
+    }
+  });
+});
+</script>
+<script>
+	  $(document).ready(function(){ 
+	  $('#page_title11').on('blur',function(){
+	 	var str = $(this).val();
+		str = str.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '_').toLowerCase();	    
+		$.ajax({
+				type: "GET",
+					async: false,
+					url:"{{base_url}}admin/cms/check_slug",
+					data:"str="+str,
+					success:function(result){
+					if(result==0){							
+							$('#page_slug').val(str); 	
+						}else{
+							str = str.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-').toLowerCase();
+							str1 = str+'-'+result;								
+							$('#page_slug').val(str1); 	
+						}													
+					}
+			});
+	  });
+	  });
+</script>
+</body>
+</html>                     

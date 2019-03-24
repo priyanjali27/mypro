@@ -1,0 +1,158 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12">
+        <div class="work-progres">
+			<div class="chit-chat-heading" style="padding: 10px;margin: 0px;">{{constant('PLAN HEADING')}}</div>
+        </div>
+      </div>	  
+</div>	  	  
+	<div class="clearfix"></div>	  	  	 	
+    <div class="chit-chat-layer1 modal-spacee">
+     	<div class="clearfix"></div>	
+
+     	   <div class="col-md-12 col-sm-12 col-lg-12">
+     	   	<div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">			
+     	   	<div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">					
+     	   		<div class="table-responsive">						
+     	   			<table class="table">	
+     	   				<form action="{{ base_url }}admin/planmodel/edit_model_details" method="POST" name="plan_form" enctype="multipart/form-data">					
+							<thead class="thead-inverse table-head-bg">									
+								<tr>									
+									<th>Modal Name</th>										
+									<th>Quantity</th>
+									<th>Price</th>  					
+								</tr>								
+							</thead>								
+							<tbody>		
+								{{error}}
+								{% if results %}
+									{% for key,plan in results %} 
+										<tr>									
+											<td>{{ plan.plan_model_name|e }}</td>												
+											<td>
+											 {% if plan.plan_model_type == 0%}
+												<input type="hidden" class="form-control" id="plan_id" name="plan_id[]" value="{{ plan.plan_model_id|e }}" dir="auto">
+												<input type="text" id="quantity" name="quantity[]" class="form-control" placeholder="Quantity" value="{{plan.plan_model_quantity|e }}"  style="width: 80px;border: 1px solid #7777; text-align:center;">
+											</td>{% endif %}												
+											<td>
+												<input type="text" id="price" name="price[]" class="form-control" placeholder="price" value="{{ plan.plan_model_price|e }}" style="width: 80px;border: 1px solid #7777; text-align:center;">	
+											</td>						
+										</tr>
+
+									{% endfor %}
+								{% else %}									
+										<tr>
+											<td class="record" colspan="4" >{{ constant('NO RECORD FOUND')}}</td>								
+										</tr>							
+								{% endif %}										
+							</tbody>				
+					</table>					
+				</div>					
+				<div class="col-md-12" style="padding:0px;">	              
+					<button class="btn btn-success" value="Submit" name="update">{{constant('SUBMIT')}}</button>				
+				</div>					
+     	   	</div>				
+     	</div>		
+     	      </div>            
+          </div>		
+		  <div class="clearfix"> </div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted successfully!");
+  var urlData='{{ base_url }}admin/plan/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

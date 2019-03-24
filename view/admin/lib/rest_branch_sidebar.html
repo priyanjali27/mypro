@@ -1,0 +1,29 @@
+<div class="sidebar-menu">
+		  	<div class="logo"> <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#"> <span id="logo" ></span> 
+			      <!--<img id="logo" src="" alt="Logo"/>--> 
+			  </a> </div>		  
+		    <div class="menu">
+		  <ul id="menu">
+		  <li><a href="{{ base_url }}admin/resturant/brands/{{company_id}}"  title="{{ constant('BACK')}}"><i class="fa fa-arrow-left"></i><span>{{ constant('BACK')}} </span> </a></li>
+     <li {% if title=="User" %} class="active" {% endif %}><a href="{{ base_url }}admin/user/restaurant_branch/{{restaurant_id}}/{{country_code}}/{{company_id}}" title="{{ constant('STAFF MANAGEMENT')}}"><i class="fa fa-motorcycle"></i><span>{{ constant('STAFF MANAGEMENT')}}</span></a></li>	
+	
+	<li {% if title=="System Tool Settings" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('SYSTEM TOOL')}} "><i class="fa fa-asterisk"></i><span>{{ constant('SYSTEM TOOL')}} </span> </a>
+	<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="System Tool Settings" %} style="display:block"  {% endif %}>
+	   
+		<li {% if heading=="deliveryarea" %} class="active" {% endif %}><a href="{{ base_url }}admin/deliveryarea/index/{{restaurant_id}}/{{country_code}}/{{company_id}}" title="{{constant('DELIVERY AREA MANAGEMENT')}}"><i class="fa fa-binoculars"></i><span>{{constant('DELIVERY AREA MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="mindeliveryorder" %} class="active" {% endif %}><a href="{{ base_url }}admin/deliveryminorder/restaurant_branch/{{restaurant_id}}/{{country_code}}/{{company_id}}" title="{{ constant('DELIVERY MANAGEMENT')}}"><i class="fa fa-binoculars"></i><span>{{ constant('DELIVERY MANAGEMENT')}}</span></a></li>
+		
+		<li {% if heading=="Tax" %} class="active" {% endif %}><a href="{{ base_url }}admin/tax/resturant_branch/{{restaurant_id}}/{{country_code}}/{{company_id}}" title="{{ constant('TAX MANAGEMENT')}}"><i class="fa fa-file-powerpoint-o"></i><span>{{ constant('TAX MANAGEMENT')}}</span></a></li>
+	
+	</ul>
+	</li>
+
+</ul> </div>
+	 </div>
+	<div class="clearfix"> </div>
+	<style>
+	<!-- #menu-comunicacao-sub li a span{ -->
+    <!-- position: RELATIVE !important; -->
+    <!-- OPACITY:1 !important; -->
+<!-- } -->
+	</style>

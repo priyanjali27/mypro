@@ -1,0 +1,796 @@
+{% include 'resturant/lib/header.html' %}
+<script src="{{base_url}}assets/js/jquery.min.js""></script>
+<script src="{{base_url}}assets/js/jquery.qrcode.min.js"></script>
+
+
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'resturant/lib/nav.html' %}
+				
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+        <div class="work-progres">
+			<div class="chit-chat-heading">
+				{{ constant('MANAGE')}} {{ constant('CUSTOMER')}}
+				<a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+			</div>
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-inverse table-head-bg">
+						<tr>
+							<th>{{ constant('NAME')}}</th>
+							<th>{{ constant('USERNAME')}}</th>
+							<th>{{ constant('EMAIL')}}</th>
+							<th>{{constant('QR CODE')}}</th>
+							<th>{{ constant('STATE')}}</th>
+							<th>{{ constant('COUNTRY')}}</th>
+							<th>{{ constant('STATUS')}}</th>
+							<th>{{ constant('ACTION')}}</th>
+						</tr>
+					</thead>
+					<tbody>									
+					{% if results %}
+					{% for key, cust in results %} 
+						<tr>									
+							<td>{{ cust.customer_name|e }}</td>
+							<td>{{ cust.customer_username|e }}</td>
+							<td>{{ cust.customer_email|e }}</td>
+							<td>
+<div id="output{{cust.customer_id}}"></div>
+<script>
+$(function(){
+  $('#output{{cust.customer_id}}').qrcode("{{cust.customer_id}}");
+   var canvas = document.querySelector("#output{{cust.customer_id}} canvas");
+  var img = canvas.toDataURL("image/png");
+  $(canvas).on('click', function() {
+    
+    var dl = document.createElement('a');
+    dl.setAttribute('href', img);
+    dl.setAttribute('download', 'qrcode.png');
+   dl.click();
+  });
+  
+});
+
+</script>
+</td>
+							<td>{{ cust.customer_state|e }}</td>											
+							<td>{{ cust.customer_country|e }}</td>											
+							<td class="status {{ cust.customer_id|e }}">
+							{% if cust.customer_status == 1 %}
+								<div class="active-button" id="{{ cust.customer_id|e }}" onclick="statusFunction({{ cust.customer_id|e }},0)">Active</div>
+							{% else %}
+								<div class="inactive-button" id="{{ cust.customer_id|e }}" onclick="statusFunction({{ cust.customer_id|e }},1)">Inactive</div>
+							{% endif %}
+							</td>
+							<td>
+							<div class="market-update-right">
+								<span><a href="#" data-toggle="modal" data-target="#myModal-view" data-cid="{{ cust.customer_id|e }}" class="view-modal"><i class="fa fa-eye latest-view-icon"></i></a></span>
+								<span><a href="#" data-href="{{ base_url }}resturant/customer/edit/{{ cust.customer_id|e }}" data-toggle="modal"  data-cid="{{ cust.customer_id|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+								<span><a href="#" onclick="confirmDeleteModal('{{ cust.customer_id|e }}')"><i class="fa fa-trash"></i></a></span>
+							</div>
+							</td>
+						</tr>
+						{% endfor %}
+						{% else %}									
+							<tr>									
+								<td class="record" colspan="7" >{{ constant('NO RECORD FOUND')}}</td>								
+							</tr>							
+						{% endif %}
+					</tbody>
+				</table>
+				<!--Pagination -->
+				<nav class="my-4 pagenation-border">
+				   {{ links|raw  }}
+					<div class="total-records">
+						<div>
+							{% if results %}
+								{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}								
+								0{{ constant('RECORD')}}
+							{% endif %}</div>
+					</div>
+				</nav>
+				<!--/Pagination -->
+			</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'resturant/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'resturant/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add customer -->
+
+<!--view customer -->
+<!--latest customer add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('MANAGE')}} {{constant('CUSTOMER')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form name="customer_registration" method="POST" action="{{ base_url }}resturant/customer/add/" >
+								<div class="col-md-12" style="padding:0px;">	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+										<label for="customer_name">{{ constant('NAME')}}<span class="required">*</span></label>												
+										<input type="text" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" id="customer_name" name="customer_name" class="form-control">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+										<label for="customer_username">{{ constant('USERNAME')}}<span class="required">*</span></label>												
+										<input type="text" id="customer_username" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('USERNAME')}}" name="customer_username" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-envelope prefix grey-text"></i>
+										<label for="customer_email">{{ constant('EMAIL')}}<span class="required">*</span></label>													
+										<input type="email" id="customer_email" maxlength="100" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" name="customer_email" class="form-control">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-phone prefix grey-text"></i>
+										<label for="customer_phone">{{ constant('PHONENO')}}<span class="required">*</span></label>														
+										<input type="tel" id="customer_phone" min="0" maxlength="12" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" name="customer_phone"  class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form">		
+										<i class="fa fa-male prefix grey-text"></i>
+										<label for="customer_gender">{{constant('GENDER')}}<span class="required">*</span></label>
+										<select name="customer_gender" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+											<option value="">{{constant('PLEASE SELECT') }} </option>
+											<option value="Male" {% if set_data.customer_gender =="Male"  %} selected="selected" {% endif %}>Male</option>
+											<option value="Female" {% if set_data.customer_gender =="Female"  %} selected="selected" {% endif %}>Female</option>
+											<option value="Transgender" {% if set_data.customer_gender =="Transgender"  %} selected="selected" {% endif %}>Transgender</option>
+										</select>
+								</div>
+								<div class="col-md-12 md-form" >											    
+									<i class="fa fa-address-card prefix grey-text"></i>
+										<label for="customer_address">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+									<textarea type="text" id="customer_address" maxlength="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" name="customer_address" class="md-textarea" style="height: 30px"></textarea>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="customer_city">{{ constant('CITY')}}<span class="required">*</span></label>
+										<input type="text" id="customer_city" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('CITY')}}" name="customer_city" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="customer_state">{{ constant('STATE')}}<span class="required">*</span></label>
+										<input type="text" id="customer_state" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('STATE')}}" name="customer_state" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-globe prefix grey-text"></i>
+											<label for="customer_country">{{ constant('COUNTRY')}}<span class="required">*</span></label>
+										<input type="text" id="customer_country" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('COUNTRY')}}" name="customer_country" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-map-pin prefix grey-text"></i>
+											<label for="customer_zipcode">{{ constant('ZIPCODE')}}<span class="required">*</span></label>
+										<input type="text" id="customer_zipcode" placeholder="{{ constant('ENTER')}} {{ constant('ZIPCODE')}}" maxlength="7" name="customer_zipcode" class="form-control">
+									</div>									
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_dob">{{ constant('DOB')}}<span class="required">*</span></label>
+										<input type="text" id="customer_dob" placeholder="{{ constant('ENTER')}} {{ constant('DOB')}}" name="customer_dob" class="form-control dobs">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_doa">{{ constant('DOA')}}</label>
+										<input type="text" id="customer_doa" name="customer_doa" placeholder="{{ constant('ENTER')}} {{ constant('DOA')}}" class="form-control dobs">
+									</div>
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+
+<!--latest customer add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+	<div class="modal-dialog">		
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{constant('EDIT')}} {{constant('CUSTOMER')}}</h4>
+			</div>
+			<div class="col-md-12">
+				<div class="card form-white" style="box-shadow: none;">
+					<div class="card" style="box-shadow:none">
+						<div class="card-body">
+							<!-- Form contact -->
+							<form name="edit_customer" method="POST" action="" id="edit_customer">
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+											<label for="form31">{{ constant('NAME')}}<span class="required">*</span></label>
+										<input type="text" id="customer_name1" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" name="customer_name" class="form-control">											
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+											<label for="customer_username">{{ constant('USERNAME')}}<span class="required">*</span></label>
+										<input type="text" id="customer_username1" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('USERNAME')}}" name="customer_username" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-envelope prefix grey-text"></i>
+											<label for="form341">{{ constant('EMAIL')}}<span class="required">*</span></label>
+										<input type="email" id="customer_email1" maxlength="100" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" name="customer_email" class="form-control">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-phone prefix grey-text"></i>
+										<label for="form341">{{ constant('PHONENO')}}<span class="required">*</span></label>
+										<input type="tel" min="0" id="customer_phone1" maxlength="12" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" name="customer_phone"  class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form">										
+										<i class="fa fa-male prefix grey-text"></i>
+										<label for="customer_gender">{{constant('GENDER')}}<span class="required">*</span></label>
+										<select name="customer_gender" id="customer_gender1" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+											<option value="">{{constant('PLEASE SELECT') }} </option>
+											<option value="Male" {% if set_data.customer_gender =="Male"  %} selected="selected" {% endif %}>Male</option>
+											<option value="Female" {% if set_data.customer_gender =="Female"  %} selected="selected" {% endif %}>Female</option>
+											<option value="Transgender" {% if set_data.customer_gender =="Transgender"  %} selected="selected" {% endif %}>Transgender</option>
+										</select>
+								</div>
+								<div class="col-md-12 md-form">
+									<i class="fa fa-address-card prefix grey-text"></i>
+										<label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+									<textarea type="text" maxlength="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" id="customer_address1" name="customer_address" class="md-textarea" style="height: 30px"></textarea>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="form341">{{ constant('CITY')}}<span class="required">*</span></label>
+										<input type="text" id="customer_city1" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('CITY')}}" name="customer_city" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="customer_state">{{ constant('STATE')}}<span class="required">*</span></label>
+										<input type="text" id="customer_state1" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('STATE')}}" name="customer_state" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-globe prefix grey-text"></i>
+											<label for="customer_country">{{ constant('COUNTRY')}}<span class="required">*</span></label>
+										<input type="text" id="customer_country1" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('COUNTRY')}}" name="customer_country" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-map-pin prefix grey-text"></i>
+											<label for="customer_zipcode">{{ constant('ZIPCODE')}}<span class="required">*</span></label>
+										<input type="text" maxlength="7" id="customer_zipcode1" placeholder="{{ constant('ENTER')}} {{ constant('ZIPCODE')}}" name="customer_zipcode" class="form-control">
+									</div>									
+								</div>		
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_dob">{{ constant('DOB')}}<span class="required">*</span></label>
+										<input type="text" id="customer_dob1" placeholder="{{ constant('ENTER')}} {{ constant('DOB')}}" name="customer_dob" class="form-control dobs">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_doa">{{ constant('DOA')}}</label>
+										<input type="text" id="customer_doa1" placeholder="{{ constant('ENTER')}} {{ constant('DOA')}}" name="customer_doa" class="form-control dobs">
+									</div>
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+								</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		</div>		  
+	</div>
+</div>
+
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('VIEW')}} {{constant('CUSTOMER')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+								<form>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+										<label for="form31">{{ constant('NAME')}}<span class="required">*</span></label>
+										<input type="text" readonly id="customer_name2" name="customer_name" class="form-control">											
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+											<label for="customer_username">{{ constant('USERNAME')}}<span class="required">*</span></label>
+										<input type="text" readonly id="customer_username2" name="customer_username" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-envelope prefix grey-text"></i>
+											<label for="form341">{{ constant('EMAIL')}}<span class="required">*</span></label>
+										<input type="email" readonly id="customer_email2" name="customer_email" class="form-control">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-phone prefix grey-text"></i>
+										<label for="form341">{{ constant('PHONENO')}}<span class="required">*</span></label>
+										<input type="tel" maxlength="12" readonly id="customer_phone2" name="customer_phone"  class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">										
+										<i class="fa fa-male prefix grey-text"></i>
+										<label for="customer_gender">{{constant('GENDER')}}<span class="required">*</span></label>
+										<select name="customer_gender" disabled id="customer_gender2" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+											<option value="">{{constant('PLEASE SELECT') }} </option>
+											<option value="Male" {% if set_data.customer_gender =="Male"  %} selected="selected" {% endif %}>Male</option>
+											<option value="Female" {% if set_data.customer_gender =="Female"  %} selected="selected" {% endif %}>Female</option>
+											<option value="Transgender" {% if set_data.customer_gender =="Transgender"  %} selected="selected" {% endif %}>Transgender</option>
+										</select>
+								</div>
+								<div class="col-md-12 md-form">
+									<i class="fa fa-address-card prefix grey-text"></i>
+										<label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+									<textarea type="text" readonly id="customer_address2" name="customer_address" class="md-textarea" style="height: 30px"></textarea>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="form341">{{ constant('CITY')}}<span class="required">*</span></label>
+										<input type="text" readonly id="customer_city2" name="customer_city" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-building prefix grey-text"></i>
+											<label for="customer_state">{{ constant('STATE')}}<span class="required">*</span></label>
+										<input type="text" readonly id="customer_state2" name="customer_state" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-globe prefix grey-text"></i>
+											<label for="customer_country">{{ constant('COUNTRY')}}<span class="required">*</span></label>
+										<input type="text" readonly id="customer_country2" name="customer_country" class="form-control">
+									</div>	
+									<div class="col-md-6 md-form">
+										<i class="fa fa-map-pin prefix grey-text"></i>
+											<label for="customer_zipcode">{{ constant('ZIPCODE')}}<span class="required">*</span></label>
+										<input type="text" readonly maxlength="7" id="customer_zipcode2" name="customer_zipcode" class="form-control">
+									</div>									
+								</div>		
+								<div class="col-md-12 md-form" style="padding:0px;">
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_dob">{{ constant('DOB')}}<span class="required">*</span></label>
+										<input type="text" disabled id="customer_dob2" name="customer_dob" class="form-control dobs">
+									</div>
+									<div class="col-md-6 md-form">
+										<i class="fa fa-calendar prefix grey-text"></i>
+											<label for="customer_doa">{{ constant('DOA')}}</label>
+										<input type="text" disabled id="customer_doa2" name="customer_doa" class="form-control dobs">
+									</div>
+								</div>
+								<div class="col-md-12 text-center">
+									<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+								</div>
+							</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+function statusFunction(id,value){
+		var urlData='{{ base_url }}resturant/customer/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.customer_status == 1){															
+							$('td.status.'+value.customer_id).html("<div id="+value.customer_id+" class='active-button' onclick='statusFunction("+value.customer_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.customer_id).html("<div id="+value.customer_id+" class='inactive-button' onclick='statusFunction("+value.customer_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='customer_registration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		customer_name: "required",
+		customer_username: "required",
+		customer_phone: {
+						required: true,
+						number: true
+						},
+		customer_gender: "required",
+		customer_address: "required",
+		customer_dob: "required", 
+		customer_city: "required",
+		customer_state: "required",
+		customer_country: "required",
+		customer_zipcode: {
+						required: true,
+						},
+
+        customer_email: {
+						required: true,
+						email: true
+						},
+		},
+    // Specify validation error messages
+    messages: {
+		customer_name: "Please enter your Name",
+		customer_country: "Please enter your country",
+		customer_username: "Please enter your username",
+		customer_phone: {
+						required: "Please enter phone number",
+						number: "Your Phone no. must be numeric"
+						},
+		customer_gender: "Please select your gender",
+		customer_city: "Please enter your city",
+		customer_state: "Please enter your state",
+		customer_country: "Please enter your country",
+		customer_address: "Please enter your address",
+		customer_dob: "Enter your date of birth",			
+		customer_zipcode: {
+						required: "Please enter zipcode",
+						},
+		customer_email: {
+						required: "Please enter  email",
+						email: "Please enter a valid email",
+						}  
+		},
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="customer_name">'+value+'</label>');
+                       });
+					   }else{
+					   $('form[name="customer_registration"]')[0].reset();
+						 $('form[name="customer_registration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(10000).fadeOut(100)){
+                           window.location.reload();
+						   }
+					   }
+					}else{
+					$('form[name="customer_registration"]')[0].reset();
+					$('form[name="customer_registration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+                     window.location.reload();
+					 }
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_customer']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		customer_name: "required",
+		customer_username: "required",
+		customer_phone: {
+						required: true,
+						number: true
+						},
+		customer_gender: "required",
+		customer_address: "required",
+		customer_dob: "required", 
+		customer_city: "required",
+		customer_state: "required",
+		customer_country: "required",
+		customer_zipcode: {
+						required: true,
+						},
+        customer_email: {
+						required: true,
+						email: true
+						},
+       
+    },
+    // Specify validation error messages
+    messages: {
+		customer_name: "Please enter your Name",
+		customer_country: "Please enter your country",
+		customer_username: "Please enter your username",
+		customer_phone: {
+						required: "Please enter phone number",
+						number: "Your Phone no. must be numeric"
+						},
+		customer_gender: "Please select your gender",
+		customer_city: "Please enter your city",
+		customer_state: "Please enter your state",
+		customer_country: "Please enter your country",
+		customer_address: "Please enter your address",
+		customer_dob: "Enter your date of birth",			
+		customer_zipcode: {
+						required: "Please enter zipcode",
+						},
+		customer_email: {
+						required: "Please enter  email",
+						email: "Please enter a valid email",
+						} 
+		},
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	    var formData = $(form).serialize();
+		var urlData = $(form).attr('action');
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="customer_name">'+value+'</label>');
+                       });					  
+					}else{
+						$('form[name="edit_customer"]')[0].reset();
+						$('form[name="edit_customer"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+						if($('.alert').delay(10000).fadeOut(100)){
+							window.location.reload();
+						}
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+   $(document).ready(function () {
+            $(".dobs").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00",
+				maxDate :0
+				});
+        });
+		
+		$(document).ready(function () {
+            $(document).on('click','.view-modal',function(e){
+			e.preventDefault();
+			var cid = $(this).data('cid');	
+			var urlData = "{{ base_url }}/resturant/customer/edit_view/"+cid;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				success:function(data) 
+				{		  			
+				  var data = $.parseJSON(data);					  
+						$.each(data.edit_view, function( index, value ) {
+								$('#customer_name2').val(value.customer_name);
+								$('#customer_username2').val(value.customer_username);
+								$('#customer_email2').val(value.customer_email);
+								$('#customer_phone2').val(value.customer_phone);
+								$('#customer_gender2').val(value.customer_gender);
+								$('#customer_address2').val(value.customer_address);
+								$('#customer_city2').val(value.customer_city);
+								$('#customer_state2').val(value.customer_state);
+								$('#customer_country2').val(value.customer_country);
+								$('#customer_zipcode2').val(value.customer_zipcode);
+								$('#customer_dob2').val(value.customer_dob);
+								$('#customer_doa2').val(value.customer_doa);
+						});
+				}
+			});
+        });
+        });
+</script>
+
+<script type="text/javascript">
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}resturant/customer/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});  
+}  
+
+</script>
+<script language="javascript">
+    $(".modal-edit").click(function(e) {  
+		e.preventDefault();
+		$('#edit_customer').attr('action',$(this).data('href'));
+		var cid = $(this).data('cid');	
+		var urlData = "{{ base_url }}/resturant/customer/edit_view/"+cid;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				success:function(data) 
+				{			  			
+				  var data = $.parseJSON(data);					  
+						$.each(data.edit_view, function( index, value ) {
+								$('#customer_name1').val(value.customer_name);
+								$('#customer_username1').val(value.customer_username);
+								$('#customer_email1').val(value.customer_email);
+								$('#customer_phone1').val(value.customer_phone);
+								$('#customer_gender1').val(value.customer_gender);
+								$('#customer_address1').val(value.customer_address);
+								$('#customer_city1').val(value.customer_city);
+								$('#customer_state1').val(value.customer_state);
+								$('#customer_country1').val(value.customer_country);
+								$('#customer_zipcode1').val(value.customer_zipcode);
+								$('#customer_dob1').val(value.customer_dob);
+								$('#customer_doa1').val(value.customer_doa);
+					});						
+				}
+			});
+        });
+</script><style type="text/css">	canvas{	    width: 100px;    height: 100px;	}</style>
+</body>
+</html>                     

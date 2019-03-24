@@ -1,0 +1,429 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'admin/lib/nav.html' %}
+				
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								 {{ constant('USER')}}
+								  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th> {{ constant('NAME')}}</th>
+										<th>{{ constant('USERNAME')}}</th>
+										<th>{{ constant('EMAIL')}}</th>
+										<th>{{ constant('PHONENO')}}</th>
+										<th>{{ constant('ADDRESS')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										 <th>{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									{% if results %}
+									{% for key, user in results %} 
+										<tr>									
+    									<td>{{ user.user_name|e }}</td>
+										<td>{{ user.user_username|e }}</td>
+										<td>{{ user.user_email|e }}</td>
+										<td>{{ user.user_phoneno|e }}</td>
+										<td>{{ user.user_address|e }}</td>
+										
+										<td>
+										{% if user.user_status == 1 %}
+										<div class="active-button">Active</div>
+									     {% else %}
+										<div class="inactive-button">Inactive</div>
+									    {% endif %}
+										</td>
+										<td>
+										 <div class="market-update-right">
+                                            <span><a href="#" data-toggle="modal" data-target="#myModal-view"><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#"  data-toggle="modal" data-target="#myModal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#"><i class="fa fa-trash"></i></a></span>
+                                        </div></td>
+										</tr>
+										{% endfor %}
+										{% else %}									
+										<tr>									
+										<td class="record" colspan="7" >
+										{{ constant('NO RECORD FOUND')}} </td>								
+										</tr>							
+										{% endif %}
+
+
+										</tbody>
+										</table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add User -->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Add User</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form31" class="form-control">
+                                                    <label for="form31">Name</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form21" class="form-control">
+                                                    <label for="form21">Username</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                                    <input type="email" id="form321" class="form-control">
+                                                    <label for="form341">Email</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-phone prefix grey-text"></i>
+                                                        <input type="number" id="form321" class="form-control">
+                                                        <label for="form341">Phone</label>
+                                                    </div>
+                                                   
+                                                        <div class="col-md-6 md-form">
+                                                                <i class="fa fa-male prefix grey-text"></i>
+                                                                <input type="text" id="form321" class="form-control">
+                                                                <label for="form341">Gender</label>
+                                                            </div>
+                                                <div class="col-md-12 md-form">
+                                                    <i class="fa fa-address-card prefix grey-text"></i>
+                                                    <textarea type="text" id="form81" class="md-textarea" style="height: 30px"></textarea>
+                                                    <label for="form81">Address</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-building prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control">
+                                                        <label for="form341">City</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-tag prefix grey-text"></i>
+                                                        <select class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+                                                                    <option data-subtext="Rep California">Department</option>
+                                                                    <option data-subtext="Sen California">Test</option>
+                                                                    <option data-subtext="Sen Massacusetts">Account</option>
+                                                                    <option data-subtext="Sen Massacusetts">Sales</option>
+                                                                </select>
+                                                              
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-calendar prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control">
+                                                        <label for="form341">Dob</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-map-pin prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control">
+                                                        <label for="form341">Zipcode</label>
+                                                </div>
+    
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn btn-success">Submit</button>
+                                                    <button class="btn btn-primary">Back</button>
+                                                </div>
+                                            </form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add User -->
+
+<!--edit user add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Edit User</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form31" class="form-control" placeholder="name">
+                                                    <label for="form31">Name</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form21" class="form-control" placeholder="Username">
+                                                    <label for="form21">Username</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                                    <input type="email" id="form321" class="form-control" placeholder="Email">
+                                                    <label for="form341">Email</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-phone prefix grey-text"></i>
+                                                        <input type="number" id="form321" class="form-control" placeholder="Phone">
+                                                        <label for="form341">Phone</label>
+                                                    </div>
+                                                   
+                                                        <div class="col-md-6 md-form">
+                                                                <i class="fa fa-male prefix grey-text"></i>
+                                                                <input type="text" id="form321" class="form-control" placeholder="Gender">
+                                                                <label for="form341">Gender</label>
+                                                            </div>
+                                                <div class="col-md-12 md-form">
+                                                    <i class="fa fa-address-card prefix grey-text"></i>
+                                                    <textarea type="text" id="form81" class="md-textarea" style="height: 30px" placeholder="Address"></textarea>
+                                                    <label for="form81">Address</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-building prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="city">
+                                                        <label for="form341">City</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-tag prefix grey-text"></i>
+                                                        <select class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+                                                                    <option data-subtext="Rep California">Department</option>
+                                                                    <option data-subtext="Sen California">Test</option>
+                                                                    <option data-subtext="Sen Massacusetts">Account</option>
+                                                                    <option data-subtext="Sen Massacusetts">Sales</option>
+                                                                </select>
+                                                              
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-calendar prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="Dob">
+                                                        <label for="form341">Dob</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-map-pin prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="Zipcode">
+                                                        <label for="form341">Zipcode</label>
+                                                </div>
+    
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn btn-success">Submit</button>
+                                                    <button class="btn btn-primary">Back</button>
+                                                </div>
+                                            </form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit user -->
+
+<!--View USer-->
+
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">View User</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form31" class="form-control" placeholder="name" readonly>
+                                                    <label for="form31">Name</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                    <input type="text" id="form21" class="form-control" placeholder="Username" readonly>
+                                                    <label for="form21">Username</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                                    <input type="email" id="form321" class="form-control" placeholder="Email" readonly>
+                                                    <label for="form341">Email</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-phone prefix grey-text"></i>
+                                                        <input type="number" id="form321" class="form-control" placeholder="Phone" readonly>
+                                                        <label for="form341">Phone</label>
+                                                    </div>
+                                                   
+                                                        <div class="col-md-6 md-form">
+                                                                <i class="fa fa-male prefix grey-text"></i>
+                                                                <input type="text" id="form321" class="form-control" placeholder="Gender" readonly>
+                                                                <label for="form341">Gender</label>
+                                                            </div>
+                                                <div class="col-md-12 md-form">
+                                                    <i class="fa fa-address-card prefix grey-text"></i>
+                                                    <textarea type="text" id="form81" class="md-textarea" style="height: 30px" placeholder="Address" readonly></textarea>
+                                                    <label for="form81">Address</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-building prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="city" readonly>
+                                                        <label for="form341">City</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-tag prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="Department" readonly>
+                                                        <label for="form341">Department</label>
+                                                              
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-calendar prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="Dob" readonly>
+                                                        <label for="form341">Dob</label>
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-map-pin prefix grey-text"></i>
+                                                        <input type="text" id="form321" class="form-control" placeholder="Zipcode" readonly>
+                                                        <label for="form341">Zipcode</label>
+                                                </div>
+    
+                                               
+                                            </form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--view user -->
+
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="js/jquery.nicescroll.js"></script>
+		<script src="js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+	$(function(){
+		$('form.material').materialForm(); // Apply material
+		$('form').validate({ 
+			errorPlacement: function(error, element) {}
+		}); // Apply validator with no error messages but classes only
+	});
+</script>
+</body>
+</html>                     

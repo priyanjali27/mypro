@@ -1,0 +1,414 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								{{constant('DELIVERY MANAGEMENT')}}   <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('COUNTRY')}}</th>
+										<th>{{ constant('RESTURANT')}}</th>
+										<th>{{ constant('DELIVERY MANAGEMENT')}}</th>
+										<th>{{ constant('PERCENTAGE')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody>	
+										{% if results %}
+											{% for key,minorder in results %} 
+												<tr>									
+												<td>{{ minorder.country_name|e }}</td>
+												<td>{{ minorder.resturantbrand_name|e }}</td>
+												<td>{{ minorder.mindeliveryorder_name|e }}</td>
+												<td>{{ minorder.mindeliveryorder_percentage|e }}</td>																																			<td class="status {{ minorder.mindeliveryorder_id|e }}">													{% if minorder.mindeliveryorder_status == 1 %}														<div class="active-button" onclick="statusFunction({{ minorder.mindeliveryorder_id|e }},0)">Active</div>													{% else %}														<div class="inactive-button" onclick="statusFunction({{ minorder.mindeliveryorder_id|e }},1)">Inactive</div>													{% endif %}												</td>
+												<td>
+												<div class="market-update-right">
+													<span><a href="#"  data-toggle="modal" data-id="{{ base_url }}admin/Deliveryminorder/edit/{{ minorder.mindeliveryorder_id|e }}" data-percent="{{ minorder.mindeliveryorder_percentage|e }}" data-name="{{ minorder.mindeliveryorder_name|e }}"   data-country="{{ minorder.mindeliveryorder_country_id|e }}" data-rest="{{ minorder.mindeliveryorder_restaurant_id|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit"></i></a></span>
+													<span><a href="#" onclick="confirmDeleteModal('{{ minorder.mindeliveryorder_id|e }}')"><i class="fa fa-trash"></i></a></span>
+												</div>
+												</td>
+												</tr>
+											{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}									
+									</tbody>
+                                </table>
+            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add country add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('ADD')}} {{constant('DELIVERY MANAGEMENT')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}admin/deliveryminorder/add" method="POST" name="mindeliveryorder_form">									
+											<div class="col-md-12 md-form" style="padding:0px;">												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="mindeliveryorder_country_id">{{constant('COUNTRY')}}</label>
+													<select id="country_rel" name="mindeliveryorder_country_id" class="selectpicker form-control-select">
+													<option value="">{{ constant('PLEASE SELECT')}}</option>
+														{% if related_country %}
+															{% for key,country in related_country %} 
+																{% if country.country_status == 1 %}
+																	<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+																{% endif %}
+															{% endfor %}
+														{% endif %}
+													</select>												</div>												<div class="col-md-6 md-form" >													<i class="fa fa-500px prefix grey-text"></i>													<label for="mindeliveryorder_restaurant_id">{{constant('RESTURANT')}}</label>													<select name="mindeliveryorder_restaurant_id" class="selectpicker form-control-select"  id="resturantbrand_type" >														<option value="">{{ constant('PLEASE SELECT')}}</option>														{% set selector = '' %}																										{% for key, resturant_branch in resturants %}																								{% if (resturant_branch.resturantbrand_id) == set_data.resturantbrand_type %}															   <option value="{{resturant_branch.resturantbrand_id}}" selected>{{resturant_branch.resturantbrand_name}}</option>															{% else %}																<option value="{{resturant_branch.resturantbrand_id}}" >{{resturant_branch.resturantbrand_name}}</option>															{% endif %}														{% endfor %}		                                													</select>												</div>
+											</div>												
+											<div class="col-md-12 md-form" style="padding:0px;">												<div class="col-md-6 md-form" style="padding:0px;" >
+													<i class="fa fa-hand-grab-o prefix grey-text"></i>													<label for="mindeliveryorder_name">{{constant('MINIMUM ORDER VALUE')}}</label>
+													<input type="number" id="mindeliveryorder_name" min="1" name="mindeliveryorder_name" class="form-control" placeholder="{{constant('ENTER')}} {{constant('MINIMUM ORDER VALUE')}}">																								</div>												<div class="col-md-6 md-form">													<i class="fa fa-percent prefix grey-text"></i><label for="mindeliveryorder_percentage">{{constant('PERCENTAGE')}}</label>													<input type="text" id="mindeliveryorder_percentage" min="1" name="mindeliveryorder_percentage" class="form-control" placeholder="{{constant('ENTER')}} {{constant('PERCENTAGE')}} ">																								</div>
+											</div>							
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>	  
+		</div>
+	  </div>
+<!--Add country add--><!--edit country add-->
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">	
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('MINIMUM ORDER VALUE')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="" id="edit_country_form" name="edit_country_form" method="POST">											
+											<div class="col-md-12 md-form" style="padding:0px;">												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-globe prefix grey-text"></i>
+													<label for="mindeliveryorder_country_id">{{constant('COUNTRY')}}</label>
+													<select id="country_rel1" name="mindeliveryorder_country_id" class="selectpicker form-control-select">
+													<option value="">{{ constant('PLEASE SELECT')}}</option>
+													{% if related_country %}
+														{% for key,country in related_country %} 
+															{% if country.country_status == 1 %}
+																<option value="{{ country.country_code|e}}">{{ country.country_name|e }}</option>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+													</select>												</div>												<div class="col-md-6 md-form">													<i class="fa fa-500px prefix grey-text"></i>													<label for="mindeliveryorder_restaurant_id">{{constant('RESTURANT')}}</label>													<select name="mindeliveryorder_restaurant_id" class="selectpicker form-control-select"  id="mindeliveryorder_restaurant_id1" >													<option value="">{{ constant('PLEASE SELECT')}}</option>													{% set selector = '' %}																									{% for key, resturant_branch in resturants %} 																										{% if (resturant_branch.resturantbrand_id) == set_data.resturantbrand_type %}														   <option value="{{resturant_branch.resturantbrand_id}}" selected>{{resturant_branch.resturantbrand_name}}</option>														{% else %}															<option value="{{resturant_branch.resturantbrand_id}}" >{{resturant_branch.resturantbrand_name}}</option>														{% endif %}													{% endfor %}			                                													</select>												</div>											</div>	
+											<div class="col-md-12 md-form" style="padding:0px;">												<div class="col-md-6 md-form" style="padding:0px;">
+													<i class="fa fa-hand-grab-o prefix grey-text"></i><label for="mindeliveryorder_name">{{constant('MINIMUM ORDER VALUE')}}</label>
+													<input type="number" id="mindeliveryorder_name1" min="1" name="mindeliveryorder_name" class="form-control" placeholder="{{constant('ENTER')}} {{constant('MINIMUM ORDER VALUE')}}">																								</div>												<div class="col-md-6 md-form">													<i class="fa fa-percent prefix grey-text"></i><label for="mindeliveryorder_percentage">{{constant('PERCENTAGE')}}</label>													<input type="text" id="mindeliveryorder_percentage1" min="1" name="mindeliveryorder_percentage" class="form-control" placeholder="{{constant('ENTER')}} {{constant('PERCENTAGE')}} ">																								</div>
+											</div>					
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit department add-->
+   <!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>{{constant('SURE DELETE')}}</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">function statusFunction(id,value){		var urlData='{{ base_url }}admin/deliveryminorder/updateStatus/'+id+'/'+value;		$.ajax(			{				url : urlData,				type: "POST",				crossDomain: true,			    success:function(response) 				{					var data = $.parseJSON(response);						$.each(data.cur_status, function( key, value ) {										if(value.mindeliveryorder_status == 1){																						$('td.status.'+value.mindeliveryorder_id).html("<div class='active-button' onclick='statusFunction("+value.mindeliveryorder_id+",0)'>Active</div>");													}else{							$('td.status.'+value.mindeliveryorder_id).html("<div class='inactive-button' onclick='statusFunction("+value.mindeliveryorder_id+",1)'>Inactive</div>");													}					});								}			});	}
+// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='mindeliveryorder_form']").validate({
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		mindeliveryorder_country_id: "required",
+		mindeliveryorder_restaurant_id: "required",				mindeliveryorder_name:{			required: true,			number: true		},
+		mindeliveryorder_percentage:{
+			required: true,
+			number: true
+		},
+	 },
+    // Specify validation error messages
+    messages: {
+		mindeliveryorder_country_id: "Please Select Country Name.",
+		mindeliveryorder_restaurant_id:  "Please Select Restaurant Brand Name.",				mindeliveryorder_name:{						required: "Please enter minimum charges.",						number: "Please enter numeric value."						},
+		mindeliveryorder_percentage:{
+						required: "Please enter percentage value.",
+						number: "Please enter numeric value."
+						},
+    },
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+					   $('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="mindeliveryorder_form"]')[0].reset();
+					$('form[name="mindeliveryorder_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();			$('label.error').css('display','none');			$('.form-control').removeClass('error');			$('select').removeClass('error');			$('form[name="edit_country_form"]')[0].reset();
+	        $('#mindeliveryorder_percentage1').attr('value',$(this).data('percent'));
+			$('#mindeliveryorder_name1').attr('value',$(this).data('name'));
+			$('select#mindeliveryorder_restaurant_id1').find('option[value="'+$(this).data('rest')+'"]').prop("selected", true);
+			$('#edit_country_form').attr('action',$(this).data('id'));
+			$('select#country_rel1').find('option[value="'+$(this).data('country')+'"]').prop("selected", true);			
+        });				
+	      $('.add-latest-user').click(function(){			
+	      	$('label.error').css('display','none');			
+	      	$('select').removeClass('error');			
+	      	$('.form-control').removeClass('error');			
+	      	$('form[name="mindeliveryorder_form"]')[0].reset();		
+	      });
+    </script>
+
+	<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_country_form']").validate({
+    // Specify validation rules
+         rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		mindeliveryorder_country_id: "required",
+		mindeliveryorder_restaurant_id: "required",
+		mindeliveryorder_percentage:{
+		required: true,
+		number: true
+		},
+		mindeliveryorder_name:{
+		required: true,
+		number: true
+		},
+	 },
+    // Specify validation error messages
+    messages: {
+     mindeliveryorder_country_id: "Please Select Country Name.",
+		mindeliveryorder_restaurant_id:  "Please Select Restaurant Brand Name.",
+		mindeliveryorder_percentage:{
+						required: "Please enter percentage value.",
+						number: "Please enter numeric value."
+						},
+		mindeliveryorder_name:{
+						required: "Please enter minimum charges.",
+						number: "Please enter numeric value."
+						},
+
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+					$('form[name="edit_country_form"]')[0].reset();
+					$('form[name="edit_country_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted successfully!");
+  var urlData='{{ base_url }}admin/deliveryminorder/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

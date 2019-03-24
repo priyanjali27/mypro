@@ -1,0 +1,751 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'admin/lib/nav.html' %}			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								 {{ constant('STAFF')}}
+						  <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a></div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+										<th> {{ constant('NAME')}}({{ constant('USERNAME')}})</th>
+										<th>{{ constant('ROLE')}}</th>
+										<th>{{ constant('EMAIL')}}</th>
+										<th>{{ constant('PHONENO')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										 <th>{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									{% if results %}
+									{% for key, user in results %} 
+										<tr>									
+    									<td>{{ user.user_name|e }}({{ user.user_username|e }})</td>
+										<td>{% if user.user_role == '3' %}Super Admin {%else%}Staff{%endif%}</td>
+										<td>{{ user.user_email|e }}</td>
+										<td>{{ user.user_phoneno|e }}</td>									
+										
+										<td class="status {{ user.user_id|e }}">
+											{% if user.user_status == 1 %}
+												<div class="active-button" onclick="statusFunction({{ user.user_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" onclick="statusFunction({{ user.user_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<td>
+										 <div class="market-update-right">
+                                            <span><a href="#" data-toggle="modal" data-target="#myModal-view" data-name="{{ user.user_name|e }}" data-username="{{ user.user_username|e }}" data-dob="{{ user.user_dob|e }}" data-email="{{ user.user_email|e }}" data-city="{{ user.user_city|e }}" data-zipcode="{{ user.user_zipcode|e }}" data-depart="{{ user.department_name|e }}" data-gender="{{ user.user_gender|e }}" data-phone="{{ user.user_phoneno|e }}" data-address="{{ user.user_address|e }}" class="view-modal"><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#"  data-toggle="modal"  data-id="{{ base_url }}admin/user/edit/{{ user.user_id|e }}" data-name="{{ user.user_name|e }}" data-username="{{ user.user_username|e }}" data-dob="{{ user.user_dob|e }}" data-did="{{user.user_department_id}}" data-email="{{ user.user_email|e }}" data-city="{{ user.user_city|e }}" data-zipcode="{{ user.user_zipcode|e }}" data-depart="{{ user.department_name|e }}" data-gender="{{ user.user_gender|e }}" data-phone="{{ user.user_phoneno|e }}" data-address="{{ user.user_address|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ user.user_id|e }}')"><i class="fa fa-trash"></i></a></span>
+                                        </div></td>
+										</tr>
+										{% endfor %}
+										{% else %}									
+										<tr>									
+										<td class="record" colspan="7" >
+										{{ constant('NO RECORD FOUND')}} </td>								
+										</tr>							
+										{% endif %}
+
+
+										</tbody>
+										</table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'admin/lib/rest_branch_sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add User -->
+
+
+
+<!--view user -->
+<!--latest user add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('USER')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+						<div class="card" style="box-shadow:none">
+							<div class="card-body">
+								<!-- Form contact -->
+								<form name="userregistration" method="POST" action="{{ base_url }}admin/user/add/" >
+									<div class="col-md-12" style="padding:0px;">	
+										<div class="col-md-6 md-form">
+											<i class="fa fa-user prefix grey-text"></i><label for="user_name">{{ constant('NAME')}}</label>
+											<input type="text" id="user_name" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" name="user_name" class="form-control">	
+											<input type="hidden" id="user_role" name="user_role" value='6'>
+											<input type="hidden" id="user_restaurant_id" name="user_restaurant_id" value='{{restaurant_id}}'>										
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-user prefix grey-text"></i><label for="user_username">{{ constant('USERNAME')}}</label>
+											<input type="text" id="user_username" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('USERNAME')}}" name="user_username" class="form-control">												
+										</div>											
+									</div>
+									<div class="col-md-12" style="padding:0px;">
+										<div class="col-md-6 md-form">
+											<i class="fa fa-envelope prefix grey-text"></i><label for="user_email">{{ constant('EMAIL')}}</label>
+											<input type="email" id="user_email" MAXLENGTH="70" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" name="user_email" class="form-control">
+											
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-phone prefix grey-text"></i><label for="user_phoneno">{{ constant('PHONENO')}}</label>
+											<input type="tel" id="user_phoneno" min="0" MAXLENGTH="20" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" name="user_phoneno"  class="form-control">													
+										</div>												
+									</div>
+									<div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form">
+											<i class="fa fa-tag prefix grey-text"></i>
+											<label for="user_department_id">{{ constant('DEPT')}}</label>
+											<select name="user_department_id" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+												<option value="">{{ constant('PLEASE SELECT') }}  </option>
+												{% set selector = '' %}
+
+												{% for key, department in departments %} 
+
+												{% if (department.department_id) == set_data.user_department_id %}
+												<option value="{{department.department_id}}" selected
+												>{{department.department_name}}</option>
+												{% else %}
+												<option value="{{department.department_id}}" 
+												>{{department.department_name}}</option>
+												{% endif %}
+												{% endfor %}
+											</select>														  
+										</div>	
+										<div class="col-md-6 md-form">
+											<i class="fa fa-male prefix grey-text"></i>
+											<label for="user_gender">{{ constant('GENDER')}}</label>
+											<select name="user_gender" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+												<option value="">{{constant('PLEASE SELECT') }} </option>
+												<option value="Male" {% if set_data.user_gender =="Male"  %} selected="selected" {% endif %}>Male</option>
+												<option value="Female" {% if set_data.user_gender =="Female"  %} selected="selected" {% endif %}>Female</option>
+												<option value="Transgender" {% if set_data.user_gender =="Transgender"  %} selected="selected" {% endif %}>Transgender</option>
+											</select>
+										</div>														
+									</div>
+									<div class="col-md-12" style="padding:0px;">
+										<div class="col-md-12 md-form">
+											<i class="fa fa-address-card prefix grey-text"></i>
+											<label for="form81">{{ constant('ADDRESS')}}</label>
+											<textarea type="text" id="user_address" MAXLENGTH="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" name="user_address" class="md-textarea" style="height: 30px"></textarea>
+										</div>
+									</div>											
+										<div class="col-md-12 md-form">
+											<i class="fa fa-building prefix grey-text"></i>
+											<label for="user_city">{{ constant('CITY')}}</label>
+											<input type="text" id="user_city" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('CITY')}}" name="user_city" class="form-control">
+										</div>
+									
+									<div class="col-md-12" style="padding:0px;">
+										<div class="col-md-6 md-form">
+											<i class="fa fa-calendar prefix grey-text"></i><label for="form341">{{ constant('DOB')}}</label>
+											<input type="text" id="user_dob" placeholder="{{ constant('ENTER')}} {{ constant('DOB')}}"name="user_dob" class="form-control dobs">												
+										</div>
+										<div class="col-md-6 md-form">
+											<i class="fa fa-map-pin prefix grey-text"></i><label for="form341">{{ constant('ZIPCODE')}}</label>
+											<input type="text" id="user_zipcode" MAXLENGTH="7" placeholder="{{ constant('ENTER')}} {{ constant('ZIPCODE')}}" name="user_zipcode" class="form-control">													
+										</div>											
+									</div>
+									<div class="col-md-12 text-center">
+										<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+									</div>
+							</form>
+							<!-- Form contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--latest user add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('USER')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="editregistration" method="POST" action="" id="edit_dept_form" >
+											<div class="col-md-12" style="padding:0px;">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>	
+													<label for="user_name">{{ constant('NAME')}}</label>
+													<input type="text" id="user_name2" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" name="user_name" class="form-control">												
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>												
+													<label for="user_username">{{ constant('USERNAME')}}</label>
+													<input type="text" readonly id="user_username2" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('USERNAME')}}" name="user_username" class="form-control">												
+												</div>											
+											</div>											
+											<div class="col-md-12" style="padding:0px;">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-envelope prefix grey-text"></i>													
+													<label for="user_email">{{ constant('EMAIL')}}</label>
+													<input type="email" id="user_email2" MAXLENGTH="70" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" name="user_email" class="form-control">												
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-phone prefix grey-text"></i>															
+													<label for="user_phoneno">{{ constant('PHONENO')}}</label>
+													<input type="tel" id="user_phoneno2" min="0" MAXLENGTH="20" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" name="user_phoneno"  class="form-control">													
+												</div>												
+											</div>												
+											<div class="col-md-12 md-form" style="padding:0px;">												
+												<div class="col-md-6 md-form">
+													<i class="fa fa-male prefix grey-text"></i>
+													<label for="user_gender">{{ constant('GENDER')}}</label>
+													<select name="user_gender" id="user_gender2" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">
+														<option value="">{{constant('PLEASE SELECT') }} </option>
+														<option value="Male" {% if set_data.user_gender =="Male"  %} selected="selected" {% endif %}>Male</option>
+														<option value="Female" {% if set_data.user_gender =="Female"  %} selected="selected" {% endif %}>Female</option>
+														<option value="Transgender" {% if set_data.user_gender =="Transgender"  %} selected="selected" {% endif %}>Transgender</option>
+													</select>
+												</div>																												
+												<div class="col-md-6 md-form">													
+												<i class="fa fa-tag prefix grey-text"></i>	
+												<label for="user_department_id">{{ constant('DEPT')}}</label>
+												<select name="user_department_id" id="user_department_id2" class="selectpicker form-control-select" data-show-subtext="true" data-live-search="true">															
+												<option value="">{{constant('PLEASE SELECT') }}  </option>															
+												{% set selector = '' %}															
+												{% for key, department in departments %} 															
+												{% if (department.department_id) == set_data.user_department_id %}															
+												<option value="{{department.department_id}}" selected>{{department.department_name}}</option>															{% else %}															<option value="{{department.department_id}}" 															>{{department.department_name}}</option>															{% endif %}															{% endfor %}															</select>														  											</div>																												</div><div class="col-md-12" style="padding:0px;">
+											<div class="col-md-12 md-form">
+												<i class="fa fa-address-card prefix grey-text"></i>																
+												<label for="user_address">{{ constant('ADDRESS')}}</label>
+												<textarea type="text" id="user_address2" MAXLENGTH="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" name="user_address" class="md-textarea" style="height: 30px"></textarea>
+											
+											</div>											
+											</div>										
+											<div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form">
+												<i class="fa fa-building prefix grey-text"></i>											<label for="user_city">{{ constant('CITY')}}</label>
+												<input type="text" id="user_city2" name="user_city" MAXLENGTH="50" placeholder="{{ constant('ENTER')}} {{ constant('CITY')}}" class="form-control">
+											</div>
+											
+											<div class="col-md-6 md-form">
+													<i class="fa fa-calendar prefix grey-text"></i>														<label for="user_dob">{{ constant('DOB')}}</label>
+													<input type="text" id="user_dob2" placeholder="{{ constant('ENTER')}} {{ constant('DOB')}}" name="user_dob" class="form-control dobs">
+													
+											</div>											</div>										<div class="col-md-12" style="padding:0px;">
+											<div class="col-md-6 md-form">
+													<i class="fa fa-map-pin prefix grey-text"></i>														<label for="user_zipcode">{{ constant('ZIPCODE')}}</label>
+													<input type="text" id="user_zipcode2" MAXLENGTH="7" placeholder="{{ constant('ENTER')}} {{ constant('ZIPCODE')}}" name="user_zipcode" class="form-control">
+													
+											</div>											</div>
+
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<div class="modal fade" id="myModal-view" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">View User</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											<div class="col-md-12" style="padding:0px;">
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i>  <label for="form31">Name</label>
+                                                    <input type="text" id="user_name1" class="form-control" readonly>
+                                                  
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-user prefix grey-text"></i><label for="form21">Username</label>
+                                                    <input type="text" id="user_username1" class="form-control" readonly>
+                                                    
+                                                </div>                                                </div><div class="col-md-12" style="padding:0px;">
+                                                <div class="col-md-6 md-form">
+                                                    <i class="fa fa-envelope prefix grey-text"></i><label for="form341">Email</label>
+                                                    <input type="email" id="user_email1" class="form-control" readonly>
+                                                    
+                                                </div>
+                                                <div class="col-md-6 md-form">
+                                                        <i class="fa fa-phone prefix grey-text"></i>  <label for="form341">Phone</label>
+                                                        <input type="number" id="user_phoneno1" class="form-control" readonly>
+                                                      
+                                                    </div>                                                    </div>
+                                                   <div class="col-md-12" style="padding:0px;">
+                                                        <div class="col-md-6 md-form">
+															<i class="fa fa-male prefix grey-text"></i> 
+															<label for="form341">Gender</label>
+															<input type="text" id="user_gender1" class="form-control" readonly>                                                               
+														</div>   
+														<div class="col-md-6 md-form">
+															<i class="fa fa-tag prefix grey-text"></i>   
+															<label for="form341">Department</label>
+															<input type="text" id="user_depart1" class="form-control" readonly>														 
+														</div> 
+													</div>															
+													<div class="col-md-12" style="padding:0px;">
+														<div class="col-md-12 md-form">
+															<i class="fa fa-address-card prefix grey-text"></i> <label for="form81">Address</label>
+															<textarea type="text" id="user_address1" class="md-textarea" style="height: 30px"  readonly></textarea>
+														</div>                                                
+													</div>												
+													<div class="col-md-12" style="padding:0px;">
+														<div class="col-md-6 md-form">
+															<i class="fa fa-building prefix grey-text"></i><label for="form341">City</label>
+															<input type="text" id="user_city1" class="form-control" readonly>															
+														</div>	
+														<div class="col-md-6 md-form">
+															<i class="fa fa-map-pin prefix grey-text"></i> <label for="form341">Zipcode</label>
+															<input type="text" id="user_zipcode1" class="form-control" readonly>
+														</div> 
+													</div>
+													<div class="col-md-12" style="padding:0px;">
+														<div class="col-md-6 md-form">
+															<i class="fa fa-calendar prefix grey-text"></i><label for="form341">Dob</label>
+															<input type="text" id="user_dob1" class="form-control" readonly>																
+														</div>														                                               
+													</div>
+    
+                                               
+                                            </form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ constant('SURE DELETE') }}</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+function statusFunction(id,value){
+	var urlData='{{ base_url }}admin/user/updateStatus/'+id+'/'+value;
+	$.ajax(
+		{
+			url : urlData,
+			type: "POST",
+			crossDomain: true,
+			success:function(response) 
+			{
+				var data = $.parseJSON(response);	
+				$.each(data.cur_status, function( key, value ) {						
+					if(value.user_status == 1){															
+						$('td.status.'+value.user_id).html("<div class='active-button' onclick='statusFunction("+value.user_id+",0)'>Active</div>");							
+					}else{
+						$('td.status.'+value.user_id).html("<div class='inactive-button' onclick='statusFunction("+value.user_id+",1)'>Inactive</div>");							
+					}
+				});				
+			}
+		});
+	}
+	
+// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='userregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		user_name: "required",
+		user_username: "required",
+		user_phoneno: {
+			required: true,
+			number: true
+        },
+		user_gender: "required",
+		user_address: "required",
+		user_dob: "required", 
+		user_city: "required",
+		user_zipcode: {
+			required: true,
+        },
+
+        user_email: {
+        required: true,
+        // Specify that email should be validated
+        // by the built-in "email" rule
+        email: true
+        },
+      
+    },
+    // Specify validation error messages
+    messages: {
+		user_name: "Please enter your Name",
+		user_username: "Please enter your username",
+		user_phoneno: {
+			required: "Please enter phone number",
+			number: "It must be numeric"
+		},
+		user_gender: "Please select your gender",
+		user_city: "Please enter your city",
+		user_address: "Please enter your address",
+		user_dob: "Enter your date of birth",
+	  
+				
+		user_zipcode: {
+			required: "Please enter zipcode",
+		},
+		user_email: {
+			required: "Please enter  email address",
+			// Specify that email should be validated
+			// by the built-in "email" rule
+			email: "Please enter a valid email address",
+        },  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{ //alert(data);
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					   $('form[name="userregistration"]')[0].reset();
+						 $('form[name="userregistration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(10000).fadeOut(100)){
+                           window.location.reload();
+                          // window.location.reload();
+						   }
+					   }
+					}else{
+					$('form[name="userregistration"]')[0].reset();
+					$('form[name="userregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+                     window.location.reload();
+					 }
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='editregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		user_name: "required",
+		user_username: "required",
+		user_phoneno: {
+			required: true,
+			number: true
+        },
+		user_gender: "required",
+		user_address: "required",
+		user_dob: "required", 
+		user_city: "required",
+		user_zipcode: {
+			required: true,
+        },
+
+        user_email: {
+			required: true,
+			// Specify that email should be validated
+			// by the built-in "email" rule
+			email: true
+        }
+       
+    },
+    // Specify validation error messages
+    messages: {
+		user_name: "Please enter your Name",
+		user_username: "Please enter your username",
+		user_phoneno: {
+			required: "Please enter phone number",
+			number: "It must be numeric"
+		},
+		user_gender: "Please select your gender",
+		user_city: "Please enter your city",
+		user_address: "Please enter your address",
+		user_dob: "Enter your date of birth",      
+		user_zipcode: {
+			required: "Please enter zipcode",	
+		},
+		user_email: {
+			required: "Please enter  email address",
+			// Specify that email should be validated
+			// by the built-in "email" rule
+			email: "Please enter a valid email address",
+        },
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+						$('#'+index+'2').after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					$('form[name="editregistration"]')[0].reset();
+					$('form[name="editregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+                     window.location.reload();
+					 }
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+   $(document).ready(function () {
+            $(".dobs").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				beforeShow: function(input, inst) {
+					$(document).off('focusin.bs.modal');
+				},
+				onClose:function(){
+					$(document).on('focusin.bs.modal');
+				},
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00",
+				maxDate:0
+            });
+        });
+		
+		$(document).ready(function () {
+            $(document).on('click','.view-modal',function(){
+			$('#user_name1').attr('value',$(this).data('name'));
+			$('#user_username1').attr('value',$(this).data('username'));
+			$('#user_dob1').attr('value',$(this).data('dob'));
+			$('#user_email1').attr('value',$(this).data('email'));
+			$('#user_city1').attr('value',$(this).data('city'));
+			$('#user_zipcode1').attr('value',$(this).data('zipcode'));
+			$('#user_depart1').attr('value',$(this).data('depart'));
+			$('#user_gender1').attr('value',$(this).data('gender'));
+			$('#user_phoneno1').attr('value',$(this).data('phone'));
+		    $('#user_address1').text($(this).data('address'));
+			});
+        });
+</script>
+
+
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/user/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+ <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+			$('label.error').css('display','none');
+			$('.form-control').removeClass('error');
+			$('select').removeClass('error');
+			$('form[name="editregistration"]')[0].reset();
+            $('#user_name2').attr('value',$(this).data('name'));
+			$('#user_username2').attr('value',$(this).data('username'));
+			$('#user_dob2').attr('value',$(this).data('dob'));
+			$('#user_email2').attr('value',$(this).data('email'));
+			$('#user_city2').attr('value',$(this).data('city'));
+			$('#user_zipcode2').attr('value',$(this).data('zipcode'));
+			$('#user_phoneno2').attr('value',$(this).data('phone'));
+		    $('#user_address2').text($(this).data('address'));
+			var did=$(this).data('did');
+			$('#user_department_id2').find('option[value="'+did+'"]').prop("selected", true);
+			var gender=$(this).data('gender');
+			$('#user_gender2').find('option[value="'+gender+'"]').prop("selected", true);
+            $('#edit_dept_form').attr('action',$(this).data('id'));			
+        });
+    </script>
+	
+</body>
+</html>                     

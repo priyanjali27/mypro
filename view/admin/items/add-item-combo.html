@@ -1,0 +1,2173 @@
+{% include 'admin/lib/header.html' %}
+
+<link href="{{ base_url }}assets/css/resturant/custom.css" rel="stylesheet" type="text/css" media="all"/>
+<!--js-->
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/pace.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/blockui.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/app.js"></script>
+	
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/interactions.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/widgets.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/effects.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'admin/lib/nav.html' %}
+				
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+
+<div class="chit-chat-layer1" style="background-color: #fff;padding: 20px;">
+	<div class="content" style="margin-bottom: 0px;padding-bottom: 0px;">	
+						<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<ul class="nav nav-tabs">
+								<li class="tab-h">{{constant('ITEM TYPE')}}</li>
+								<li class="active"><a data-toggle="tab" href="#assocative_html">{{constant('INDIVIDUAL')}}</a></li>
+								{%if action!='edit'%}
+								<li><a data-toggle="tab" id="combos" href="#combo_html">Combo Item</a></li>
+							{%endif%}
+							</ul>
+					</div>
+					</div>
+					</div>
+
+	<div class="content tab-content">
+		{%if action=='edit'%}
+	 <a type="button" href="{{base_url}}admin/menus/resturant/{{item_data.item_brand_id}}/{{item_data.item_country_id}}/{{item_data.item_company_id}}"  class="btn btn-primary">{{constant('BACK')}}</a>
+	 {%endif%}
+   <!-- /***********************************************************/
+	/*         START ASSOCIATIVE AND INDIVIDUAL ITEMS HTML     */
+    /***********************************************************/-->
+					<div class="row tab-pane fade in active individual" id="assocative_html">
+						<form action="" id="individual_item" name="individual_item" enctype="multipart/form-data" method="post">
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xs-12 mrg-se">
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="item-head">{{constant('ADD ITEM')}}</div>
+							<input   id="individual" name="individual"  type="hidden"  value="" >
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+								<input  type="hidden" name="item_country_id"  value="{{ country_id }}" >
+								<input  class="r-alpaca-control form-control" style="padding-left: 0px;" id="item_name" name="item_name" autocomplete="" type="text" placeholder="{{constant('ITEM NAME')}}" value="{{ item_data.item_language_item_name }}" >
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+							{%if action=='edit'%}
+							<div class="form-group">
+								<input  class="r-alpaca-control form-control" style="padding-left: 0px;"   autocomplete="" type="text" readonly  value="{{ item_code }}" >
+							</div>
+						{%else%}
+							<div class="form-group">
+								<input  class="r-alpaca-control form-control" style="padding-left: 0px;"  id="item_code" name="item_code"  autocomplete="" type="text" placeholder="{{constant('ITEM CODE')}}"  value="{{ item_code }}" >
+							</div>
+							{%endif%}
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+							  <select class="form-control no-border" id="item_category_id" name="item_category_id" >
+								<option value="">Select Category</option>
+									{% if categories %}
+									{% for key, category in categories %} 
+									<option value="{{category.category_id}}" {% if item_category_id == category.category_id %}  selected {% endif %} >{{category.category_name}}</option>
+									{% endfor %}
+									{% endif %}	
+								
+								
+							  </select>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+						<div class="fileinput fileinput-r fileinput-new" data-provides="fileinput">
+							<span class="btn btn-default btn-file"><span>{{constant('CHOOSE FILE')}}</span>
+							<input name="item_file" id="item_file" type="file" {% if action != 'edit' %} required {% endif %} /></span>
+							<span class="fileinput-filename">{{constant('ITEM IMAGE')}}<br/></span><span class="fileinput-new"><b>Only allow JPG,JPEG,GIF & PNG</b></span>
+							<div >
+							{% if item_image %}
+							<img src="{{ base_url }}upload/images/{{ item_image }}" width="80" >{% endif %}</div>
+						</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+								<textarea class="form-control no-border" rows="5" name="item_description" id="item_description" placeholder="{{constant('ITEM DESCRIPTION')}}">{{ item_data.item_language_item_description }}</textarea>
+							</div>
+						</div>
+					</div>
+					
+	              <div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('PREPARATION COST')}}</label>
+								<input  class="r-alpaca-control form-control" name="item_prepration_cost" id="item_prepration_cost" autocomplete="" type="text" placeholder="{{constant('PREPARATION COST')}}" value="{{item_prepration_cost }}" >
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('DEFAULT PRICE')}}</label>
+								<input  class="r-alpaca-control form-control" name="item_default_price" id="item_default_price" autocomplete="" type="text" placeholder="{{constant('PRICE')}}" value="{{ item_default_price }}" >
+							</div>
+							 <div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" value="" name="item_check_locprices" id="item_check_locprices" {% if item_check_locprices == '1' %} checked {% endif %} >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									{{constant('CHANGE LOC')}}
+								</label>
+							</div>
+							<div class="defult-main">
+							<div class="defult-list def-text">{{constant('DEFAULT DISCOUNT')}}</div>
+							<div class="defult-list def-switch">
+								<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" {% if discount_datas.discount_price %} checked {% endif %} >
+										<label class="onoffswitch-label" for="myonoffswitch">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div>
+							<div id="discount_price_div">
+							
+							
+							{% if action=='edit' and discount_datas.discount_price !='' %}
+								<div class="col-sm-12 col-md-12 col-xs-12 defult-input" style="margin-bottom:20px;">
+									<div class="form-group">
+										<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('DEFAULT PRICE')}}</label>
+										<input  class="r-alpaca-control form-control" name="item_discount_price" id="item_discount_price" autocomplete="" type="text" placeholder="Discount price" value="{{ discount_datas.discount_price }}" >
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+									<div class="content-group-lg">
+										<h6 class="text-semibold">From Date</h6>
+										<div class="input-group">
+											<input type="text" id="datepicker_from_discount" name="datepicker_from_discount" value="{{ discount_datas.discount_from }}" >
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+									<div class="content-group-lg">
+										<h6 class="text-semibold">To Date</h6>
+										<div class="input-group">
+											<input type="text" id="datepicker_to_discount" name="datepicker_to_discount" value="{{ discount_datas.discount_to }}" >
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							
+							
+							</div>
+						
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12" id="change_price_locationwise">
+						
+						{% if action == 'edit' and item_check_locprices == '1' %}
+							<div class="form-group">
+									  <label for="basic2" class="col-lg-12 control-label r-alpaca-control-label" style="text-align:left;">{{constant('admin')}}</label>
+							</div>
+							<div id="myElement" class="simplebar">
+							
+								{% if admins %}
+									{% for key, admin in admins %} 
+								
+								<div class="checkbox">
+									<label class="custom-lable">
+										<input type="checkbox" value="" data-restid="{{admin.adminbrand_id}}" data-id="{{key}}" checked id="admin_default_check_{{key}}" class="admin_default_check">
+										<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										<span id="after_{{key}}">{{admin.adminbrand_name}} Restaurant</span>
+										<input type="number" class="cus_input_n admin_prices" id="admin_default_price_{{key}}"name="item_admin_price[{{admin.adminbrand_id}}]" value="{{ priceofbranch_data[admin.adminbrand_id] }}" required>
+									</label>
+								</div>
+							{% endfor %}
+							{% endif %}		
+							</div>
+						{% endif %}
+			
+						</div>
+						
+						</div>
+											
+							<div class="col-md-12 col-sm-12 col-xs-12">
+
+								<div class="main-add-button-ass">
+									<button type="button" class="btn btn-add-custom" id="associated_div">{{constant('ASSOCIATED PRODUCT')}}</button>
+								</div>
+<div id="assocative_div"></div>
+							</div>
+
+					</div>
+					
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xs-12 mrg-se">
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+					<div class="item-head">{{constant('ITEM AVAILABLE')}} </div>
+						<select id="custom-option" class="show-tick form-control" name="locations[]" id="locations_select" multiple>
+									 {% if resturants %}
+									{% for key, resturant in resturants %} 
+									<option value="{{resturant.resturantbrand_id}}" {% if resturant.resturantbrand_id  in displayonbranch_data %} selected {% endif %} >{{resturant.resturantbrand_name}}</option>
+									{% endfor %}
+									{% endif %} 
+									</select>
+									<div class="main-all-select">
+      <div class="select-all-f">Hold down Ctrl in your Keyboard for the multiple selection<span><button type="button" id="select_all_locations" class="btn select-all-button" >{{constant('SELECT ALL LOCS')}}</button></span></div>
+     </div>
+					</div>
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r" style="margin-top:10px;">
+						<div id="time-range">
+						<div class="r-alpaca-control-label">{{constant('AVAILABLE TIME')}}</div>
+								<div class="r-alpaca-control-label"></div>
+								<div class="range-r">
+								<span class="slider-time text-semibold">9:00 AM</span>
+								<span class="slider-time2 text-semibold">5:00 PM</span>
+								</div>
+								<input type="hidden"  class="slider-timeinput" name="sliderstarttime" value="9:00 AM" >
+								<input type="hidden"  class="slider-timeinput2" name="sliderendtime" value="5:00 PM">
+								
+								<div class="sliders_step1">
+									<div id="slider-range"></div>
+								</div>
+							</div>
+							
+						<div class="days-main">
+							<div class="r-alpaca-control-label">{{constant('DAYS')}}</div>
+							<div class="main-float-days">
+							<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Monday" {% if 'Monday' in itemavlableday_data %}checked {% endif %} ><span>Monday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Tuesday" {% if 'Tuesday' in itemavlableday_data %}checked {% endif %} ><span>Tuesday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Wednesday" {% if  'Wednesday' in itemavlableday_data %}checked {% endif %} ><span>Wednesday</span>
+								   </label>
+								</div>
+								</div>
+								
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Thursday" {% if 'Thursday' in itemavlableday_data  %}checked {% endif %} ><span>Thursday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Friday" {%  if 'Friday' in itemavlableday_data %}checked {% endif %} ><span>Friday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days"  name="item_days[]" value="Saturday" {% if  'Saturday' in itemavlableday_data %}checked {% endif %} ><span>Saturday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_days" name="item_days[]" value="Sunday" {% if 'Sunday' in itemavlableday_data %}checked {% endif %} ><span>Sunday</span>
+								   </label>
+								</div>
+								</div>
+								
+								</div>
+								<div class="col-sm-12 col-md-12" id="item_days_html">
+								</div>
+								
+								
+						</div>
+					</div>
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+						<div class="defult-main">
+							<div class="defult-list def-text">{{constant('ITEM STATUS')}}</div>
+							<div class="defult-list def-switch">
+								<div class="onoffswitch">
+										<input type="checkbox" name="item_status" id="myonoffswitch1" class="onoffswitch-checkbox"  {%if item_data.item_status==1   %}checked{%endif%} value="1" >
+										<label class="onoffswitch-label" for="myonoffswitch1">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div>
+					</div>
+							
+					
+					{%if action=='edit'%}
+					
+				
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+					    	{%if item_data.item_visiblity=='1'   %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_pos" id="item_hide_pos" value=""  checked>
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_web" id="item_hide_web" value="" >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Show on web
+								</label>
+							</div>
+							</div>
+							{%elseif item_data.item_visiblity=='2'  %}
+								<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_pos" id="item_hide_pos" value=""  >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_web" id="item_hide_web" value="" checked >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Show on web
+								</label>
+							</div>
+							</div>
+							{%else%}
+								<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_pos" id="item_hide_pos" value="" checked >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_web" id="item_hide_web" value="" checked >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Show on web
+								</label>
+							</div>
+							</div>
+							{%endif%}
+					</div>
+					
+					
+						{%else%}
+			
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_pos" id="item_hide_pos" value="" checked>
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_web" id="item_hide_web" value="" checked>
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Show on web
+								</label>
+							</div>
+							</div>
+							
+					</div>
+					{%endif%}
+					<div class="col-md-12 col-sm-12 col-xs-12 border-bg-r-mrg">
+						<div class="r-alpaca-control-label bor-bottom-1">{{constant('MANAGE PORTION')}}</div>
+						
+						<div class="main-size-rate">
+							<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+                            <select class="form-control no-border" id="portion_product_name" name="portion_product_name">
+						     <option value="">Please Select Quantity</option>
+							{% if quantities%}
+							{% for key, quantity in quantities %} 
+						    <option value="{{quantity.quantity_id}}">{{quantity.quantity_name}}</option>
+							{% endfor %}
+							{% endif %}
+							
+						</select>
+								</div> 
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+								<input class="form-control" id="portion_product_price" name="portion_product_price" placeholder="Price" type="number">
+								</div>
+								
+								
+								
+								<div class="main-add-button">
+									<button type="button" class="btn btn-add-custom waves-effect waves-light" id="portion_add">{{constant('ADD')}}</button>
+									<button type="button" class="btn btn-add-custom waves-effect waves-light" id="portion_cancel">{{constant('CANCEL')}}</button>
+								</div>
+						
+							</div>
+							<div id="add_portions">
+						{% if portion_array %}
+							{% for key, portion in portion_array %} 
+							<div id="row_assoc1_{{key}}"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;">
+									<div class="defult-list def-text">{{portion.text}}</div>
+							
+       <div class="defult-list def-pricee-r">{{portion.price}}</div>
+       <div class="defult-list def-pricee-r flo-right">
+	   <span class="remove_assoc_portion" id="{{key}}" data-price="{{portion.price}}" ><i class="fa fa-trash"></i></span>
+	   </div>
+	        <div class="defult-list def-switch">
+									<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
+										<label class="onoffswitch-label" for="myonoffswitch3">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div></div>
+							{%endfor%}
+							{%endif%}
+							</div>
+						
+					</div>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+
+<div class="main-add-button">
+									<button type="submit" class="btn btn-add-custom">{{constant('SUBMIT')}}</button>
+									<button type="button" class="btn btn-add-custom" id="cancel_form_assoc">{{constant('CANCEL')}}</button>
+								</div>
+
+</div>
+					</div>
+					
+					
+
+						</form>
+					
+						</div>
+	<!--/***********************************************************/
+	/*         END ASSOCIATIVE AND INDIVIDUAL ITEMS HTML       */
+    /***********************************************************/
+					
+	/***********************************************************/
+	/*             START COMBO ITEMS HTML                      */
+    /***********************************************************/-->
+
+				<div id="combo_html" class="row tab-pane fade combo-items">
+				<form action="" id="combo_item" name="combo_item" enctype="multipart/form-data" method="post">
+					<div class="col-md-12 col-lg-6 col-sm-12 col-xs-12 mrg-se">
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="item-head">{{constant('ADD ITEM')}}</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+								<input   id="combo" name="combo"  type="hidden"  value="" >
+								<input  class="r-alpaca-control form-control" style="padding-left: 0px;" id="item_name" name="item_name" autocomplete="" type="text" placeholder="{{constant('ITEM NAME')}}" value="{{ item_combo_name }}" >
+								<input  type="hidden" name="item_country_id"  value="{{ country_id }}" >
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+							<div class="form-group">
+								<input  class="r-alpaca-control form-control" style="padding-left: 0px;"  id="item_code1" name="item_code"  autocomplete="" type="text" placeholder="{{constant('ITEM CODE')}}" value="{{ item_code }}" >
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+							  <select class="form-control no-border" id="item_category_id" name="item_category_id" >
+								<option value="">Select Category</option>
+									{% if categories %}
+									{% for key, category in categories %} 
+									<option value="{{category.category_id}}" {% if item_category_id == category.category_id %}  selected {% endif %} >{{category.category_name}}</option>
+									{% endfor %}
+									{% endif %}	
+								
+								
+							  </select>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+						<div class="fileinput fileinput-r fileinput-new" data-provides="fileinput">
+							<span class="btn btn-default btn-file"><span>{{constant('CHOOSE FILE')}}</span>
+							<input name="item_file" id="item_file" type="file" {% if action != 'edit' %} required {% endif %} /></span>
+							<span class="fileinput-filename">{{constant('ITEM IMAGE')}}<br/></span><span class="fileinput-new"><b>Only allow JPG,JPEG,GIF & PNG</b></span>
+							<div >
+							{% if item_image %}
+							<img src="{{ base_url }}upload/images/{{ item_image }}" width="80" >{% endif %}</div>
+						</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+							<div class="form-group">
+								<textarea class="form-control no-border" rows="5" name="item_description" id="item_description" placeholder="{{constant('ITEM DESCRIPTION')}}">{{ item_description }}</textarea>
+							</div>
+						</div>
+						</div>
+						  <div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						  	
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('PREPARATION COST')}}</label>
+								<input  class="r-alpaca-control form-control" name="item_prepration_cost" id="item_prepration_cost" autocomplete="" type="number" min="1" placeholder="{{constant('PREPARATION COST')}}" value="{{item_prepration_cost }}" >
+							</div>
+						</div>
+					</div>
+	                       <div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						   <div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('DEFAULT PRICE')}}</label>
+								<input  class="r-alpaca-control form-control" name="item_default_price" id="item_default_price" autocomplete="" type="text" placeholder="{{constant('PRICE')}}" value="{{ item_default_price }}" >
+							</div>
+							 <div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" value="" name="item_check_locprices" id="item_check_locpricess" {% if item_check_locprices == '1' %} checked {% endif %} >
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									{{constant('CHANGE LOC')}}
+								</label>
+							</div>
+							<div class="defult-main">
+							<div class="defult-list def-text">{{constant('DEFAULT DISCOUNT')}}</div>
+							<div class="defult-list def-switch">
+								<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch11" class="onoffswitch-checkbox" id="myonoffswitch11" {% if discount_datas.discount_price %} checked {% endif %} >
+										<label class="onoffswitch-label" for="myonoffswitch11">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div>
+							<div id="discount_price_div1">
+							
+							
+							{% if action=='edit' and discount_datas.discount_price !='' %}
+								<div class="col-sm-12 col-md-12 col-xs-12 defult-input" style="margin-bottom:20px;">
+									<div class="form-group">
+										<label class="control-label r-alpaca-control-label" for="alpaca9">{{constant('DEFAULT PRICE')}}</label>
+										<input  class="r-alpaca-control form-control" name="item_discount_price" id="item_discount_price" autocomplete="" type="text" placeholder="Discount price" value="{{ discount_datas.discount_price }}" >
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+									<div class="content-group-lg">
+										<h6 class="text-semibold">From Date</h6>
+										<div class="input-group">
+											<input type="text" id="datepicker_from_discount" name="datepicker_from_discount" value="{{ discount_datas.discount_from }}" >
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+									<div class="content-group-lg">
+										<h6 class="text-semibold">To Date</h6>
+										<div class="input-group">
+											<input type="text" id="datepicker_to_discount" name="datepicker_to_discount" value="{{ discount_datas.discount_to }}" >
+										</div>
+									</div>
+								</div>
+								{% endif %}
+							
+							
+							</div>
+						
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12" id="change_price_locationwise1">
+						
+						{% if action == 'edit' and item_check_locprices == '1' %}
+							<div class="form-group">
+									  <label for="basic2" class="col-lg-12 control-label r-alpaca-control-label" style="text-align:left;">{{constant('admin')}}</label>
+							</div>
+							<div id="myElement" class="simplebar">
+							
+								{% if resturants %}
+									{% for key, resturant in resturants %} 
+								
+								<div class="checkbox">
+									<label class="custom-lable">
+										<input type="checkbox" value="" data-restid="{{resturant.resturantbrand_id}}" data-id="{{key}}" checked id="resturant_default_check_{{key}}" class="resturant_default_check_">
+										<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										<span id="after_{{key}}">{{resturant.resturantbrand_name}} Restaurant</span>
+										<input type="number" class="cus_input_n resturant_prices" id="resturant_default_price_{{key}}"name="item_resturant_price[{{resturant.resturantbrand_id}}]" value="{{ priceofbranch_data[resturant.resturantbrand_id] }}" required>
+									</label>
+								</div>
+							{% endfor %}
+							{% endif %}		
+							</div>
+						{% endif %}
+			
+						</div>
+						
+						</div>
+											
+										
+
+				<div class="col-md-12 col-sm-12 col-xs-12 border-bg-r-mrg">
+							<div class="col-md-8 col-sm-8 col-xs-12">
+							
+							  <input type="text" id="search"  value="" placeholder="Search.." name="search">
+							  
+							
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control no-border" id="anim" style="height:46px">
+						<option value="">Select Category</option>
+									{% if categories %}
+									{% for key, category in categories %} 
+									<option value="{{category.category_id}}" {% if item_category_id == category.category_id %}  selected {% endif %} >{{category.category_name}}</option>
+									{% endfor %}
+									{% endif %}	
+								
+						</select>
+						</div>
+						<div id="list_items">
+					
+					</div>
+						</div>
+					
+					</div>
+					
+					<div class="col-md-12 col-lg-6 col-sm-12 col-xs-12 mrg-se">
+			<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+					<div class="item-head">{{constant('ITEM AVAILABLE')}} </div>
+						<select id="custom-option1" class="show-tick form-control" name="locations[]" id="locations_select" multiple>
+									 {% if resturants %}
+									{% for key, resturant in resturants %} 
+									<option value="{{resturant.resturantbrand_id}}" {% if resturant.resturantbrand_id  in displayonbranch_data %} selected {% endif %} >{{resturant.resturantbrand_name}}</option>
+									{% endfor %}
+									{% endif %} 
+									</select>
+									<div class="main-all-select">
+      <div class="select-all-f">Hold down Ctrl in your Keyboard for the multiple selection<span><button type="button" id="select_all_locationsq" class="btn select-all-button" >{{constant('SELECT ALL LOCS')}}</button></span></div>
+     </div>
+					</div>
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r" style="margin-top:10px;">
+						<div id="time-range-combo1">
+		
+						<div class="r-alpaca-control-label">{{constant('AVAILABLE TIME')}}</div>
+								<div class="r-alpaca-control-label"></div>
+								<div class="range-r">
+								<span class="slider-time1 text-semibold">9:00 AM</span>
+								<span class="slider-time21 text-semibold">5:00 PM</span>
+								</div>
+								<input type="hidden"  class="slider-timeinput1" name="sliderstarttime" value="9:00 AM" >
+								<input type="hidden"  class="slider-timeinput21" name="sliderendtime" value="5:00 PM">
+								
+								<div class="sliders_step11">
+									<div id="slider-range1"></div>
+								</div>
+							
+							</div>
+							
+						<div class="days-main">
+							<div class="r-alpaca-control-label">{{constant('DAYS')}}</div>
+							<div class="main-float-days">
+							<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Monday" {% if 'Monday' in itemavlableday_data %}checked {% endif %} ><span>Monday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Tuesday" {% if 'Tuesday' in itemavlableday_data %}checked {% endif %} ><span>Tuesday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Wednesday" {% if  'Wednesday' in itemavlableday_data %}checked {% endif %} ><span>Wednesday</span>
+								   </label>
+								</div>
+								</div>
+								
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Thursday" {% if 'Thursday' in itemavlableday_data  %}checked {% endif %} ><span>Thursday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Friday" {%  if 'Friday' in itemavlableday_data %}checked {% endif %} ><span>Friday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days"  name="item_days[]" value="Saturday" {% if  'Saturday' in itemavlableday_data %}checked {% endif %} ><span>Saturday</span>
+								   </label>
+								</div>
+								</div>
+								<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <input type="checkbox" class="item_combo_days" name="item_days[]" value="Sunday" {% if 'Sunday' in itemavlableday_data %}checked {% endif %} ><span>Sunday</span>
+								   </label>
+								</div>
+								</div>
+								
+								</div>
+								<div class="col-sm-12 col-md-12" id="item_days_html1">
+								</div>
+								
+								
+						</div></div>
+					
+				<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+						<div class="defult-main">
+							<div class="defult-list def-text">{{constant('ITEM STATUS')}}</div>
+							<div class="defult-list def-switch">
+								<div class="onoffswitch">
+										<input type="checkbox" name="item_status" id="myonoffswitch14" class="onoffswitch-checkbox"  checked value="1" >
+										<label class="onoffswitch-label" for="myonoffswitch14">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div>
+					</div>
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_pos" id="item_hide_pos" value="" checked>
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									<input type="checkbox" name="item_hide_web" id="item_hide_web" value="" checked>
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									Show on web
+								</label>
+							</div>
+							</div>
+							
+					</div>
+					
+					<div class="col-md-12 col-sm-12 col-xs-12 border-bg-r-mrg">
+						<div class="r-alpaca-control-label borde-bot">Add Combo Item</div>
+						
+						<div id="cobmo_set_data">
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+
+<div class="main-add-button">
+									<button type="submit" class="btn btn-add-custom" name="add_combo" value="add" >{{constant('SUBMIT')}}</button>
+									<button type="button" class="btn btn-add-custom">{{constant('CANCEL')}}</button>
+								</div>
+
+</div>
+					</div>
+					
+					
+
+					
+						</div>
+
+					</form>
+					</div>
+    <!--***********************************************************/
+	/*             END COMBO ITEMS HTML                        */
+    /***********************************************************-->
+     <div class="clearfix"> </div>
+</div>
+    <!--***********************************************************/
+	/*             EXTRA HTML                        */
+    /***********************************************************-->
+<div style="display:none;" id="price_locations">
+							<div class="form-group">
+								  <label for="basic2" class="col-lg-12 control-label r-alpaca-control-label" style="text-align:left;">Restaurants</label>
+							</div>
+							<div id="myElement" class="simplebar">
+								{% if resturants %}
+									{% for key, resturant in resturants %} 
+								<div class="checkbox">
+									<label class="custom-lable">
+										<input type="checkbox" value="" data-restid="{{resturant.resturantbrand_id}}" data-id="{{key}}" checked id="resturant_default_check_{{key}}" class="resturant_default_check">
+										<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										<span id="after_{{key}}">{{resturant.resturantbrand_name}} Restaurant</span>
+										<input type="number" class="cus_input_n resturant_prices" id="resturant_default_price_{{key}}"name="item_resturant_price[{{resturant.resturantbrand_id}}]" value="" required>
+									</label>
+								</div>
+							{% endfor %}
+							{% endif %}		
+							</div>
+
+</div>
+
+
+<div id="asso_div" style="display:none;">
+							<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-top">
+							
+							<div class="add-ass-pro">Add Associated Product</div>
+						
+								<div class="add-main">
+									<a href="#"><span></span>Add New Item</a>
+								</div>
+								<div class="main-size-rate">
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-le">
+								<input type="text" class="form-control" id="associate_product_name" name="associate_product_name"   placeholder="Name">
+								</div> 
+								<div class="col-md-6 col-sm-6 col-xs-12 padd-ri">
+								<input type="number" class="form-control"  id="associate_product_price" name="associate_product_price"  placeholder="Price">
+								</div>
+								
+								<div class="col-md-12 col-sm-12 pr-main">
+									<div class="checkbox">
+										<label class="custom-lable">
+											<input type="checkbox" value="" id="associate_product_checked" name="associate_product_checked" >
+											<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											Pre-added
+										</label>
+							</div>
+								</div>
+								
+								<div class="main-add-button">
+									<button type="button" class="btn btn-add-custom" id="asso_add">Add</button>
+									<button type="button" class="btn btn-add-custom" id="asso_cancel">Cancel</button>
+								</div>
+							<div id="add_associative_product">	
+					
+					{% if associative_array %}
+									{% for key, associative in associative_array %}
+									<div id="row_assoc_{{key}}"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;">
+									<div class="defult-list def-text">{{associative.name}}</div>
+							
+       <div class="defult-list def-pricee-r">{{associative.price}}</div>
+       <div class="defult-list def-pricee-r flo-right">
+	   <span class="remove_assoc" id="{{key}}" data-price="{{associative.price}}" data-checked="{{associative.checked}}"><i class="fa fa-trash"></i></span>
+	   </div>
+	        <div class="defult-list def-switch">
+									<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
+										<label class="onoffswitch-label" for="myonoffswitch3">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div></div>
+									{% endfor %}
+										{% endif %}	
+						</div>
+						
+								</div>
+								
+						</div>
+						</div>
+						<div id="portion_select" style="display:none;">
+						 <option value="">Please Select Quantity</option>
+							{% if quantities%}
+							{% for key, quantity in quantities %} 
+						    <option value="{{quantity.quantity_id}}">{{quantity.quantity_name}}</option>
+							{% endfor %}
+							{% endif %}
+							</div>
+	<!--***********************************************************/
+	/*            END EXTRA HTML                        */
+    /***********************************************************-->
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'admin/lib/rest_sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+<!--slide bar menu end here-->
+
+<style>
+	<!-- .logo { -->
+    <!-- width: auto; -->
+    <!-- position: relative; -->
+	<!-- left:0px; -->
+	<!-- top:10px; -->
+	<!-- } -->
+	.checkbox label::before{
+	display:none;
+	}
+	.checkbox {
+    padding-left: 0;
+}
+.fa-trash:before, .fa-trash:after{
+left:0px;
+}
+.fileinput-r {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none repeat scroll 0 0 transparent;
+    cursor: inherit;
+    display: block;
+}
+select[multiple], select[size] {
+    background-color: #fff;
+    padding: 10px;
+}
+
+select[multiple] option, select[size] option {
+    padding: 7px 12px;
+    border-radius: 3px;
+}
+	select[multiple], select[size] {
+    height: 200px;
+    padding: 7px;
+}
+
+.no-border    {border-bottom: 1px solid #ccc !important;
+    border: none;
+    box-shadow: none;
+}
+.btn {
+    font-size: .8rem;
+    padding: 10px;
+	}
+	
+	.nav > li > a:hover, .nav > li > a:focus{
+    background-image: url(../../assets/images/radio-active.jpg) !important;
+    background-repeat: no-repeat !important;
+    background-position:left center !important;
+	}
+	.bor-bottom-1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #3c3c3c;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}.r-alpaca-control{ padding:0px 0px 10px;}
+
+						.cus_input_n { width: 60px !important;
+    margin-top: -10px;
+    border: 1px solid #bdbdbd !important;
+    height: 1.3em !important;
+    margin-left: 10px;
+				}
+				
+				div label input {
+    margin-right: 0;
+}
+		
+
+.simplebar, [data-simplebar-direction] {
+    position: relative;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch; /* Trigger native scrolling for mobile, if not supported, plugin is used. */
+}
+
+.simplebar .simplebar-scroll-content,
+[data-simplebar-direction] .simplebar-scroll-content {
+    overflow-y: scroll;
+    overflow-x: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -ms-overflow-style: none; /* hide browser scrollbar on IE10+ */
+}
+
+/* hide browser scrollbar on Webkit (Safari & Chrome) */
+.simplebar-scroll-content::-webkit-scrollbar {
+    display: none;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-scroll-content,
+.simplebar.horizontal .simplebar-scroll-content {
+    overflow-x: scroll;
+    overflow-y: auto;
+}
+
+.simplebar-track {
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 11px;
+}
+
+.simplebar-track .simplebar-scrollbar {
+    position: absolute;
+    right: 2px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    min-height: 10px;
+    width: 7px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    -ms-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+    background: #6c6e71;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+}
+
+.simplebar-track:hover .simplebar-scrollbar {
+    /* When hovered, remove all transitions from drag handle */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    opacity: 0.7;
+    -webkit-transition: opacity 0 linear;
+    -moz-transition: opacity 0 linear;
+    -o-transition: opacity 0 linear;
+    -ms-transition: opacity 0 linear;
+    transition: opacity 0 linear;
+}
+
+.simplebar-track .simplebar-scrollbar.visible {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    opacity: 0.7;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-track,
+.simplebar.horizontal .simplebar-track {
+    top: auto;
+    left: 0;
+    width: auto;
+    height: 11px;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-track .simplebar-scrollbar,
+.simplebar.horizontal .simplebar-track .simplebar-scrollbar {
+    right: auto;
+    top: 2px;
+    height: 7px;
+    min-height: 0;
+    min-width: 10px;
+    width: auto;
+}
+
+#myElement{
+  height:150px;
+  width:100%;
+}		
+	
+#myElement1{
+  height:150px;
+  width:100%;
+}		
+	.select-all-f{
+ margin-top: 20px;
+    font-size: 14px;
+    color: #3c3c3c;
+}
+.select-all-button{
+    background-color: #f8f8f8;
+    border: 1px solid #ebebeb;
+    font-size: 14px;
+    color: #4f4f4f !important;
+    font-weight: 600;
+    padding: 8px 16px 8px 16px;
+    box-shadow: 0px 3px #b2b2b2;
+}
+.select-all-button:hover{
+ background-color:#f8f8f8;
+ box-shadow: 0px 3px #b2b2b2;
+}
+.select-all-f span{
+ float:right;
+}	
+.def-pricee-r{
+  padding-left: 30px;
+  margin-right: 20px;
+  font-size: 18px;
+    font-weight: 500;
+    color: #3b3b3b;
+    margin-top: 4px;
+}
+.flo-right{
+ float:right !important;
+}
+.flo-right a{
+ color:#900254;
+}
+input#item_code {
+  text-transform: uppercase;
+}
+</style>
+<script type="text/javascript">
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<script src="{{base_url}}assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+
+  $("form[name='individual_item']").validate({
+    // Specify validation rules
+    rules: {
+   
+		item_name: "required",
+		item_code :"required",
+		item_category_id :"required",
+		
+		//item_file :"required",
+		item_description :"required",
+		item_prepration_cost: {
+		required: true,
+	    number: true
+        },
+		item_default_price: {
+		required: true,
+	    number: true
+        },
+		item_discount_price:{
+		required: true,
+	    number: true
+        },
+        item_prepration_cost:{
+		required: true,
+	    number: true
+        },
+		datepicker_from_discount:"required",
+		datepicker_to_discount:"required",
+		'locations[]':"required",
+		'item_days[]':"required",
+		
+	   
+    },
+    // Specify validation error messages
+    messages: {
+		item_name: "Please enter your Item Name.",
+		item_code :"Please enter your Item Code.",
+		item_category_id :"Please Select category Name.",
+		//item_file :"Please Select a file.",
+		item_description :"Please enter your Item description.",
+		item_prepration_cost:{
+		required: "Please enter preparation cost.",
+	    number: "Please enter number format."
+        },
+		item_default_price: {
+		required: "Please enter default price.",
+	    number: "Please enter number format."
+        },
+		item_discount_price:{
+		required: "Please enter discount price.",
+	    number: "Please enter number format."
+        },
+        item_prepration_cost:{
+		required:"Please enter preparation cost price.",
+	    number:"Please enter number format."
+        },
+		datepicker_from_discount:"Please select from date",
+		datepicker_to_discount:"Please select to date",
+	    'locations[]':"Please select locations.",
+		'item_days[]':"Please select days for availablity.",
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+
+    if ($('.item_days:checked').length == 0){
+	$('#item_days_html').html('<label id="item_days-error" class="error" for="item_days">Please select days for availablity.</label>');
+        return false;
+      
+    }else{
+	   $('#item_days_html').html();
+	}
+    $('#item_code-error').remove();
+	var item_code=$('#item_code').val();
+	//alert(item_code);
+	  if(typeof(item_code)  === "undefined"){
+	    	form.submit();  
+	  }else{
+    var urlData="{{base_url}}admin/menus/check_unique_itemcode";
+	$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data:{item_code:item_code},
+				 success:function(data) 
+				{ 
+                var data = $.parseJSON(data);
+				if(data.error_code=='true'){
+				$('#item_code').after('<label id="item_code-error" class="error" for="item_code">Please enter unique item code.</label>');
+				$(window).scrollTop(300);
+				
+				}
+				if(data.error_code=='false'){
+				
+				  $('#item_code-error').remove();
+					form.submit();
+				}
+				}
+				});
+
+			
+	     }
+  }
+		 
+  });
+  });
+
+
+
+</script>
+<script type="text/javascript">
+	$("#slider-range").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time').html(hours1 + ':' + minutes1);
+        $('.slider-timeinput').val(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time2').html(hours2 + ':' + minutes2);
+        $('.slider-timeinput2').val(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+<script type="text/javascript">
+							$("#slider-range-combo").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time-combo').html(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time2-combo').html(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+<script type="text/javascript">
+	$("#slider-range1").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time1').html(hours1 + ':' + minutes1);
+        $('.slider-timeinput1').val(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time21').html(hours2 + ':' + minutes2);
+        $('.slider-timeinput21').val(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+<script type="text/javascript">
+							$("#slider-range-combo1").slider({
+    range: true,
+    min: 0,
+    max: 1440,
+    step: 15,
+    values: [540, 1020],
+    slide: function (e, ui) {
+        var hours1 = Math.floor(ui.values[0] / 60);
+        var minutes1 = ui.values[0] - (hours1 * 60);
+
+        if (hours1.length == 1) hours1 = '0' + hours1;
+        if (minutes1.length == 1) minutes1 = '0' + minutes1;
+        if (minutes1 == 0) minutes1 = '00';
+        if (hours1 >= 12) {
+            if (hours1 == 12) {
+                hours1 = hours1;
+                minutes1 = minutes1 + " PM";
+            } else {
+                hours1 = hours1 - 12;
+                minutes1 = minutes1 + " PM";
+            }
+        } else {
+            hours1 = hours1;
+            minutes1 = minutes1 + " AM";
+        }
+        if (hours1 == 0) {
+            hours1 = 12;
+            minutes1 = minutes1;
+        }
+
+
+
+        $('.slider-time-combo1').html(hours1 + ':' + minutes1);
+
+        var hours2 = Math.floor(ui.values[1] / 60);
+        var minutes2 = ui.values[1] - (hours2 * 60);
+
+        if (hours2.length == 1) hours2 = '0' + hours2;
+        if (minutes2.length == 1) minutes2 = '0' + minutes2;
+        if (minutes2 == 0) minutes2 = '00';
+        if (hours2 >= 12) {
+            if (hours2 == 12) {
+                hours2 = hours2;
+                minutes2 = minutes2 + " PM";
+            } else if (hours2 == 24) {
+                hours2 = 11;
+                minutes2 = "59 PM";
+            } else {
+                hours2 = hours2 - 12;
+                minutes2 = minutes2 + " PM";
+            }
+        } else {
+            hours2 = hours2;
+            minutes2 = minutes2 + " AM";
+        }
+
+        $('.slider-time2-combo1').html(hours2 + ':' + minutes2);
+    }
+});
+						 </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+/*******Discount price portion hide/show******/  
+$(document).ready(function(){
+$(document).on('click','#myonoffswitch',function() {
+
+  if ($(this).is(':checked')) {
+    $('#discount_price_div').html('<div class="col-sm-12 col-md-12 col-xs-12 defult-input" style="margin-bottom:20px;"><div class="form-group"><label class="control-label r-alpaca-control-label" for="alpaca9">{{constant("DEFAULT PRICE")}}</label><input  class="r-alpaca-control form-control" name="item_discount_price" id="item_discount_price" autocomplete="" type="text" placeholder="Discount price"></div></div><div class="col-md-6 col-sm-6 col-xs-12 padd-le"><div class="content-group-lg"><h6 class="text-semibold">From Date</h6><div class="input-group"><input type="text" id="datepicker_from_discount" name="datepicker_from_discount"></div></div></div><div class="col-md-6 col-sm-6 col-xs-12 padd-ri"><div class="content-group-lg"><h6 class="text-semibold">To Date</h6><div class="input-group"><input type="text" id="datepicker_to_discount" name="datepicker_to_discount"></div></div></div> </div>');
+  $( "#datepicker_from_discount" ).datepicker();
+	 $( "#datepicker_to_discount" ).datepicker();
+
+  }else{
+   $('#discount_price_div').empty();
+  }
+  });
+});
+$(document).ready(function(){
+$(document).on('click','#myonoffswitch11',function() {
+
+  if ($(this).is(':checked')) {
+    $('#discount_price_div1').html('<div class="col-sm-12 col-md-12 col-xs-12 defult-input" style="margin-bottom:20px;"><div class="form-group"><label class="control-label r-alpaca-control-label" for="alpaca9">{{constant("DEFAULT PRICE")}}</label><input  class="r-alpaca-control form-control" name="item_discount_price" id="item_discount_price" autocomplete="" type="text" placeholder="Discount price"></div></div><div class="col-md-6 col-sm-6 col-xs-12 padd-le"><div class="content-group-lg"><h6 class="text-semibold">From Date</h6><div class="input-group"><input type="text" id="datepicker_from_discount" name="datepicker_from_discount"></div></div></div><div class="col-md-6 col-sm-6 col-xs-12 padd-ri"><div class="content-group-lg"><h6 class="text-semibold">To Date</h6><div class="input-group"><input type="text" id="datepicker_to_discount" name="datepicker_to_discount"></div></div></div> </div>');
+  $( "#datepicker_from_discount" ).datepicker();
+	 $( "#datepicker_to_discount" ).datepicker();
+
+  }else{
+   $('#discount_price_div1').empty();
+  }
+  });
+});
+/*******change price locationwise hide/show******/  
+
+$(document).ready(function(){
+  $(document).on('click','#item_check_locprices',function() {
+
+  if ($(this).is(':checked')) {
+    var htmldata=$('#price_locations').html();
+    $('#change_price_locationwise').html(htmldata);
+   }else{
+   $('#change_price_locationwise').empty();
+  }
+  });
+});
+$(document).ready(function(){
+  $(document).on('click','#item_check_locpricess',function() {
+
+  if ($(this).is(':checked')) {
+    var htmldata=$('#price_locations').html();
+    $('#change_price_locationwise1').html(htmldata);
+   }else{
+   $('#change_price_locationwise1').empty();
+  }
+  });
+});
+/*************check/uncheck by click single class********************/
+$(document).ready(function(){
+  $(document).on('click','.resturant_default_check',function() {
+   var data_id=$(this).data('id');
+   var data_restid=$(this).data('restid');
+	  if ($(this).is(':checked')) {
+		$('#after_'+data_id).after('<input type="number" class="cus_input_n resturant_prices" id="resturant_default_price_'+data_id+'"name="item_resturant_price['+data_restid+']" value="" required>');
+	   }else{
+	   $('#resturant_default_price_'+data_id).remove();
+	  }
+  });
+});
+/*************Associated div********************/
+
+$(document).ready(function(){
+  $(document).on('click','#associated_div',function() {
+  
+  if ($('#assocative_div').html()== "") {
+   var htmldata=$('#asso_div').html();
+	   $('#assocative_div').html(htmldata);
+	   }else{
+	    
+	   $('#assocative_div').empty();
+	  }
+  });
+});
+
+/*************cancel Associated div********************/
+
+$(document).ready(function(){
+  $(document).on('click','#asso_cancel',function() {
+$('#associate_product_name').replaceWith('<input type="text" class="form-control" id="associate_product_name" name="associate_product_name"   placeholder="Name">');
+ $('#associate_product_price').replaceWith('<input type="number" class="form-control" id="associate_product_price" name="associate_product_price"   placeholder="price">');
+
+  $('#associate_product_checked').attr('checked', false);
+  });
+});
+
+$(document).ready(function(){
+  $(document).on('click','.remove_assoc',function() {
+  var data_id=$(this).attr('id');
+   var urlData="{{base_url}}admin/menus/session_remove";
+     $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				 cache: false,
+				data: { data_id: data_id} ,
+			    success:function(data) 
+				{ 
+				if(data==0){
+			        $('#add_associative_product').html("");
+				}else{
+			     var data = $.parseJSON(data);
+				  var htmldata="";
+				 
+				  $.each(data, function( index, value ) {
+
+				 htmldata+='<div id="row_assoc_'+index+'"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;"><div class="defult-list def-text">'+value.name+'</div><div class="defult-list def-pricee-r">'+value.price+'</div><div class="defult-list def-pricee-r flo-right"><span class="remove_assoc" id="'+index+'" data-price="'+value.price+'" data-checked="'+value.checked+'"><i class="fa fa-trash"></i></span></div><div class="defult-list def-switch"><div class="onoffswitch"><input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked=""><label class="onoffswitch-label" for="myonoffswitch3"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div></div></div>';	 });
+			
+				 //console.log(htmldata);
+				 $('#add_associative_product').html(htmldata);
+					$('#associate_product_name').replaceWith('<input type="text" class="form-control" id="associate_product_name" name="associate_product_name"   placeholder="Name">');
+					$('#associate_product_price').replaceWith('<input type="number" class="form-control" id="associate_product_price" name="associate_product_price"   placeholder="price">');
+					$('#associate_product_checked').attr('checked', false);
+				}}
+				
+			});
+  
+  });
+  });
+/*************cancel Associated div********************/
+
+$(document).ready(function(){
+  $(document).on('click','#asso_add',function() {
+   $('#associate_product_price-error').remove();
+    $('#associate_product_name-error').remove();
+	var check="";  
+  if($('#associate_product_name').val()==""){
+  $('#associate_product_name').after('<label id="associate_product_name-error" class="error" for="associate_product_name">Please enter product name.</label>');
+  check=1;  
+  }
+  if($('#associate_product_price').val()==""){
+ 
+  $('#associate_product_price').after('<label id="associate_product_price-error" class="error" for="associate_product_price">Please enter a valid number.</label>');
+   check=1; 
+  }
+  if(check=="1"){
+  return false;
+  }else{
+  var name=$('#associate_product_name').val();
+  var price=$('#associate_product_price').val();
+  if($('#associate_product_checked').is(':checked')){
+   var checked=1;
+  }else{
+   var checked=0; 
+  }
+  
+  var urlData="{{base_url}}admin/menus/session_associate";
+     $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data: { name: name, price :price,checked:checked} ,
+			    success:function(data) 
+				{ 
+				  var data = $.parseJSON(data);
+				  var htmldata="";
+				 
+				  $.each(data, function( index, value ) {
+
+				  htmldata+='<div id="row_assoc_'+index+'"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;"><div class="defult-list def-text">'+value.name+'</div><div class="defult-list def-pricee-r">'+value.price+'</div><div class="defult-list def-pricee-r flo-right"><span class="remove_assoc" id="'+index+'" data-price="'+value.price+'" data-checked="'+value.checked+'"><i class="fa fa-trash"></i></span></div><div class="defult-list def-switch"><div class="onoffswitch"><input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked=""><label class="onoffswitch-label" for="myonoffswitch3"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div></div></div>';	 });
+				 //console.log(htmldata);
+				 $('#add_associative_product').html(htmldata);
+					$('#associate_product_name').replaceWith('<input type="text" class="form-control" id="associate_product_name" name="associate_product_name"   placeholder="Name">');
+					$('#associate_product_price').replaceWith('<input type="number" class="form-control" id="associate_product_price" name="associate_product_price"   placeholder="price">');
+					$('#associate_product_checked').attr('checked', false);
+				}
+			});
+			
+  }
+ 
+  });
+});
+/******************portion add************/
+$(document).ready(function(){
+  $(document).on('click','#portion_add',function() {
+   $('#portion_product_price-error').remove();
+    $('#portion_product_name-error').remove();
+	var check="";  
+
+  if($('#portion_product_name option:selected').val()==""){
+ 
+   $('#portion_product_name').after('<label id="portion_product_name-error" class="error" for="portion_product_name">Please select product portion.</label>');
+  check=1;
+  }
+  if($('#portion_product_price').val()==""){
+ 
+  $('#portion_product_price').after('<label id="portion_product_price-error" class="error" for="portion_product_price">Please enter a valid number.</label>');
+   check=1; 
+  }
+  if(check=="1"){
+  return false;
+  }else{
+  var name=$('#portion_product_name option:selected').val();
+  var text=$('#portion_product_name option:selected').text();
+  var price=$('#portion_product_price').val();
+
+  //alert(name);
+  //alert(price);
+  var urlData="{{base_url}}admin/menus/session_portion";
+     $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data: { name: name,text:text, price :price} ,
+			    success:function(data) 
+				{ 
+				  var data = $.parseJSON(data);
+				  var htmldata="";
+				 
+				 $.each(data, function(index, value ) {
+
+				  htmldata+='<div id="row_assoc1_'+index+'"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;"><div class="defult-list def-text">'+value.text+'</div><div class="defult-list def-pricee-r">'+value.price+'</div><div class="defult-list def-pricee-r flo-right"><span class="remove_assoc_portion" id="'+index+'" data-price="'+value.price+'" ><i class="fa fa-trash"></i></span></div><div class="defult-list def-switch"><div class="onoffswitch"><input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked=""><label class="onoffswitch-label" for="myonoffswitch3"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div></div></div>';	 });
+				 //console.log(htmldata);
+				 $('#add_portions').html(htmldata);
+					var html_data= $('#portion_select').html();
+				    $('#portion_product_name').html(html_data);
+					$('#portion_product_price').replaceWith('<input type="number" class="form-control" min="1" id="portion_product_price" name="portion_product_price"   placeholder="price">');
+					
+				}
+			});
+			
+  }
+ 
+  });
+});
+
+/*************cancel Associated div********************/
+
+$(document).ready(function(){
+  $(document).on('click','#portion_cancel',function() {
+   var html_data= $('#portion_select').html();
+$('#portion_product_name').html(html_data);
+$('#portion_product_price').replaceWith('<input type="number"  min="1" class="form-control" id="portion_product_price" name="portion_product_price"   placeholder="price">');
+								
+  });
+});
+
+$(document).ready(function(){
+  $(document).on('click','.remove_assoc_portion',function() {
+  var data_id=$(this).attr('id');
+   //alert(data_id);
+   var urlData="{{base_url}}admin/menus/session_portion_remove";
+     $.ajax(
+			{
+				url : urlData,
+			     type: "POST",
+				 cache: true,
+				data: { data_id: data_id} ,
+			    success:function(data) 
+				{ 
+				if(data==0){
+			        $('#add_portions').html("");
+				}else{
+			     var data = $.parseJSON(data);
+				  var htmldata="";
+				 
+				  $.each(data, function( index, value ) {
+htmldata+='<div id="row_assoc1_'+index+'"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;"><div class="defult-list def-text">'+value.text+'</div><div class="defult-list def-pricee-r">'+value.price+'</div><div class="defult-list def-pricee-r flo-right"><span class="remove_assoc_portion" id="'+index+'" data-price="'+value.price+'" ><i class="fa fa-trash"></i></span></div><div class="defult-list def-switch"><div class="onoffswitch"><input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked=""><label class="onoffswitch-label" for="myonoffswitch3"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div></div></div>';	 });
+			
+				 //console.log(htmldata);
+				 $('#add_portions').html(htmldata);
+				    var html_data= $('#portion_select').html();
+				    $('#portion_product_name').html(html_data);
+					$('#portion_product_price').replaceWith('<input type="number" class="form-control"  min="1" id="portion_product_price" name="portion_product_price"   placeholder="price">');
+					}}
+				
+			});
+  
+  });
+  });
+
+$(document).ready(function(){
+$(document).on('click','#cancel_form_assoc',function(event) {
+$('#individual_item')[0].reset();
+  $('.slider-time').html('9:00 AM');
+  $('.slider-time2').html('5:00 PM');
+  $('.slider-timeinput').val('9:00 AM');
+  $('.slider-timeinput2').val('5:00 PM');
+ var urlData="{{base_url}}admin/menus/sessionreset";
+ $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				 success:function(data) 
+				{ 
+				$('#add_associative_product').empty();
+				$('#add_portions').empty();
+				
+				}
+				});
+});
+});
+
+$(document).ready(function(){
+$(document).on('click','#select_all_locations',function(event) {
+$('#custom-option option').attr('selected','selected');
+});
+});
+$(document).ready(function(){
+$(document).on('click','#select_all_locationsq',function(event) {
+$('#custom-option1 option').attr('selected','selected');
+});
+});
+$(document).ready(function(){
+$(document).on('click','.item_days',function(event) {
+$(this).attr('checked','checked');
+
+
+
+});
+});
+
+</script>
+  
+{% if associative_array %}
+<script>
+	$(document).ready(function(){
+	$('#associated_div').trigger('click');
+	});
+</script>
+{% endif %}
+
+<!--/*******************************COMBO ITEM JS*****************************/-->
+<script>
+$(function() {
+
+  $("form[name='combo_item']").validate({
+    // Specify validation rules
+    rules: {
+   
+		item_name: "required",
+		item_code :"required",
+		item_category_id :"required",
+		
+		//item_file :"required",
+		item_description :"required",
+		item_prepration_cost: {
+		required: true,
+	    number: true
+        },
+		item_default_price: {
+		required: true,
+	    number: true
+        },
+		item_discount_price:{
+		required: true,
+	    number: true
+        },
+		datepicker_from_discount:"required",
+		datepicker_to_discount:"required",
+		'locations[]':"required",
+		'item_days[]':"required",
+		
+	   
+    },
+    // Specify validation error messages
+    messages: {
+		item_name: "Please enter your Item Name.",
+		item_code :"Please enter your Item Code.",
+		item_category_id :"Please Select category Name.",
+		//item_file :"Please Select a file.",
+		item_description :"Please enter your Item description.",
+		item_prepration_cost:{
+		required: "Please enter preparation cost.",
+	    number: "Please enter number format."
+        },
+		item_default_price: {
+		required: "Please enter default price.",
+	    number: "Please enter number format."
+        },
+		item_discount_price:{
+		required: "Please enter discount price.",
+	    number: "Please enter number format."
+        },
+		datepicker_from_discount:"Please select from date",
+		datepicker_to_discount:"Please select to date",
+	    'locations[]':"Please select locations.",
+		'item_days[]':"Please select days for availablity.",
+		
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+
+   
+    if ($('.item_combo_days:checked').length == 0){
+	$('#item_days_html1').html('<label id="item_combo_days-error" class="error" for="item_combo_days">Please select days for availablity.</label>');
+        return false;
+      
+    }else{
+	   $('#item_days_html1').html();
+	}
+    $('#item_code1-error').remove();
+	var item_code=$('#item_code1').val();
+    var urlData="{{base_url}}admin/menus/check_unique_itemcode";
+	$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data:{item_code:item_code},
+				 success:function(data) 
+				{ 
+                var data = $.parseJSON(data);
+				if(data.error_code=='true'){
+				$('#item_code1').after('<label id="item_code1-error" class="error" for="item_code1">Please enter unique item code.</label>');
+				$(window).scrollTop(300);
+				
+				}
+				if(data.error_code=='false'){
+				
+				  $('#item_code1-error').remove();
+					form.submit();
+				}
+				}
+				});
+
+			
+	     }
+  });
+});
+
+$(document).ready(function(){
+
+$(document).on('change','#anim',function(event) {
+
+var cat_id=$(this).val();
+var search=$('#search').val();
+
+var urlData="{{base_url}}admin/menus/check_search";
+$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				data:{search:search,cat_id:cat_id},
+				 success:function(data) 
+				{ 
+					var data=$.parseJSON(data);
+		var htmldata="";
+		var items_checked_id = new Array();
+			$.each(data, function( index, value ){
+			
+				if(value.item_checked=="checked"){
+					
+					//items_checked_id.push(value.item_id);
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" checked="checked" class="check_items check_items'+value.item_id+'"  data-id='+value.item_id+' disabled /><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}else{
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img width="70" src="{{base_url}}upload/images/'+value.item_image+'" class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" class="check_items check_items'+value.item_id+'" data-id='+value.item_id+'><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}
+			});
+			//add_combo_item(items_checked_id)
+			$('#list_items').html(htmldata);
+				}
+				});
+});
+
+
+$(document).on('keyup keydown','#search',function(event) {
+
+var cat_id=$('#anim option:selected').val();
+var search=$(this).attr('value');
+
+
+var urlData="{{base_url}}admin/menus/check_search";
+var url="{{base_url}}";
+$.ajax({
+		url : urlData,
+		type: "POST",
+		data:{search:search,cat_id:cat_id},
+		success:function(data) 
+		{ 
+		var data=$.parseJSON(data);
+		var htmldata="";
+		var items_checked_id = new Array();
+			$.each(data, function( index, value ){
+			
+				if(value.item_checked=="checked"){
+					
+					//items_checked_id.push(value.item_id);
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" checked="checked" class="check_items check_items'+value.item_id+'"  data-id='+value.item_id+' disabled /><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}else{
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img width="70" src="{{base_url}}upload/images/'+value.item_image+'" class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" class="check_items check_items'+value.item_id+'" data-id='+value.item_id+'><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}
+			});
+			//add_combo_item(items_checked_id)
+			$('#list_items').html(htmldata);
+		}	
+				
+	});
+});
+
+$(document).on('click','.check_items',function(event) {
+//alert('add');
+ var item_id=$(this).data('id');
+	$(this).attr('disabled','disabled');
+ var urlData="{{base_url}}admin/menus/checked_combo";
+
+ $.ajax({
+			url : urlData,
+			type: "POST",
+			data:{item_id:item_id},
+			success:function(data) { 
+				data=$.parseJSON(data);
+				var htmldata="";
+
+				$.each(data, function( index, value ) {
+						htmldata +='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><select data-id="'+value.item_id+'" name="select_portion['+value.item_id+']" class="select_portions"  ><option value="">Please Select</option>';
+						if(value.portions){
+						$.each(value.portions, function( key, portion ) {
+						    if(value.check_portion!="" && value.check_portion==portion.itemportion_portion_id){
+							htmldata +='<option selected="selected" value="'+portion.itemportion_portion_id+'">'+portion.quantity_name +'</option>';
+							}else{
+							htmldata +='<option value="'+portion.itemportion_portion_id+'">'+portion.quantity_name +'</option>';
+							
+							}
+						});
+						}
+					htmldata +='</select><div class="r-teext item-deletee"><div class="checkbox"><input value="1" min="1" type="number" name="quantities['+value.item_id+']" style="width:50px;" >&nbsp;<a onclick="remove_item('+value.item_id+')"><i class="cr-icon fa fa-trash"></i></a></div></div></div>';
+					
+				});
+				//alert(htmldata);
+				$('#cobmo_set_data').html(htmldata);
+				}
+			});
+		
+});
+
+
+
+});
+  </script>
+<script>
+function combo_search_item(cat_id){
+var search=$('#search').val();
+
+var urlData="{{base_url}}admin/menus/check_search";
+var url="{{base_url}}";
+$.ajax({
+		url : urlData,
+		type: "POST",
+		data:{search:search,cat_id:cat_id},
+		success:function(data) 
+		{ 
+		var data=$.parseJSON(data);
+		var htmldata="";
+		var items_checked_id = new Array();
+			$.each(data, function( index, value ){
+			alert(value.item_checked);
+				if(value.item_checked=="checked"){
+					
+					items_checked_id.push(value.item_id);
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" checked="checked" class="check_items check_items'+value.item_id+'"  data-id='+value.item_id+' disabled /><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}else{
+					htmldata+='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img width="70" src="{{base_url}}upload/images/'+value.item_image+'" class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><label class="custom-lable"><input value=""  type="checkbox" class="check_items check_items'+value.item_id+'" data-id='+value.item_id+'><span class="cr"><i class="cr-icon fa fa-check"></i></span></label></div></div></div>';
+				}
+			});
+			add_combo_item(items_checked_id)
+			$('#list_items').html(htmldata);
+		}	
+				
+	});
+}
+
+
+function add_combo_item(item_ids){
+//alert(item_ids);
+var urlData="{{base_url}}admin/menus/checked_combos";
+
+$.ajax({
+			url : urlData,
+			type: "POST",
+			data:{item_id:item_ids},
+			success:function(data) { 
+				data=$.parseJSON(data);
+				var htmldata="";
+				$.each(data, function( index, value ) {
+						htmldata +='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><div class="r-teext item-deletee"><div class="checkbox"><input value="1"  type="number"  style="width:50px;" >&nbsp;<a onclick="remove_item('+value.item_id+')" ><i class="cr-icon fa fa-trash"></i></a></div></div></div>';
+					
+				});
+				$('#cobmo_set_data').html(htmldata);
+					
+				}
+			});
+
+}
+
+
+function remove_item(item_id){
+ var urlData="{{base_url}}admin/menus/remove_items_combo";
+ 
+		$.ajax({
+			url : urlData,
+			type: "POST",
+			data:{item_id:item_id},
+			success:function(data) { 
+				
+				data=$.parseJSON(data);
+				var htmldata="";
+				if(data == 0){
+					$('#cobmo_set_data').html('');
+				}else{
+					$.each(data, function( index, value ) {
+						htmldata +='<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/'+value.item_image+'" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">'+value.item_name+'</div><div class="co-ratee">'+value.item_defaultprice+'</div></div><select data-id="'+value.item_id+'" name="select_portion['+value.item_id+']" class="select_portions"  ><option value="">Please Select</option>';
+						if(value.portions){
+						$.each(value.portions, function( key, portion ) {
+						    if(value.check_portion!="" && value.check_portion==portion.itemportion_portion_id){
+							htmldata +='<option selected="selected" value="'+portion.itemportion_portion_id+'">'+portion.quantity_name +'</option>';
+							}else{
+							htmldata +='<option value="'+portion.itemportion_portion_id+'">'+portion.quantity_name +'</option>';
+							
+							}
+						});
+						}
+					htmldata +='</select><div class="r-teext item-deletee"><div class="checkbox"><input value="1" min="1" type="number" name="quantities['+value.item_id+']" style="width:50px;" >&nbsp;<a onclick="remove_item('+value.item_id+')"><i class="cr-icon fa fa-trash"></i></a></div></div></div>';
+					
+				});
+				}
+				var cat_id = $('#anim').val();
+              //  combo_search_item(cat_id);
+				$('#cobmo_set_data').html(htmldata);
+				$('.check_items'+item_id).prop('disabled',false);	
+				$('.check_items'+item_id).prop('checked',false);	
+				}
+			});
+}
+$(document).on('change','.select_portions',function(){
+var item_id=$(this).data('id');
+var portion_id=$(this).val();
+ var urlData="{{base_url}}admin/menus/set_portions";
+
+		$.ajax({
+			url : urlData,
+			type: "POST",
+			data:{item_id:item_id,portion_id:portion_id},
+			success:function(data) { 
+				
+				}
+				});
+});
+</script>  
+</body>
+</html>                                         

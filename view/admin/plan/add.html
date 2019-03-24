@@ -1,0 +1,455 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12">
+		<div class="work-progres">
+			<div class="chit-chat-heading" style="padding: 10px;margin: 0px;">
+				{{constant('PLAN HEADING')}}
+				   <a href="#" data-toggle="modal" data-target="#myModal" class="hvr-icon-float-away add-latest-user"></a>
+			</div>
+		</div>
+      </div>	  
+  </div>	  	  
+   <div class="clearfix"> 
+   </div>	  	  	 	
+    <div class="chit-chat-layer1 modal-spacee">     			
+     	<div class="clearfix"> 
+     	</div>	
+
+			<div class="col-md-12 col-sm-12 col-lg-12">
+				<div class="col-md-12 col-sm-6 col-xs-12" style="margin-top:20px;">	
+				<table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('PRICE')}}</th>										
+										<th>{{ constant('DESCRIPTION')}}</th>										
+										<th>{{ constant('STATUS')}}</th>										
+										<th>{{ constant('ACTION')}}</th>
+									</tr>
+									</thead>
+									<tbody>	
+										{% if resultss %}
+											{% for key,plan_add in resultss %} 
+												<tr>									
+												<td>{{ plan_add.plan_name|e }}</td>
+												<td>{{ plan_add.plan_price|e }}</td>
+												<td>{{ plan_add.plan_description|e  }}</td>																		
+												<td class="status {{ plan_add.plan_id|e }}">													
+													{% if plan_add.plan_status == 1 %}														
+														<div class="active-button" onclick="statusFunction({{ plan_add.plan_id|e }},0)">Active</div>													
+													{% else %}														
+														<div class="inactive-button" onclick="statusFunction({{ plan_add.plan_id|e }},1)">Inactive</div>													
+													{% endif %}												
+												</td>
+												<td>
+												<div class="market-update-right">	
+													<span><a href="{{ base_url }}admin/planmodel/assign_model/{{ plan_add.plan_id|e}}"><button type="button" class="btn btn-default waves-effect waves-light">Assign Model</button></a></span>
+													<span><a href="#" data-toggle="modal" data-id="{{ base_url }}admin/plan/edit_plan/{{ plan_add.plan_id|e  }}" data-name="{{ plan_add.plan_name|e }}" data-price="{{ plan_add.plan_price|e }}" data-description="{{ plan_add.plan_description|e }}" data-target="#myModal-edit" class="modal-edit"><i class="fa fa-edit"></i></a></span>
+													<span><a href="#" onclick="confirmDeleteModal('{{ plan_add.plan_id|e }}')"><i class="fa fa-trash"></i></a></span>
+												</div>
+												</td>
+												</tr>
+											{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              {{ links|raw  }}
+                <div class="total-records">
+                    <div>
+						{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+						{% else %}							
+							0 {{ constant('RECORD')}}
+						{% endif %}
+					</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  		
+     	   	<div class="col-md-12 col-sm-12 col-lg-12 work-progres" style="padding:10px;">						
+			<div class="table-responsive">						
+     	   		<table class="table">						
+     	   			<thead class="thead-inverse table-head-bg">									
+     	   				<tr>									
+     	   					<th>{{ constant('MODEL')}} {{ constant('NAME')}}</th>										
+     	   					<th>{{ constant('QUANTITY')}}</th>
+     	   					<th>{{ constant('PRICE')}}</th>  			
+     	   				</tr>								
+     	   			</thead>								
+     	   			<tbody>		
+     	   			<tbody>	
+						{% if results %}
+							{% for key,plan in results %} 
+								<tr>									
+									<td>{{ plan.plan_model_name|e }}</td>												
+									<td>{{ plan.plan_model_quantity|e }}</td>												
+									<td>{{ plan.plan_model_price|e }}</td>					
+								</tr>
+							{% endfor %}
+						{% else %}									
+						<tr>
+							<td class="record" colspan="4" >{{ constant('NO RECORD FOUND')}} </td>								
+						</tr>							
+						{% endif %}							
+						</tbody>				
+				</table>					
+     	   </div>					
+     	   <div class="col-md-12" style="padding:0px;">	
+              
+     	   <a href="{{ base_url }}admin/planmodel/edit_model_details/" class="btn btn-success waves-effect waves-light" > EDIT</a>					
+     	   	 				</div>					
+     	   	</div>				
+     	   		</div>		
+     	      </div>            
+          </div>		<div class="clearfix"> </div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add paymentmethod add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('PLAN HEADING')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="{{ base_url }}admin/plan/add_plan" method="POST" name="plan_form" enctype="multipart/form-data">
+											
+												<div class="col-md-6 md-form">												
+												<label for="form31">{{constant('NAME')}}</label>												
+												<textarea  type="text"  class="md-textarea form-control" rows="3" name="name" placeholder="{{constant('NAME')}}" style="    padding-top:10px;"></textarea>									</div>
+											<div class="col-md-6 md-form">												
+											<label for="form31">{{constant('PRICE')}}</label>												
+											<textarea  type="text"  class="md-textarea form-control" rows="3" name="price" placeholder="{{constant('PRICE')}}" style="    padding-top:10px;"></textarea>									</div>
+											<div class="col-md-12 md-form">
+												<label for="form31">{{constant('DESCRIPTION')}}</label>
+												<input type="text" id=""placeholder="{{constant('DESCRIPTION')}}"  name="description" class="form-control">
+											</div>
+											<div class="col-md-12 text-center">
+                               <button class="btn btn-success" value="Submit" name="add">{{constant('SUBMIT')}}</button>
+												<button class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+
+  <div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{constant('EDIT')}} {{constant('NAME')}}</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form action="" id="edit_plan_form" name="edit_plan_form" method="POST">
+											
+											<div class="col-md-6 md-form">
+												<label for="Name">{{ constant('PLAN')}} {{constant('NAME')}}</label>
+												<input type="text" id="name1" placeholder="{{ constant('ENTER')}} {{ constant('PLAN')}} {{ constant('NAME')}}" maxlength="50" name="name" class="form-control" >
+												
+											</div>
+											<div class="col-md-6 md-form">
+												<label for="price">{{ constant('PRICE')}}</label>
+												<input type="text" id="price1" placeholder="{{ constant('ENTER')}} {{ constant('PRICE')}} " maxlength="50" name="price" class="form-control" >
+												
+											</div>
+											<div class="col-md-12 md-form">
+												<label for="description">{{ constant('DESCRIPTION')}}</label>
+												<input type="text" id="description1" placeholder="{{ constant('ENTER')}} {{ constant('DESCRIPTION')}} " maxlength="50" name="description" class="form-control" >
+												
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{constant('SUBMIT')}}</button>
+												<button  class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+			
+				
+				
+<!--Add paymentmethod add-->
+
+<!--edit paymentmethod add-->
+
+
+
+<!--edit department add-->
+   <!----modal starts here --->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+             <div class="modal-body">
+             	<div class="delete_massage"></div>
+                <p>{{constant('SURE DELETE')}}</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+<script type="text/javascript">
+
+$(function() {
+  $("form[name='plan_form']").validate({
+
+    rules: {      
+		name:{required: true},
+		price:{required: true},
+			 },		
+    messages: {
+        name: {required:"Please enter plan title."},  				
+    },
+    submitHandler: function(form) {
+	var messageLength=CKEDITOR.instances['page_desc'].getData().replace(/<[^>]*>/gi, '').length;
+    if(!messageLength) {
+	          $('#page_desc').after('<label id="page_desc-error" class="error" for="page_desc">Please enter page description.</label>');
+               $(window).scrollTop(300);
+				return false;
+        }
+        else if (data.error == 'permission') {
+                     $('form[name="plan_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                     } else{
+		$('#page_desc-error').remove();
+		}
+	
+    }
+  });
+});
+</script>
+<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">{{constant("DELETE")}}</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record Deleted successfully!");
+  var urlData='{{ base_url }}admin/plan/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function(data) 
+				{
+				var data = $.parseJSON(data);
+				if (data.error == 'false') {
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}else {
+                   $('.delete_massage').html('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                    }
+                }
+			});
+			
+  
+}  
+
+</script>
+<script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+	  		$('label.error').css('display','none');
+			$('.form-control').removeClass('error');
+			$('select').removeClass('error');
+			$('form[name="edit_plan_form"]')[0].reset();
+
+            $('#name1').attr('value',$(this).data('name'));
+            $('#price1').attr('value',$(this).data('price'));
+            $('#description1').attr('value',$(this).data('description'));
+			$('#edit_plan_form').attr('action',$(this).data('id'));
+			
+        });
+    </script>
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_plan_form']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		name: "required",
+		
+    },
+    // Specify validation error messages
+    messages: {
+      name: "Please enter plan title",
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+					    	//alert(data);
+				  var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="plan_name">'+value+'</label>');
+                       });
+					   
+					}
+					 else if (data.error == 'permission') {
+                     $('form[name="edit_plan_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                            }else{
+					$('form[name="edit_plan_form"]')[0].reset();
+					$('form[name="edit_plan_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+					window.location.reload();
+					}
+				    
+            		}
+				}
+			});
+    }
+  });
+});
+
+function statusFunction(id,value){
+		var urlData='{{ base_url }}admin/plan/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.plan_status == 1){															
+							$('td.status.'+value.plan_id).html("<div class='active-button' onclick='statusFunction("+value.plan_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.plan_id).html("<div class='inactive-button' onclick='statusFunction("+value.plan_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+</script>
+
+</body>
+</html>                     

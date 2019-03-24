@@ -1,0 +1,226 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+    <div class="page-container">	
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'resturant/lib/nav.html' %}
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+                            <div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+                            <div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+                                <div class="work-progres">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+                                            <h4 class="modal-title">{{constant('COMPANY')}}  {{constant('ADDRESS')}} </h4>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="card form-white" style="box-shadow: none;">
+                                                <div class="card" style="box-shadow:none">
+                                                    <div class="card-body">
+                                                        <!-- Form contact -->
+                                                        <!-- Form contact -->
+                                                        {%if(success_massage) %}
+                                                        <div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}</div>
+
+                                                        {% endif %}
+                                                        <form name="resturantbrands" action="{{ base_url }}resturant/Companysetting/update" method="post">
+                                                            <input type="hidden" name="language_code" value="" class="edit_language_code">
+                                                            <div class="col-md-12 md-form" style="padding:0px;">
+                                                                <div class="col-md-6 md-form" style="padding:0px;">	
+                                                                    <i class="fa fa-user prefix grey-text"></i>
+                                                                    <label for="company_name">{{ constant('NAME')}}<span class="required">*</span></label>		<input type="hidden" name="language_code" value="{{language_code}}" >									
+                                                                    <input type="text" id="company_name1"  value="{{company.company_language_name }}" name="company_name" maxlength="50" placeholder="{{ constant('ENTER') }} {{ constant('COMPANY')}} {{ constant('NAME')}}" class="form-control">
+                                                                </div>
+                                                                <div class="col-md-6 md-form">	
+                                                                    <i class="fa fa-code prefix grey-text"></i>
+                                                                    <label for="company_code">{{ constant('COMPANY')}} {{ constant('CODE')}}<span class="required">*</span></label>											
+                                                                    <input type="text" id="company_code1" readonly="true" name="company_code" value="{{company.company_code}}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 md-form" style="padding:0px;">
+                                                                <div class="col-md-6 md-form" style="padding:0px;">	
+                                                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                                                    <label for="company_email">{{ constant('EMAIL')}}<span class="required">*</span></label>
+                                                                    <input type="email" id="company_email1" maxlength="60" value="{{company.company_email}}" placeholder="{{ constant('ENTER') }} {{ constant('EMAIL')}}" name="company_email" class="form-control">	
+                                                                </div>
+                                                                <div class="col-md-6 md-form" style="padding:0px;">	
+                                                                    <i class="fa fa-registered prefix grey-text"></i>
+                                                                    <label for="company_cr_no">{{ constant('CRNUMBER')}}<span class="required">*</span></label>
+                                                                    <input type="number" id="company_cr_no1" maxlength="15" value="{{company.company_cr_no}}" placeholder="{{ constant('ENTER') }} {{ constant('CRNUMBER')}}" name="company_cr_no" class="form-control">	
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 md-form" style="padding:0px;">
+                                                                <div class="col-md-6 md-form" style="padding:0px;">	
+                                                                    <i class="fa fa-phone prefix grey-text"></i>
+                                                                    <label for="company_phone">{{ constant('PHONENO')}}<span class="required">*</span></label>														
+                                                                    <input type="tel" id="company_phone1" maxlength="12" value="{{company.company_phone}}" placeholder="{{ constant('ENTER') }} {{ constant('PHONENO')}}" name="company_phone" class="form-control">
+                                                                </div>
+                                                                <div class="col-md-6 md-form">
+                                                                    <i class="fa fa-phone prefix grey-text"></i>
+                                                                    <label for="company_vat_no">{{ constant('VAT NUM')}}<span class="required">*</span></label>														
+                                                                    <input type="text" name="company_vat_no" value="{{company.company_vat_no}}" id="company_vat_no1" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 md-form" style="padding:0px;">											    
+                                                                <i class="fa fa-address-card prefix grey-text"></i>
+                                                                <label for="company_address">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+                                                                <textarea type="text" id="company_address1" maxlength="500" placeholder="{{ constant('ENTER') }} {{ constant('ADDRESS')}}" name="company_address" class="md-textarea" style="height:auto;">{{company.company_language_address}}</textarea>
+                                                            </div>
+                                                            <div class="col-md-12 text-center">
+                                                                <button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+                                                            </div>
+                                                        </form>
+                                                        <!-- Form contact -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="modal-footer">
+                                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+                        </div>
+
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--main page chit chating end here-->
+
+                    <!--climate end here-->
+                </div>
+                <!--inner block end here-->
+                <!--copy rights start here-->
+                <div class="copyrights">
+                    <p>© 2018 Tabqy. All Rights Reserved | Design by  <a href="#" target="_blank">Askonlinesolutions</a> </p>
+                </div>	
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+
+        {% include 'resturant/lib/sidebar.html' %}
+        <!--slide bar menu end here-->
+
+        <style>
+            .logo {
+                width: auto;
+                position: relative;
+                left:0px;
+                top:10px;
+            }
+
+        </style>
+
+        <script>
+            var toggle = true;
+
+            $(".sidebar-icon").click(function () {
+                if (toggle)
+                {
+                    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                    $("#menu span").css({"position": "absolute"});
+                } else
+                {
+                    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                    setTimeout(function () {
+                        $("#menu span").css({"position": "relative"});
+                    }, 400);
+                }
+                toggle = !toggle;
+            });
+        </script>
+        <!--scrolling js-->
+        <script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+        <script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+        <script src="{{base_url}}assets/js/scripts.js"></script>
+        <!--//scrolling js-->
+        <script src="{{base_url}}assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+        <script type="text/javascript">
+
+            // Wait for the DOM to be ready
+            $(function () {
+                // Initialize form validation on the registration form.
+                // It has the name attribute "registration"
+                $("form[name='resturantbrands']").validate({
+                    // Specify validation rules
+                    rules: {
+                        // The key name on the left side is the name attribute
+                        // of an input field. Validation rules are defined
+                        // on the right side
+                        company_name: "required",
+                        company_phone: {
+                            required: true,
+                            number: true
+                        },
+                        company_address: "required",
+                        company_email: {
+                            required: true,
+                            email: true
+                        },
+                        company_code: "required",
+                        company_vat_no: "required"
+                    },
+                    // Specify validation error messages
+                    messages: {
+                        company_name: "Please enter company name",
+                        company_phone: {
+                            required: "Please enter phone number",
+                            number: "It must be numeric",
+                        },
+                        company_address: "Please enter company address",
+                        company_email: {
+                            required: "Please enter company email",
+                            email: "Please enter a valid email",
+                        },
+                        company_code: "Please enter company code",
+                        company_vat_no: "Please enter VAT Number",
+                    },
+                    // Make sure the form is submitted to the destination defined
+                    // in the "action" attribute of the form when valid
+                    submitHandler: function (form) {
+                        var formData = $(form).serialize();
+                        var urlData = $(form).attr('action');
+                        $.ajax(
+                                {
+                                    url: urlData,
+                                    type: "POST",
+                                    crossDomain: true,
+                                    data: formData,
+                                    success: function (data)
+                                    {
+                                        var data = $.parseJSON(data);
+                                        if (data.error == 'true') {
+
+                                            $.each(data.error_msg, function (index, value) {
+                                                $('#' + index).after('<label id="' + index + '-error" class="error" for="user_name">' + value + '</label>');
+                                            });
+
+                                        } else {
+                                            //$('form[name="resturantbrands"]')[0].reset();
+                                            $('form[name="resturantbrands"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                            $('.alert').delay(1000).fadeOut(100);
+
+                                        }
+                                    }
+                                });
+                    }
+                });
+            });
+        </script>
+
+
+</body>
+</html>                     

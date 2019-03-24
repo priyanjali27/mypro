@@ -1,0 +1,661 @@
+{% include 'resturant/lib/header.html' %}
+<script>var baseurl = "{{ base_url }}";</script>
+<body>	
+    <div class="page-container">	
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'resturant/lib/nav.html' %}
+
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+                            <div class="col-md-9 col-sm-9 col-xs-12 col-lg-9">
+                                <div class="work-progres">
+                                    <div class="chit-chat-heading">
+                                        {{constant('STAFF')}} 
+
+                                    </div>
+
+
+                                    <div class="table-responsive">
+                                        <table class="table">
+
+                                            <thead class="thead-inverse table-head-bg">
+                                                <tr>
+                                                    <!--<th>Image</th>--->
+                                                    <th>{{constant('STAFF')}} {{constant('NAME')}}</th>
+                                                    <th>{{constant('STAFF')}} {{constant('ROLE')}}</th>
+
+                                                    <th>{{constant('EMAIL')}} {{constant('ADDRESS')}}</th>
+                                                    <th>Assign</th>
+                                                    <th>{{constant('ACTION')}}</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for staff in staffs %}
+                                                <tr>									
+                                                    <!--<td><img src="http://askonlinetraning.com/tabqy1/assets/images/logo.png" class="img-staff" alt="img"></td>--->
+                                                    <td>{{ staff.user_name }}</td>
+                                                    <td>{{ staff.usertype_name }}</td>
+
+                                                    <td>{{ staff.user_email }}</td>
+                                                    <td>
+                                                        <span>
+                                                            <a href="{{ base_url }}resturant/staffrole/assign_model/{{ staff.user_id|e }}/{{ staff.user_company_id|e }}" >
+                                                                <div class="active-button">Assign</div>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                    <td><div class="market-update-right">
+                                                            <!--<span><a href="#" class="view-modal1"><i class="fa fa-eye latest-view-icon"></i></a></span>-->
+                                                            <span>
+                                                                <a href="#" data-toggle="modal" 
+                                                                   data-id="{{ base_url }}resturant/staffrole/staffedit/{{ staff.user_id|e }}"data-name="{{ staff.user_name|e }}" data-username="{{ staff.user_username|e }}" data-dob="{{ staff.user_dob|e }}" data-srole="{{staff.user_staffrole }}" data-email="{{ staff.user_email|e }}" data-city="{{ staff.user_city|e }}" data-zipcode="{{ staff.user_zipcode|e }}" data-depart="{{ staff.department_name|e }}" data-gender="{{ staff.user_gender|e }}" data-phone="{{ staff.user_phoneno|e }}" data-address="{{ staff.user_address|e }}" 
+                                                                   data-target="#myModal-staff-edit" id="staff-edit" class="modal-edit staff-edit"  >
+                                                                    <i class="fa fa-edit edit-right"></i></a></span>
+                                                            <span><a href="javascript:void(0)" onclick="confirmDeleteModal('{{ staff.user_id|e }}')" ><i class="fa fa-trash"></i></a></span></div></td>
+                                                </tr>
+
+                                                {% endfor %}
+
+                                            </tbody>
+
+
+
+                                        </table>
+                                        <!--Pagination -->
+                                        <nav class="my-4 pagenation-border">
+
+                                            <div class="total-records">
+                                                <div>  <!---- Total Record ----> </div>
+                                            </div>
+                                        </nav>
+                                        <!--/Pagination -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="col-md-12 work-progres" style="MARGIN-TOP: 20PX;">
+
+                                    <div class="col-md-12 add-staff"><a  data-toggle="modal" data-target="#myModal-staff"><span><i class="fa fa-user"></i></span>Add New Staff</a></div>
+
+                                    <div class="col-md-12" style="padding:0px;">
+                                        <div class="staff-filter"> 
+                                            <div class="staff-h">Staff Filter</div>
+                                            <ul>
+
+                                                <li class="{% if roleId =='' %}active{% endif %} role-list"  >
+                                                    <a href="{{base_url}}resturant/staffrole/index/" class="color-w">All</a></li>
+                                                {% for role in roles %}
+                                                <li class="role-list {% if role.usertype_id == roleId %}active{% endif %}"  ><a href="{{base_url}}resturant/staffrole/index/{{ role.usertype_id }}"  class="color-w" >{{ role.usertype_name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>	
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 new-role">
+
+                                    <div class="edit-role-btn" {% if roleId =='' %} style="display:none;" {% endif %} >
+                                         <button type="button" data-toggle="modal" data-target='#myModal-edit-role{{ roleId }}' class="btn btn-success edit-role ">Edit Role</button>
+                                    </div>
+
+                                    <a href="" data-toggle="modal" data-target="#myModal-role"><span><i class="fa fa-plus"></i></span>Add New Role</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--main page chit chating end here-->
+
+                    <!--climate end here--> 
+                </div>
+
+
+
+
+
+
+                <!-- add role-->
+                <div class="modal fade" id="myModal-role" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">{{constant('ADD')}} {{constant('ROLE')}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="response_msg"></div>
+                                <div class="col-md-12" style="padding:0px;">	
+                                    <div class="col-md-12 md-form">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="role_name">{{constant('ROLE')}} {{constant('NAME')}}</label>
+                                        <input type="text" placeholder="{{constant('ENTER')}} {{constant('ROLE')}} {{constant('NAME')}}" name="role_name" class="form-control role_name">
+                                    </div>
+                                </div>							
+                            </div>
+                            <div class="modal-footer" style="border:none;">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success waves-effect waves-light" onclick="addRole()" >Submit</button>
+                                    <button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal" >Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- add  role-->
+
+
+
+                {% for role in roles %}
+                <!-- edit role-->
+                <div class="modal fade" id="myModal-edit-role{{ role.usertype_id }}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+
+                        <!-- Modal content-->
+                        <div class="modal-content simplebar" id="myElement" style="width:100%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" id="close_role_model{{ role.usertype_id }}" >&times;</button>
+                                <h4 class="modal-title">Edit Role</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="col-md-12 massage_box{{ role.usertype_id }}" style="padding:0px;">
+                                </div>
+
+
+                                <div class="col-md-12" style="padding:0px;">	
+                                    <div class="col-md-6 col-xs-12 md-form" style="padding:0px;">
+
+                                        <input type="text"  name="roleName" class="form-control roleName" value="{{ role.usertype_name }}" readonly >
+
+
+                                    </div> 	
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6 col-xs-12 md-form" style="padding:0px;">
+                                        <!----
+                                        <select name="customer_gender" class="selectpicker form-control-select valid" style="margin-bottom:0px;">
+                                                <option value="">Defult Page </option>
+                                                <option value="">Male</option>
+                                                <option value="">Female</option>
+                                                <option value="">Transgender</option>
+                                        </select>---->
+                                    </div> 
+
+
+
+
+
+
+                                    <div class="col-md-12 col-xs-12 md-form">
+                                        <div style="text-align:center">
+                                            <div class="">
+                                                <input id="supper11" type="checkbox" class="superAdmin{{ role.usertype_id }}"  {% if role.supperadmin == '1' %}checked{% endif %} value="1" > Super Admin
+                                                       <!--<label for="supper11">Super Admin</label>-->
+                                            </div>
+
+
+                                            <!---
+                                            <div class="md-checkbox md-checkbox-inline">
+                                              <input id="i11" type="checkbox" checked >
+                                              <label for="i11">Inline & Centered</label>
+                                            </div>
+                                            <div class="md-checkbox md-checkbox-inline">
+                                              <input type="checkbox" id="i12" >
+                                              <label for="i12">Inline & Centered</label>
+                                            </div> --->
+                                        </div>  
+                                    </div>
+
+
+
+                                    <div class="col-md-12 col-xs-12">
+
+                                        {% for key in controllers|keys %}
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="check-heading">{{ key }}</div>
+
+                                            {% for controller in controllers[key] %}
+                                            <div class="col-md-12 col-sm-12" style="padding:0px;">
+                                                <div class="col-sm-5 col-md-5 col-xs-12" style="padding-left:0px;">
+                                                    <div class="co-display-name">
+                                                        <h4>{{ controller.controllers_display_name }} </h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 col-md-7 col-xs-12">
+                                                    <div style="text-align:left">
+
+                                                        <div class="md-checkbox md-checkbox-inline">
+                                                            <input  type="checkbox" id="add{{ controller.controllers_id~role.usertype_id }}" value="{{ controller.controllers_id }}"  name="add[]" {% if role.usertype_id == checkdata[controller.controllers_id] and checkdata[controller.controllers_id~"_add"] == '1' %}checked{% endif%} >
+
+                                                                    <label for="add{{ controller.controllers_id~role.usertype_id }}" style="padding-left:0px;">Add</label>
+                                                        </div>
+
+                                                        <div class="md-checkbox md-checkbox-inline">
+                                                            <input  type="checkbox" id="edit{{ controller.controllers_id~role.usertype_id }}" value="{{ controller.controllers_id }}" name="edit[]" {% if role.usertype_id == checkdata[controller.controllers_id] and checkdata[controller.controllers_id~"_edit"] == '1' %}checked{% endif%} >
+
+                                                                    <label for="edit{{ controller.controllers_id~role.usertype_id }}" style="padding-left:0px;">Edit</label>
+                                                        </div>
+                                                    {% if controller.controllers_id != 3 %}
+                                                        <div class="md-checkbox md-checkbox-inline">
+                                                            <input  type="checkbox" id="del{{ controller.controllers_id~role.usertype_id }}" value="{{ controller.controllers_id }}"  name="delete[]" {% if role.usertype_id == checkdata[controller.controllers_id] and checkdata[controller.controllers_id~"_delete"] == '1' %}checked{% endif%} >
+
+                                                                    <label for="del{{ controller.controllers_id~role.usertype_id }}" style="padding-left:0px;">Delete</label>
+                                                        </div>
+                                                    {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {% endfor %}
+
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="modal-footer" style="border:none;">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success waves-effect waves-light" onclick="addPrivileges({{ role.usertype_id }})" >Submit</button>
+                                    <button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}  
+
+                {% include 'resturant/staffrole/user.html' %}  
+
+                <div id="deleteModal" class="modal fade" role='dialog'>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+                            </div>
+                            <div class="delete_message"></div>
+                            <div class="modal-body">
+                                <p>{{constant('SURE DELETE')}}</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+                                <span id= 'deleteButton'></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- edit role-->
+                <script>
+                    function readUrl(input) {
+                    if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                    var imgData = e.target.result;
+                    var imgName = input.files[0].name;
+                    input.setAttribute("data-title", imgName);
+                    console.log(e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    }
+                    }
+                </script>
+
+
+                <!--inner block end here-->
+                <!--copy rights start here-->
+                {% include 'resturant/lib/footer.html' %}	
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        {% include 'resturant/lib/sidebar.html' %}
+    </div>
+
+    <!--
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    --->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="{{base_url}}assets/js/app/role_restaurant.js"></script> 
+    <style>
+        .check-heading {
+            font-size: 18px;
+        }
+        .modal-lg {
+            width: 970px;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+                    // scroll
+
+                    ; (function (factory) {
+                    if (typeof module === 'object' && typeof module.exports === 'object') {
+                    factory(require('jquery'), window, document);
+                    } else {
+                    factory(window.jQuery, window, document);
+                    }
+                    }(function ($, window, document, undefined) {
+
+
+                    /**
+                     * Calculate scrollbar width
+                     *
+                     * Called only once as a constant variable: we assume that scrollbar width never change
+                     *
+                     * Original function by Jonathan Sharp:
+                     * http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php
+                     */
+                    var SCROLLBAR_WIDTH;
+                    function scrollbarWidth () {
+                    // Append a temporary scrolling element to the DOM, then measure
+                    // the difference between its outer and inner elements.
+                    var tempEl = $('<div class="scrollbar-width-tester" style="width:50px;height:50px;overflow-y:scroll;top:-200px;left:-200px;"><div style="height:100px;"></div>'),
+                            width = 0,
+                            widthMinusScrollbars = 0;
+                    $('body').append(tempEl);
+                    width = $(tempEl).innerWidth(),
+                            widthMinusScrollbars = $('div', tempEl).innerWidth();
+                    tempEl.remove();
+                    return (width - widthMinusScrollbars);
+                    }
+
+                    var IS_WEBKIT = 'WebkitAppearance' in document.documentElement.style;
+                    // SimpleBar Constructor
+                    function SimpleBar (element, options) {
+                    this.el = element,
+                            this.$el = $(element),
+                            this.$track,
+                            this.$scrollbar,
+                            this.dragOffset,
+                            this.flashTimeout,
+                            this.$contentEl = this.$el,
+                            this.$scrollContentEl = this.$el,
+                            this.scrollDirection = 'vert',
+                            this.scrollOffsetAttr = 'scrollTop',
+                            this.sizeAttr = 'height',
+                            this.scrollSizeAttr = 'scrollHeight',
+                            this.offsetAttr = 'top';
+                    this.options = $.extend({}, SimpleBar.DEFAULTS, options);
+                    this.theme = this.options.css;
+                    this.init();
+                    }
+
+                    SimpleBar.DEFAULTS = {
+                    wrapContent: true,
+                            autoHide: true,
+                            css: {
+                            container: 'simplebar',
+                                    content: 'simplebar-content',
+                                    scrollContent: 'simplebar-scroll-content',
+                                    scrollbar: 'simplebar-scrollbar',
+                                    scrollbarTrack: 'simplebar-track'
+                            }
+                    };
+                    SimpleBar.prototype.init = function () {
+                    // Measure scrollbar width
+                    if (typeof SCROLLBAR_WIDTH === 'undefined') {
+                    SCROLLBAR_WIDTH = scrollbarWidth();
+                    }
+
+                    // If scrollbar is a floating scrollbar, disable the plugin
+                    if (SCROLLBAR_WIDTH === 0) {
+                    this.$el.css('overflow', 'auto');
+                    return;
+                    }
+
+                    if (this.$el.data('simplebar-direction') === 'horizontal' || this.$el.hasClass(this.theme.container + ' horizontal')){
+                    this.scrollDirection = 'horiz';
+                    this.scrollOffsetAttr = 'scrollLeft';
+                    this.sizeAttr = 'width';
+                    this.scrollSizeAttr = 'scrollWidth';
+                    this.offsetAttr = 'left';
+                    }
+
+                    if (this.options.wrapContent) {
+                    this.$el.wrapInner('<div class="' + this.theme.scrollContent + '"><div class="' + this.theme.content + '"></div></div>');
+                    }
+
+                    this.$contentEl = this.$el.find('.' + this.theme.content);
+                    this.$el.prepend('<div class="' + this.theme.scrollbarTrack + '"><div class="' + this.theme.scrollbar + '"></div></div>');
+                    this.$track = this.$el.find('.' + this.theme.scrollbarTrack);
+                    this.$scrollbar = this.$el.find('.' + this.theme.scrollbar);
+                    this.$scrollContentEl = this.$el.find('.' + this.theme.scrollContent);
+                    this.resizeScrollContent();
+                    if (this.options.autoHide) {
+                    this.$el.on('mouseenter', $.proxy(this.flashScrollbar, this));
+                    }
+
+                    this.$scrollbar.on('mousedown', $.proxy(this.startDrag, this));
+                    this.$scrollContentEl.on('scroll', $.proxy(this.startScroll, this));
+                    this.resizeScrollbar();
+                    if (!this.options.autoHide) {
+                    this.showScrollbar();
+                    }
+                    };
+                    /**
+                     * Start scrollbar handle drag
+                     */
+                    SimpleBar.prototype.startDrag = function (e) {
+                    // Preventing the event's default action stops text being
+                    // selectable during the drag.
+                    e.preventDefault();
+                    // Measure how far the user's mouse is from the top of the scrollbar drag handle.
+                    var eventOffset = e.pageY;
+                    if (this.scrollDirection === 'horiz') {
+                    eventOffset = e.pageX;
+                    }
+                    this.dragOffset = eventOffset - this.$scrollbar.offset()[this.offsetAttr];
+                    $(document).on('mousemove', $.proxy(this.drag, this));
+                    $(document).on('mouseup', $.proxy(this.endDrag, this));
+                    };
+                    /**
+                     * Drag scrollbar handle
+                     */
+                    SimpleBar.prototype.drag = function (e) {
+                    e.preventDefault();
+                    // Calculate how far the user's mouse is from the top/left of the scrollbar (minus the dragOffset).
+                    var eventOffset = e.pageY,
+                            dragPos = null,
+                            dragPerc = null,
+                            scrollPos = null;
+                    if (this.scrollDirection === 'horiz') {
+                    eventOffset = e.pageX;
+                    }
+
+                    dragPos = eventOffset - this.$track.offset()[this.offsetAttr] - this.dragOffset;
+                    // Convert the mouse position into a percentage of the scrollbar height/width.
+                    dragPerc = dragPos / this.$track[this.sizeAttr]();
+                    // Scroll the content by the same percentage.
+                    scrollPos = dragPerc * this.$contentEl[0][this.scrollSizeAttr];
+                    this.$scrollContentEl[this.scrollOffsetAttr](scrollPos);
+                    };
+                    /**
+                     * End scroll handle drag
+                     */
+                    SimpleBar.prototype.endDrag = function () {
+                    $(document).off('mousemove', this.drag);
+                    $(document).off('mouseup', this.endDrag);
+                    };
+                    /**
+                     * Resize scrollbar
+                     */
+                    SimpleBar.prototype.resizeScrollbar = function () {
+                    if (SCROLLBAR_WIDTH === 0) {
+                    return;
+                    }
+
+                    var contentSize = this.$contentEl[0][this.scrollSizeAttr],
+                            scrollOffset = this.$scrollContentEl[this.scrollOffsetAttr](), // Either scrollTop() or scrollLeft().
+                            scrollbarSize = this.$track[this.sizeAttr](),
+                            scrollbarRatio = scrollbarSize / contentSize,
+                            // Calculate new height/position of drag handle.
+                            // Offset of 2px allows for a small top/bottom or left/right margin around handle.
+                            handleOffset = Math.round(scrollbarRatio * scrollOffset) + 2,
+                            handleSize = Math.floor(scrollbarRatio * (scrollbarSize - 2)) - 2;
+                    if (scrollbarSize < contentSize) {
+                    if (this.scrollDirection === 'vert'){
+                    this.$scrollbar.css({'top': handleOffset, 'height': handleSize});
+                    } else {
+                    this.$scrollbar.css({'left': handleOffset, 'width': handleSize});
+                    }
+                    this.$track.show();
+                    } else {
+                    this.$track.hide();
+                    }
+                    };
+                    /**
+                     * On scroll event handling
+                     */
+                    SimpleBar.prototype.startScroll = function(e) {
+                    // Simulate event bubbling to root element
+                    this.$el.trigger(e);
+                    this.flashScrollbar();
+                    };
+                    /**
+                     * Flash scrollbar visibility
+                     */
+                    SimpleBar.prototype.flashScrollbar = function () {
+                    this.resizeScrollbar();
+                    this.showScrollbar();
+                    };
+                    /**
+                     * Show scrollbar
+                     */
+                    SimpleBar.prototype.showScrollbar = function () {
+                    this.$scrollbar.addClass('visible');
+                    if (!this.options.autoHide) {
+                    return;
+                    }
+                    if (typeof this.flashTimeout === 'number') {
+                    window.clearTimeout(this.flashTimeout);
+                    }
+
+                    this.flashTimeout = window.setTimeout($.proxy(this.hideScrollbar, this), 1000);
+                    };
+                    /**
+                     * Hide Scrollbar
+                     */
+                    SimpleBar.prototype.hideScrollbar = function () {
+                    this.$scrollbar.removeClass('visible');
+                    if (typeof this.flashTimeout === 'number') {
+                    window.clearTimeout(this.flashTimeout);
+                    }
+                    };
+                    /**
+                     * Resize content element
+                     */
+                    SimpleBar.prototype.resizeScrollContent = function () {
+                    if (IS_WEBKIT) {
+                    return;
+                    }
+
+                    if (this.scrollDirection === 'vert'){
+                    this.$scrollContentEl.width(this.$el.width() + SCROLLBAR_WIDTH);
+                    this.$scrollContentEl.height(this.$el.height());
+                    } else {
+                    this.$scrollContentEl.width(this.$el.width());
+                    this.$scrollContentEl.height(this.$el.height() + SCROLLBAR_WIDTH);
+                    }
+                    };
+                    /**
+                     * Recalculate scrollbar
+                     */
+                    SimpleBar.prototype.recalculate = function () {
+                    this.resizeScrollContent();
+                    this.resizeScrollbar();
+                    };
+                    /**
+                     * Getter for original scrolling element
+                     */
+                    SimpleBar.prototype.getScrollElement = function () {
+                    return this.$scrollContentEl;
+                    };
+                    /**
+                     * Getter for content element
+                     */
+                    SimpleBar.prototype.getContentElement = function () {
+                    return this.$contentEl;
+                    };
+                    /**
+                     * Data API
+                     */
+                    $(window).on('load', function () {
+                    $('[data-simplebar-direction]').each(function () {
+                    $(this).simplebar();
+                    });
+                    });
+                    /**
+                     * Plugin definition
+                     */
+                    var old = $.fn.simplebar;
+                    $.fn.simplebar = function (options) {
+                    var args = arguments,
+                            returns;
+                    // If the first parameter is an object (options), or was omitted,
+                    // instantiate a new instance of the plugin.
+                    if (typeof options === 'undefined' || typeof options === 'object') {
+                    return this.each(function () {
+
+                    // Only allow the plugin to be instantiated once,
+                    // so we check that the element has no plugin instantiation yet
+                    if (!$.data(this, 'simplebar')) { $.data(this, 'simplebar', new SimpleBar(this, options)); }
+                    });
+                    // If the first parameter is a string
+                    // treat this as a call to a public method.
+                    } else if (typeof options === 'string') {
+                    this.each(function () {
+                    var instance = $.data(this, 'simplebar');
+                    // Tests that there's already a plugin-instance
+                    // and checks that the requested public method exists
+                    if (instance instanceof SimpleBar && typeof instance[options] === 'function') {
+
+                    // Call the method of our plugin instance,
+                    // and pass it the supplied arguments.
+                    returns = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+                    }
+
+                    // Allow instances to be destroyed via the 'destroy' method
+                    if (options === 'destroy') {
+                    $.data(this, 'simplebar', null);
+                    }
+                    });
+                    // If the earlier cached method
+                    // gives a value back return the value,
+                    // otherwise return this to preserve chainability.
+                    return returns !== undefined ? returns : this;
+                    }
+                    };
+                    $.fn.simplebar.Constructor = SimpleBar;
+                    /**
+                     * No conflict
+                     */
+                    $.fn.simplebar.noConflict = function () {
+                    $.fn.simplebar = old;
+                    return this;
+                    };
+                    }));
+                    $('#myElement').simplebar();
+    </script>
+
+</body>
+</html>

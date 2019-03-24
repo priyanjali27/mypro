@@ -1,0 +1,120 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+    <div class="page-container">	
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'resturant/lib/nav.html' %}
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="work-progres">
+                                <div class="chit-chat-heading" style="padding: 10px;margin: 0px;">Plan Detail</div>
+                            </div>
+                        </div>	  
+                    </div>	  	
+                    <div class="clearfix"></div>	  	  	 	
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres">
+                            <div class="">
+
+                                <form name="company_plan_assign" method="POST" action="{{ base_url }}admin/company/plan_assign/" >
+
+                                    <div class="col-md-12 md-form" style="padding:0px;">
+                                        <div class="col-md-12 md-form" style="padding:0px;">  
+
+
+                                            {% for all_detail in selected_plan_data %}
+                                            <div class="col-md-2 md-form">
+                                            </div>              
+                                            <div class="col-md-8 md-form">
+                                                <div class="columns">
+                                                    <ul class="price-p">
+
+                                                        {% for plan,plan_v in all_detail %}
+                                                        {% if plan_v.plan_name !='' %}
+                                                        <li class="header" style="background-color:#9f0660">{{ plan_v.plan_name|e }}</li>
+                                                        <li class="header">No. of Days: {{ plan_v.no_of_days|e }}</li>
+
+                                                        <li class="grey-1">{{ plan_v.plan_price|e }}</li>
+                                                        {% endif %}                           
+                                                        {% endfor %}
+                                                        {% for plandetail,detail_v in all_detail %}
+
+                                                        {% if detail_v %}
+                                                        {% for k1,v1 in detail_v %}                         
+                                                        {% if v1.plan_model_name!="" %}
+                                                        <li class="grey-2">{{ v1.plan_model_name|e }}&nbsp;&nbsp;{{ v1.plan_detail_quantity|e }}</li>                                               
+                                                        {% endif %}
+                                                        {% endfor %} 
+                                                        {% endif %}
+
+                                                        {% endfor %} 
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 md-form">
+                                            </div>  
+
+                                            {% endfor %}      
+
+                                        </div>
+
+
+                                    </div>                                                                  
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+
+
+
+                    <!--main page chit chating end here-->
+
+                    <!--climate end here-->
+                </div>
+                <!--inner block end here-->
+                <!--copy rights start here-->
+                {% include 'resturant/lib/footer.html' %}	
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        {% include 'resturant/lib/sidebar.html' %}
+    </div>
+    <!--slide bar menu end here-->
+
+
+
+    <script>
+        var toggle = true;
+
+        $(".sidebar-icon").click(function () {
+            if (toggle)
+            {
+                $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                $("#menu span").css({"position": "absolute"});
+            } else
+            {
+                $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                setTimeout(function () {
+                    $("#menu span").css({"position": "relative"});
+                }, 400);
+            }
+            toggle = !toggle;
+        });
+    </script>
+    <!--scrolling js-->
+    <script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+    <script src="{{base_url}}assets/js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="{{base_url}}assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+</body>
+</html>                     

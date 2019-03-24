@@ -1,0 +1,288 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+					
+			
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								{{ constant('LANGUAGE')}}
+								  <a href="{{ base_url }}admin/language/add" class="hvr-icon-float-away add-latest-user"></a>
+							</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+									<tr>
+										<th>{{ constant('NAME')}}</th>
+										<th>{{ constant('CODE')}}</th>
+										<th>{{ constant('FLAG')}}</th>
+										<th>{{ constant('CREATED')}}</th>
+										<th>{{ constant('STATUS')}}</th>
+										<!--<th>{{constant('ACTION')}}</th>-->
+									</tr>
+									</thead>
+									<tbody>
+										{% if results %}
+									{% for key, language in results %} 
+										<tr>									
+    									<td>{{ language.language_name|e }}</td>
+										<td>{{ language.language_code|e }}</td>
+										<td><img width="50" src="{{ base_url }}upload/lang_flags/{{ language.language_flag|e }}"></td>
+										<td>{{ language.language_created|e }}</td>
+										
+										<td class="status {{ language.language_id|e }}">
+											{% if language.language_status == 1 %}
+												<div class="active-button" onclick="statusFunction({{ language.language_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" onclick="statusFunction({{ language.language_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<!--<td>
+										<div class="market-update-right">
+                                             <span><a href="#"  onclick="confirmDeleteModal('{{ language.language_id|e }}')"><i class="fa fa-trash"></i></a></span>
+                                        </div>
+										</td>-->
+										</tr>
+									{% endfor %}
+									{% else %}									
+									<tr>									
+									<td class="record" colspan="4" >
+									{{ constant('NO RECORD FOUND')}} </td>								
+									</tr>							
+									{% endif %}
+										
+									</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+              
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'admin/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    	{% include 'admin/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+<!--Add department add-->
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Add Department</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											
+											<div class="col-md-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<input type="text" id="form31" class="form-control">
+												<label for="form31">Name</label>
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">Submit</button>
+												<button class="btn btn-primary">Back</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--Add department add-->
+
+<!--edit department add-->
+
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Edit Department</h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form>
+											
+											<div class="col-md-12 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<input type="text" id="form31" class="form-control" placeholder="Test Department">
+												<label for="form31">Name</label>
+											</div>
+											
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">Submit</button>
+												<button class="btn btn-primary">Back</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<!--edit department add-->
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+
+function statusFunction(id,value){
+		var urlData='{{ base_url }}admin/language/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.language_status == 1){															
+							$('td.status.'+value.language_id).html("<div class='active-button' onclick='statusFunction("+value.language_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.language_id).html("<div class='inactive-button' onclick='statusFunction("+value.language_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+
+function confirmDeleteModal(id){
+
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/department/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

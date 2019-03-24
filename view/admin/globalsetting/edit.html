@@ -1,0 +1,302 @@
+{% include 'admin/lib/header.html' %}
+
+<body>
+
+    <div class="page-container">
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                {% include 'admin/lib/nav.html' %}
+
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="work-progres">
+                                <div class="modal-header">
+                                    {{constant('Global Settings')}}
+                                    <a href="#" data-toggle="modal" data-target="#myModal" ></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="clearfix">
+                    </div>
+                   
+                        <div class="clearfix">
+                        </div>
+
+                      <div class="container">
+
+  <div class="panel-group" id="accordion">
+    
+    <div class="panel panel-default">
+      <form action="{{ base_url }}admin/global_setting/edit" method="POST" name="settings_form"> 
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="panel-title expand">
+           <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('NAME')}} | {{constant('ADDRESS')}} | {{constant('PHONENO')}} | {{constant('WEBSITE')}}</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body"> <i class="fa fa-user prefix grey-text"></i>
+         <label for="name"> {{constant('NAME')}}</label>
+        <input type="text" id="name" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" maxlength="50" name="name" class="form-control">
+        <i class="fa fa-user prefix grey-text"></i>
+        <label for="name"> {{constant('ADDRESS')}}</label>
+        <input type="text" id="address" placeholder="{{ constant('ENTER')}}  {{ constant('ADDRESS')}}" maxlength="50" name="address" class="form-control">
+        <i class="fa fa-phone prefix grey-text active"></i>
+         <label class="active">{{constant('PHONENO')}}<span class="required" aria-required="true">*</span></label>
+         <input type="number" placeholder="{{constant('ENTER')}} {{constant('PHONENO')}}" maxlength="12" min="0" name="phone_number" class="form-control">
+         
+         <label class="active">{{constant('WEBSITE')}}<span class="required" aria-required="true">*</span></label>
+         <input type="text" placeholder="{{constant('WEBSITE')}} URL" maxlength="12" min="0" name="website" class="form-control">
+       </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="panel-title expand">
+            <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('PICKUP')}}</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+            <input type="radio" name="pickup" value="1">Yes
+            <input type="radio" name="pickup" value="0">no</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="panel-title expand">
+            <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('DELIVERY')}}</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
+            <input type="radio" name="dilevery" value="1">Yes
+            <input type="radio" name="dilevery" value="0">no</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="panel-title expand">
+            <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('PAYMENT OPTION')}}</a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-body">
+            <input type="radio" name="payement_option" value="0">Cash
+            <input type="radio" name="payement_option" value="1">Card 
+       </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="panel-title expand">
+            <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('ORDER OUTSIDE DELIVERY AREA')}}</a>
+        </h4>
+      </div>
+      <div id="collapse5" class="panel-collapse collapse">
+        <div class="panel-body">
+            <input type="radio" name="order_outside_delivery_area" value="0">Yes
+            <input type="radio" name="order_outside_delivery_area" value="1">No 
+       </div>
+      </div>
+    </div>
+     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="panel-title expand">
+            <div class="right-arrow pull-right">+</div>
+          <a href="#">{{constant('OPENING HOURS')}}</a>
+        </h4>
+      </div>
+      <div id="collapse6" class="panel-collapse collapse">
+        <div class="panel-body">
+        
+          <div class="weekDays-selector">
+            <input type="checkbox" value="mon" name="weekday[]" />
+            <label for="weekday-mon">MON</label>
+            <input type="checkbox" value="tue" name="weekday[]" />
+            <label for="weekday-tue">TUE</label>
+            <input type="checkbox" value="wed" name="weekday[]" />
+            <label for="weekday-wed">WED</label>
+            <input type="checkbox" value="thu" name="weekday[]" />
+            <label for="weekday-thu">THU</label>
+            <input type="checkbox" value="fri" name="weekday[]" />
+            <label for="weekday-fri">FRI</label>
+            <input type="checkbox" value="sat" name="weekday[]" />
+            <label for="weekday-sat">SAT</label>
+            <input type="checkbox" value="sun" name="weekday[]" />
+            <label for="weekday-sun">SUN</label>
+        </div>
+
+          Start time  <input class="timepicker text-center" name="starttime">
+          Close time    <input class="timepicker text-center" name="closetime"> 
+       </div>
+      </div>
+    </div>
+    <button class="btn btn-success" value="Submit" name="add">{{constant('SUBMIT')}}</button>
+  </form>
+    </div> 
+</div>
+               
+
+                    <div class="clearfix"> </div>
+
+
+
+                    <!--main page chit chating end here-->
+
+                    <!--climate end here-->
+                
+                <!--inner block end here-->
+                <!--copy rights start here-->
+                {% include 'admin/lib/footer.html' %}
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        {% include 'admin/lib/sidebar.html' %}
+    </div>
+    <!--slide bar menu end here-->
+
+    
+
+    
+
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--scrolling js-->
+    <script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+    <script src="{{base_url}}assets/js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="{{base_url}}assets/js/bootstrap.js">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+  <script>
+$(function() {
+  $(".expand").on( "click", function() {
+    // $(this).next().slideToggle(200);
+    $expand = $(this).find(">:first-child");
+    
+    if($expand.text() == "+") {
+      $expand.text("-");
+    } else {
+      $expand.text("+");
+    }
+  });
+});
+</script>
+<script>
+   $(function() {
+
+    // alert(hello);
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='settings_form']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    resturant_setting_name            : "required",
+                    resturant_setting_dilevery        : "required",
+                    resturant_setting_pickup          : "required",
+                    resturant_setting_name            : "required",
+                    resturant_setting_payement_option : "required",
+                },
+                // Specify validation error messages
+                messages: {
+                    resturant_setting_name: "Please enter Floor Name",
+                },
+                alert();
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function(form) {
+                    var formData = $(form).serialize();
+                    var urlData = $(form).attr('action');
+                    $.ajax({
+                        url: urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        data: formData,
+                        success: function(data) {
+                            var data = $.parseJSON(data);
+                            if (data.error == 'true') {
+                                $.each(data.error_msg, function(index, value) {
+                                    $('#' + index).after('<label id="' + index + '-error" class="error" for="user_name">' + value + '</label>');
+                                });
+
+                            } else if (data.error == 'permission') {
+                                $('form[name="settings_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                            } else {
+                                $('form[name="settings_form"]')[0].reset();
+                                $('form[name="settings_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                if ($('.alert').delay(10000).fadeOut(100)) {
+                                    window.location.reload();
+                                }
+
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<script type="text/javascript">
+
+$(function() {
+  $("form[name='settings_form']").validate({
+
+    rules: {      
+   resturant_setting_name :{required: true},
+    price:{required: true},
+       },   
+    messages: {
+        resturant_setting_name: {required:"Please enter plan title."},          
+    },
+    submitHandler: function(form) {
+  var messageLength=CKEDITOR.instances['page_desc'].getData().replace(/<[^>]*>/gi, '').length;
+    if(!messageLength) {
+            $('#page_desc').after('<label id="page_desc-error" class="error" for="page_desc">Please enter page description.</label>');
+               $(window).scrollTop(300);
+        return false;
+        }
+        else if (data.error == 'permission') {
+                     $('form[name="settings_form"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                     } else{
+    $('#page_desc-error').remove();
+    }
+  
+    }
+  });
+});
+</script>
+<script type="text/javascript">
+  $('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 60,
+    minTime: '10',
+    maxTime: '6:00pm',
+    defaultTime: '11',
+    startTime: '10:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+</script>
+</body>
+
+</html>

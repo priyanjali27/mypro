@@ -1,0 +1,552 @@
+{% include 'admin/lib/header.html' %}
+
+<link href="{{ base_url }}assets/css/resturant/custom.css" rel="stylesheet" type="text/css" media="all"/>
+<!--js-->
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/pace.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/blockui.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/app.js"></script>
+	
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/interactions.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/widgets.min.js"></script>
+	<script type="text/javascript" src="{{ base_url }}assets/js/resturant/effects.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'admin/lib/nav.html' %}
+				
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1" style="background-color: #fff;padding: 20px;">
+	<div class="content" style="margin-bottom: 0px;padding-bottom: 0px;">	
+						<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<ul class="nav nav-tabs">
+							 <a type="button" href="{{base_url}}admin/menus/resturant/{{item_data.0.item_brand_id|e}}/{{item_data.0.item_country_id|e}}/{{item_data.0.item_company_id|e}}"  class="btn btn-primary">{{constant('BACK')}}</a>
+							</ul>
+					</div>
+					</div>
+					</div>
+				  
+	<div class="content tab-content">
+	<div class="row tab-pane fade in active" id="home">
+
+
+
+					
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xs-12 mrg-se">
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="item-head font-weight-r">{{constant('VIEW')}} {{constant('ITEM')}}</div>
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+							<div class="product-image"><img src="{{base_url }}upload/images/{{item_data.0.item_image|e}}" alt="image" class="img-responsive"></diV>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+							<div class="col-md-6 col-xs-12"><div class="product-name-r"><strong>{{constant('ITEM NAME')}}:</strong> {{item_data.0.item_language_item_name|e}}</div></div>
+							<div class="col-md-6 col-xs-12"><div class="product-name-r"><strong>{{constant('ITEM CODE')}}:</strong> {{item_data.0.item_code|e}}</div></div>
+							<div class="col-md-6 col-xs-12"><div class="product-name-r"><strong>{{constant('CATEGORY NAME')}}:</strong> {{item_data.0.category_name|e}}</div></div>
+						
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="item-description">
+								<p>{{item_data.0.item_language_item_description|e}}</p>
+							</div>
+						</div>
+					</div>
+				<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<div class="col-md-12">
+						<div class="product-name-r"><strong>{{constant('PREPARATION COST')}}:</strong> {{item_data.0.item_prepration_cost|e}}</div>
+					</div>
+				</div>
+				</div>
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+						<div class="col-md-12">
+							
+							<div class="product-name-r"><strong>{{constant('DEFAULT PRICE')}}:</strong> {{item_data.0.item_defaultprice|e}}</div>
+						</div>
+						
+						<div class="col-md-12" style="margin-top: 10px;">
+						
+							<div class="product-name-r"><strong>{{constant('DISCOUNT PRICE')}}:</strong>{{discount_data.0.discount_price|e}}</div>
+						</div>
+						
+						<div class="col-md-12" style="margin-top: 10px;">
+							<div class="r-alpaca-control-label font-weight-price-r">{{constant('DISCOUNT DATE')}}</div>
+							
+							<div class="range-r">
+								<span class="slider-time text-semibold-r">{{discount_data.0.discount_from|e}}  </span> 
+								<span class="slider-time2 text-semibold-r">    {{discount_data.0.discount_to|e}}</span>
+								</div>
+						</div>
+						
+							
+						</div>
+					
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							{% if priceofbranch_data %}
+							<div class="r-alpaca-control-label font-weight-price-r">{{constant('RESTURANT')}}</div>
+							{% for key, priceofbranch in priceofbranch_data %} 
+							<div class="product-name-r"><strong>{{priceofbranch.resturantbrand_name}} :</strong> {{priceofbranch.itempriceofbranch_price }}</div>
+							{% endfor %}
+							{% endif %}
+						</div>
+						
+						</div>
+						
+						
+						{% if associated_data%}
+							<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-top">
+							
+							<div class="add-ass-pro">{{constant('VIEW ASSOC')}}</div>
+						
+								
+								<div class="main-size-rate">
+								{% for key, associative in associated_data %} 
+								<div id="row_assoc_{{key}}"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;">
+									<div class="defult-list def-text">{{associative.associated_name}}</div>
+							
+       <div class="defult-list def-pricee-r">{{associative.associated_value}}</div>
+       <div class="defult-list def-pricee-r">{% if associative.associated_preadded==1%}Pre-added{%endif%}</div>
+	        <div class="defult-list def-switch">
+									<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch11" class="onoffswitch-checkbox" readonly id="myonoffswitch31" checked="">
+										<label class="onoffswitch-label" for="myonoffswitch3">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div></div>
+							   
+						{%endfor%}
+								</div>
+								
+						</div>
+						{%endif%}
+						{% if combo_items %}
+						<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-top">
+							
+							<div class="add-ass-pro">{{constant('VIEW COMBO')}}</div>
+						
+							{% for key, combo in combo_items %} 
+						<div class="col-md-12 col-sm-12 col-xs-12 main-add-itemm-left" style="margin-top:20px;"><div class="r-teext item-imagess"><div class="coco-img"><img src="{{base_url}}upload/images/{{combo.item_image}}" width="70"  class="" alt="jkdf"></div></div><div class="r-teext item-textt"><div class="cocacola-head">{{combo.item_name}}</div><div class="co-ratee"></div>
+						<div class="cocacola-head">Portion Type: {{combo.quantity_name}}</div>
+						Qty: {{combo.comboitem_quantity}}</div></div>
+						
+						{%endfor%}
+						</div>
+						{%endif%}
+					</div>
+					
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xs-12 mrg-se">
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r">
+					<div class="item-head font-weight-r">{{constant('ITEM AVAILABLE')}}</div>
+					{% for key, displayonbranch in displayonbranch_data %} 
+						<div class="product-name-r"><strong>Resturant Name:</strong> {{displayonbranch.resturantbrand_name}} </div>
+						{%endfor%}
+					</div>
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r" style="margin-top:10px;">
+						<div id="time-range" style="padding-bottom: 0px;margin-bottom: 20px;">
+						<div class="r-alpaca-control-label font-weight-r">{{constant('AVAILABLE TIME')}}</div>
+								<div class="r-alpaca-control-label text-semibold-1-r "></div>
+								<div class="range-r">
+								<span class="slider-time text-semibold-r">From {{item_data.0.item_available_from}}</span>
+								<span class="slider-time2 text-semibold-r">To {{item_data.0.item_available_to}}</span>
+								</div>
+							</div>
+							
+						<div class="days-main">
+							<div class="r-alpaca-control-label text-semibold-1-r ">{{constant('DAYS')}}</div>
+							<div class="main-float-days">
+							{% for key, itemavlableday in itemavlableday_data %} 
+							<div class="dayss-list">
+							<div id="ck-button">
+								   <label>
+									  <span style="background:#7a0553;color:#fff;">{{itemavlableday.itemavlableday_day }}</span>
+								   </label>
+								</div>
+								</div>
+								{%endfor%}
+							
+								
+								
+								</div>
+								
+						</div>
+					</div>
+					
+				
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg">
+					
+					<div class="col-sm-12 col-md-12 col-xs-12 border-bg-r-mrg" style="margin-bottom:30px;">
+						<div class="defult-main">
+							<div class="defult-list def-text">{{constant('ITEM STATUS')}}</div>
+							<div class="defult-list def-switch">
+							{% if item_data.0.item_status==1%}
+								<div class="onoffswitch">
+										Enable
+									</div>
+									{% else%}
+									<div class="onoffswitch">
+										Disable
+									</div>
+									{%endif%}
+							</div>
+							</div>
+					</div>
+					{% if item_data.0.item_visiblity==2%}
+                     
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+								
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							{% elseif item_data.0.item_visiblity==1%}
+                     
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									
+									Show on web
+								</label>
+							</div>
+							</div>
+							{% elseif item_data.0.item_visiblity==3%}
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+									
+									Hide in pos screen
+								</label>
+							</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="checkbox">
+								<label class="custom-lable">
+								
+									Show on web
+								</label>
+							</div>
+							</div>	
+						{% endif%}
+					</div>
+					{% if itemportion_data%}
+				
+					<div class="col-md-12 col-sm-12 col-xs-12 border-bg-r-mrg">
+						<div class="add-ass-pro">{{constant('MANAGE PORTION')}}</div>
+							{% for key, itemportion in itemportion_data %} 
+						<div id="row_assoc1_{{key}}"class="col-md-12 col-sm-12 col-xs-12 small-list"><div class="defult-main" style="margin-top:0px;">
+									<div class="defult-list def-text">{{itemportion. quantity_name }}</div>
+							
+       <div class="defult-list def-pricee-r">{{itemportion.itemportion_price}}</div>
+     
+	        <div class="defult-list def-switch">
+									<div class="onoffswitch">
+										<input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" readonly id="myonoffswitch322" checked="">
+										<label class="onoffswitch-label" for="myonoffswitch3">
+											<span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+							</div>
+							</div></div>
+							   
+							{% endfor %} 
+					
+					
+						
+						
+					</div>
+					{%endif%}
+					
+					</div>
+					
+					
+
+					
+					
+						</div>
+						
+                                <div class="main-add-button">
+							<a href="{{base_url}}admin/menus/resturant/{{restaurant_id}}" class="btn btn-add-custom">{{constant('BACK')}}</a>
+								</div>
+						    
+  
+     <div class="clearfix"> </div>
+</div>
+
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+   {% include 'admin/lib/rest_sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+<!--slide bar menu end here-->
+
+<style>
+	<!-- .logo { -->
+    <!-- width: auto; -->
+    <!-- position: relative; -->
+	<!-- left:0px; -->
+	<!-- top:10px; -->
+	<!-- } -->
+	.checkbox label::before{
+	display:none;
+	}
+	.checkbox {
+    padding-left: 0;
+}
+.fa-trash:before, .fa-trash:after{
+left:0px;
+}
+.fileinput-r {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none repeat scroll 0 0 transparent;
+    cursor: inherit;
+    display: block;
+}
+select[multiple], select[size] {
+    background-color: #fff;
+    padding: 10px;
+}
+
+select[multiple] option, select[size] option {
+    padding: 7px 12px;
+    border-radius: 3px;
+}
+	select[multiple], select[size] {
+    height: 200px;
+    padding: 7px;
+}
+
+.no-border    {border-bottom: 1px solid #ccc !important;
+    border: none;
+    box-shadow: none;
+}
+.btn {
+    font-size: .8rem;
+    padding: 10px;
+	}
+	
+	.nav > li > a:hover, .nav > li > a:focus{
+    background-image: url(../../assets/images/radio-active.jpg) !important;
+    background-repeat: no-repeat !important;
+    background-position:left center !important;
+	}
+	.bor-bottom-1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #3c3c3c;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}.r-alpaca-control{ padding:0px 0px 10px;}
+
+						.cus_input_n { width: 60px !important;
+    margin-top: -10px;
+    border: 1px solid #bdbdbd !important;
+    height: 1.3em !important;
+    margin-left: 10px;
+				}
+				
+				div label input {
+    margin-right: 0;
+}
+		
+
+.simplebar, [data-simplebar-direction] {
+    position: relative;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch; /* Trigger native scrolling for mobile, if not supported, plugin is used. */
+}
+
+.simplebar .simplebar-scroll-content,
+[data-simplebar-direction] .simplebar-scroll-content {
+    overflow-y: scroll;
+    overflow-x: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -ms-overflow-style: none; /* hide browser scrollbar on IE10+ */
+}
+
+/* hide browser scrollbar on Webkit (Safari & Chrome) */
+.simplebar-scroll-content::-webkit-scrollbar {
+    display: none;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-scroll-content,
+.simplebar.horizontal .simplebar-scroll-content {
+    overflow-x: scroll;
+    overflow-y: auto;
+}
+
+.simplebar-track {
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 11px;
+}
+
+.simplebar-track .simplebar-scrollbar {
+    position: absolute;
+    right: 2px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    min-height: 10px;
+    width: 7px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    -ms-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+    background: #6c6e71;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+}
+
+.simplebar-track:hover .simplebar-scrollbar {
+    /* When hovered, remove all transitions from drag handle */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    opacity: 0.7;
+    -webkit-transition: opacity 0 linear;
+    -moz-transition: opacity 0 linear;
+    -o-transition: opacity 0 linear;
+    -ms-transition: opacity 0 linear;
+    transition: opacity 0 linear;
+}
+
+.simplebar-track .simplebar-scrollbar.visible {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    opacity: 0.7;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-track,
+.simplebar.horizontal .simplebar-track {
+    top: auto;
+    left: 0;
+    width: auto;
+    height: 11px;
+}
+
+[data-simplebar-direction="horizontal"] .simplebar-track .simplebar-scrollbar,
+.simplebar.horizontal .simplebar-track .simplebar-scrollbar {
+    right: auto;
+    top: 2px;
+    height: 7px;
+    min-height: 0;
+    min-width: 10px;
+    width: auto;
+}
+
+#myElement{
+  height:150px;
+  width:100%;
+}		
+	
+#myElement1{
+  height:150px;
+  width:100%;
+}		
+	.select-all-f{
+ margin-top: 20px;
+    font-size: 14px;
+    color: #3c3c3c;
+}
+.select-all-button{
+    background-color: #f8f8f8;
+    border: 1px solid #ebebeb;
+    font-size: 14px;
+    color: #4f4f4f !important;
+    font-weight: 600;
+    padding: 8px 16px 8px 16px;
+    box-shadow: 0px 3px #b2b2b2;
+}
+.select-all-button:hover{
+ background-color:#f8f8f8;
+ box-shadow: 0px 3px #b2b2b2;
+}
+.select-all-f span{
+ float:right;
+}	
+.def-pricee-r{
+  padding-left: 30px;
+  margin-right: 20px;
+  font-size: 18px;
+    font-weight: 500;
+    color: #3b3b3b;
+    margin-top: 4px;
+}
+.flo-right{
+ float:right !important;
+}
+.flo-right a{
+ color:#900254;
+}
+input#item_code {
+  text-transform: uppercase;
+}
+</style>
+<script type="text/javascript">
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+ 
+</body>
+</html>                                         

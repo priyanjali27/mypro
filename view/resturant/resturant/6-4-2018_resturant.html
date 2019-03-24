@@ -1,0 +1,590 @@
+{% include 'resturant/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		{% include 'resturant/lib/nav.html' %}
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+               <div class="work-progres">
+                            <div class="chit-chat-heading">
+								  {{ constant('RESTURANT')}}  
+							  <a href="#" data-toggle="modal" data-target="#myModal-resturent" class="hvr-icon-float-away add-latest-user"></a>
+								</div>
+							
+
+                            <div class="table-responsive">
+                                <table class="table">
+									<thead class="thead-inverse table-head-bg">
+										<tr>
+											<th>{{ constant('NAME')}}</th>
+											<th>{{ constant('BRAND')}}</th>
+											<th>{{ constant('EMAIL')}}</th>
+											<th>{{ constant('PHONENO')}}</th>
+											<th>{{ constant('STATUS')}}</th>
+											<th>{{ constant('ACTION')}}</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+										{% if results %}
+									{% for key, resturant in results %} 
+										<tr>									
+    									<td>{{ resturant.resturantbrand_name|e }}</td>
+										<td><b>{{ resturant.t2resturantbrand_name|e }}</b></td>
+										<td>{{ resturant.resturantbrand_email|e }}</td>
+										<td>{{ resturant.resturantbrand_phoneno|e }}</td>
+										
+										<td class="status {{ resturant.resturantbrand_id|e }}">
+											{% if resturant.resturantbrand_status == 1 %} 
+												<div class="active-button" id="{{ resturant.resturantbrand_id|e }}" onclick="statusFunction({{ resturant.resturantbrand_id|e }},0)">Active</div>
+											{% else %}
+												<div class="inactive-button" id="{{ resturant.resturantbrand_id|e }}" onclick="statusFunction({{ resturant.resturantbrand_id|e }},1)">Inactive</div>
+											{% endif %}
+										</td>
+										<td><div class="market-update-right">
+										      <span><a href="#" data-toggle="modal" data-target="#myModal-view1" class="view-modal1" data-name="{{ resturant.resturantbrand_name|e }}"
+										data-brand="{{ resturant.t2resturantbrand_name|e }}" data-displayname="{{ resturant.resturantbrand_displayname|e }}"
+										data-email="{{ resturant.resturantbrand_email|e }}" data-phone="{{ resturant.resturantbrand_phoneno|e }}"
+										data-address="{{ resturant.resturantbrand_address|e }}"
+										data-created="{{ resturant.resturantbrand_created|e }}"
+										><i class="fa fa-eye latest-view-icon"></i></a></span>
+                                            <span><a href="#" class="modal-edit" data-id="{{ base_url }}resturant/resturant/edit/{{ resturant.resturantbrand_id|e }}"   data-type="{{resturant.resturantbrand_type|e}}" data-name="{{ resturant.resturantbrand_name|e }}"
+										data-brand="{{ resturant.t2resturantbrand_name|e }}" data-displayname="{{ resturant.resturantbrand_displayname|e }}"
+										data-email="{{ resturant.resturantbrand_email|e }}" data-phone="{{ resturant.resturantbrand_phoneno|e }}"
+										data-address="{{ resturant.resturantbrand_address|e }}"
+										data-created="{{ resturant.resturantbrand_created|e }}" 
+										data-users="{{ resturant.resturantbrand_countusers|e }}"
+										data-pos="{{ resturant.resturantbrand_countpos|e }}"
+										data-toggle="modal" data-target="#myModal-edit"><i class="fa fa-edit edit-right"></i></a></span>
+                                            <span><a href="#" onclick="confirmDeleteModal('{{ resturant.resturantbrand_id|e }}')"><i class="fa fa-trash"></i></a></span></div></td>
+										</tr>
+									{% endfor %}
+									{% else %}									
+							<tr>									
+							<td class="record" colspan="7" >
+							{{ constant('NO RECORD FOUND')}} </td>								
+							</tr>							
+							{% endif %}	
+											</tbody>
+                                </table>
+                                            <!--Pagination -->
+            <nav class="my-4 pagenation-border">
+               {{ links|raw  }}
+                <div class="total-records">
+                    <div>{% if results %}
+							{{start}}-{{end}} {{ constant('RECORD')}}
+							{% else %}
+							
+							0 {{ constant('RECORD')}}
+							{% endif %}</div>
+                </div>
+            </nav>
+            <!--/Pagination -->
+                  </div>
+             </div>
+      </div>
+
+     <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+	{% include 'resturant/lib/footer.html' %}	
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+  	{% include 'resturant/lib/sidebar.html' %}
+</div>
+
+
+<!--latest user add-->
+
+<!--latest resturent add-->
+<div class="modal fade" id="myModal-resturent" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{ constant('ADD')}} {{ constant('RESTURANT')}}  </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form name="resturantbrands" action="{{ base_url }}resturant/resturant/add" method="post">
+											<div class="row">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>
+													<label for="form31"> {{ constant('NAME')}} <span class="required">*</span> </label>
+													<input type="text" id="resturantbrand_name" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('NAME') }}" name="resturantbrand_name" class="form-control">
+												</div>
+												<div class="col-md-6 md-form">
+													<i class="fa fa-user prefix grey-text"></i>
+													<label for="form21">{{ constant('DISPLAY NAME')}}<span class="required">*</span></label>
+													<input type="text" id="resturantbrand_displayname" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('DISPLAY NAME') }}" name="resturantbrand_displayname" class="form-control">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6 md-form">
+													<i class="fa fa-envelope prefix grey-text"></i>
+													<label for="form341">{{ constant('EMAIL')}} <span class="required">*</span> </label>
+													<input type="email" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('EMAIL') }}" id="resturantbrand_email" name="resturantbrand_email" class="form-control">
+												</div>											
+												<div class="col-md-6 md-form">
+													<i class="fa fa-phone prefix grey-text"></i>
+													<label for="form341">{{ constant('PHONENO')}}  <span class="required">*</span></label>
+													<input type="tel" min="0" maxlength="20" placeholder="{{ constant('ENTER') }} {{ constant('PHONENO') }}" id="resturantbrand_phoneno" name="resturantbrand_phoneno" class="form-control">
+												</div>
+											</div>	
+											<div class="row">			
+												<div class="col-md-12 md-form">
+													<i class="fa fa-address-card prefix grey-text"></i>
+													<label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+													<textarea type="text" id="resturantbrand_address" maxlength="500" placeholder="{{ constant('ENTER') }} {{ constant('ADDRESS') }}" name="resturantbrand_address" class="md-textarea" style="height: 30px"></textarea>
+												</div>											
+											</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>
+			
+				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+	  
+	  
+<div class="modal fade" id="myModal-edit" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">{{ constant('EDIT') }} {{ constant('RESTURANT')}}  </h4>
+			</div>
+			<div class="col-md-12">
+					<div class="card form-white" style="box-shadow: none;">
+							<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										<form id="edit_dept_form" name="edit_dept_form" action="" method="post">
+												<div class="row">
+											<div class="col-md-6 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="form31"> {{ constant('NAME')}}<span class="required">*</span> </label>
+												<input type="text" id="resturantbrand_name2" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('NAME') }}" name="resturantbrand_name" class="form-control">
+												
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="form21">{{ constant('DISPLAY NAME')}}<span class="required">*</span></label>
+												<input type="text" id="resturantbrand_displayname2" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('DISPLAY NAME') }}" name="resturantbrand_displayname" class="form-control">
+											
+											</div>
+											</div>	<div class="row">
+											<div class="col-md-6 md-form">
+												<i class="fa fa-envelope prefix grey-text"></i>
+													<label for="form341">{{ constant('EMAIL')}}<span class="required">*</span></label>
+												<input type="email" id="resturantbrand_email2" maxlength="70" placeholder="{{ constant('ENTER') }} {{ constant('EMAIL') }}" name="resturantbrand_email" class="form-control">
+											</div>										
+											<div class="col-md-6 md-form">
+													<i class="fa fa-phone prefix grey-text"></i>
+													<label for="form341">{{ constant('PHONENO')}}<span class="required">*</span></label>
+													<input type="tel" type="tel" min="0" maxlength="20" placeholder="{{ constant('ENTER') }} {{ constant('PHONENO') }}" id="resturantbrand_phoneno2" name="resturantbrand_phoneno" class="form-control">
+											</div>	
+											</div>	
+											<div class="row">
+											<div class="col-md-12 md-form">
+												<i class="fa fa-address-card prefix grey-text"></i>
+													<label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+												<textarea type="text" id="resturantbrand_address2" maxlength="500" placeholder="{{ constant('ENTER') }} {{ constant('ADDRESS') }}" name="resturantbrand_address" class="md-textarea" style="height: 30px"></textarea>
+											</div>
+											</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+						</div>
+			</div>				
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>  
+	  <input type="hidden" id="dashboard" value="{{ base_url }}resturant/user/dashboard_list">
+<!--latest resturent add-->
+
+
+	  <div class="modal fade" id="myModal-view1" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{{ constant('VIEW') }} {{ constant('RESTURANT') }}</h4>
+			</div>
+			<div class="col-md-12">
+                <div class="card form-white" style="box-shadow: none;">
+                        <div class="card" style="box-shadow:none">
+                                <div class="card-body">
+                                    <!-- Form contact -->                   
+                                        <div class="col-md-6 md-form">
+                                            <i class="fa fa-user prefix grey-text"></i>
+											<label for="form31"> {{ constant('NAME')}}<span class="required">*</span></label>
+                                            <input type="text" id="rest_name" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-md-6 md-form">
+                                            <i class="fa fa-user prefix grey-text"></i>
+                                            	<label for="form31"> {{ constant('DISPLAY NAME')}}  <span class="required">*</span></label>
+                                            <input type="text" id="rest_displayname" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-md-6 md-form">
+                                            <i class="fa fa-envelope prefix grey-text"></i>
+                                            	<label for="form31"> {{ constant('EMAIL')}} <span class="required">*</span> </label>
+                                            <input type="email" id="rest_email" class="form-control" readonly>
+                                         
+                                        </div>
+                                        <div class="col-md-6 md-form">
+                                                <i class="fa fa-phone prefix grey-text"></i>
+                                                 <label for="form341">{{ constant('PHONENO')}}<span class="required">*</span></label>
+                                                <input type="number" id="rest_phone" class="form-control" readonly>
+                                               
+                                            </div>
+                                          
+                               <div class="col-md-12 md-form">
+                                            <i class="fa fa-address-card prefix grey-text"></i>
+                                              <label for="form81">{{ constant('ADDRESS')}}<span class="required">*</span></label>
+                                     
+                                            <textarea type="text" id="rest_address" class="md-textarea" style="height: 30px"  placeholder="Address" readonly></textarea>
+                                          
+                                                
+                                 </div>
+                                         <div class="col-md-6 md-form">
+                                                    <i class="fa fa-500px prefix grey-text"></i>
+                                                     <label for="form341">{{ constant('CREATED')}}</label>
+                                                    <input type="text" id="rest_created" class="form-control" placeholder="Created" readonly>
+                                                   
+                                                </div>
+
+                                
+                                    <!-- Form contact -->
+                                </div>
+                            </div>
+                    </div>
+        </div>
+			
+				
+				</form>
+			<div class="modal-footer">
+			  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+			</div>
+		  </div>
+		  
+		</div>
+	  </div>
+
+<div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{constant('DELETE')}} </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{constant('CANCEL')}}</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+	<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+<script type="text/javascript">
+function statusFunction(id,value){
+		var urlData='{{ base_url }}resturant/resturant/updateStatus/'+id+'/'+value;
+		$.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+			    success:function(response) 
+				{
+					var data = $.parseJSON(response);	
+					$.each(data.cur_status, function( key, value ) {						
+						if(value.resturantbrand_status == 1){															
+							$('td.status.'+value.resturantbrand_id).html("<div id="+value.resturantbrand_id+" class='active-button' onclick='statusFunction("+value.resturantbrand_id+",0)'>Active</div>");							
+						}else{
+							$('td.status.'+value.resturantbrand_id).html("<div id="+value.resturantbrand_id+" class='inactive-button' onclick='statusFunction("+value.resturantbrand_id+",1)'>Inactive</div>");							
+						}
+					});				
+				}
+			});
+	}
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='resturantbrands']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		resturantbrand_name: "required",
+		resturantbrand_displayname: "required",
+		resturantbrand_email: {
+						required: true,
+						email: true,
+						},
+		resturantbrand_phoneno: {
+						required: true,
+						number: true,
+						}, 
+		resturantbrand_address: "required"		
+    },
+    // Specify validation error messages
+    messages: {
+        resturantbrand_name: "Please enter your Name.",
+		resturantbrand_displayname: "Please enter your Display Name.",
+		resturantbrand_email: {
+						required: "Please enter email address",
+						email: "Please enter a valid email",
+						} ,
+		resturantbrand_phoneno: {
+						required: "Please enter your phoneno.",
+						number: "Phoneno. must be numeric",
+						}, 
+		resturantbrand_address: "Please enter your Address."
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 var dashboard = $('#dashboard').attr('value');
+		 
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{ 
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   $.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   
+					}else{
+						$('form[name="resturantbrands"]')[0].reset();
+						$('form[name="resturantbrands"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+						if($('.alert').delay(10000).fadeOut(100)){
+						window.location.reload();
+					}
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='edit_dept_form']").validate({
+    // Specify validation rules
+    rules: {
+      resturantbrand_name: "required",
+		resturantbrand_displayname: "required",
+		resturantbrand_email: {
+						required: true,
+						email: true
+						},
+
+		resturantbrand_phoneno: {
+								required: true,
+								number: true
+								}, 
+		resturantbrand_address: "required"
+		
+    },
+    // Specify validation error messages
+    messages: {
+        resturantbrand_name: "Please enter your Name.",
+		resturantbrand_displayname: "Please enter your Display Name.",
+		resturantbrand_email: {
+						required: "Please enter email address",
+						email: "Please enter a valid email",
+						} ,
+		resturantbrand_phoneno: {
+						required: "Please enter your phoneno.",
+						number: "Phoneno. must be numeric"
+						}, 
+		resturantbrand_address: "Please enter your Address."
+		
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					  
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					  
+					}else{
+					$('form[name="edit_dept_form"]')[0].reset();
+					$('form[name="edit_dept_form"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+					if($('.alert').delay(10000).fadeOut(100)){
+                     window.location.reload();
+					 }
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+ <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+        $(document).ready(function () {
+            $(document).on('click','.view-modal1',function(){
+			$('#rest_name').attr('value',$(this).data('name'));
+			$('#rest_displayname').attr('value',$(this).data('displayname'));
+			$('#rest_email').attr('value',$(this).data('email'));
+			if($(this).data('brand')!=null){
+			$('#rest_brand').attr('value',$(this).data('brand'));
+			}
+		    $('#rest_address').text($(this).data('address'));
+			$('#rest_phone').attr('value',$(this).data('phone'));
+			$('#rest_created').attr('value',$(this).data('created'));
+			});
+        });
+    </script>
+	
+	 <script language="javascript">
+      $(".modal-edit").click(function(e) {  
+	  e.preventDefault();
+	   $('#resturantbrand_name2').attr('value',$(this).data('name'));
+			$('#resturantbrand_displayname2').attr('value',$(this).data('displayname'));
+			$('#resturantbrand_email2').attr('value',$(this).data('email'));
+			$('#resturantbrand_countusers2').attr('value',$(this).data('users'));
+			$('#resturantbrand_countpos2').attr('value',$(this).data('pos'));
+		    $('#resturantbrand_address2').text($(this).data('address'));
+			$('#resturantbrand_phoneno2').attr('value',$(this).data('phone'));
+			$('#edit_dept_form').attr('action',$(this).data('id'));
+			var did=$(this).data('type');
+
+			$('#resturantbrand_type2').find('option[value="'+did+'"]').prop("selected", true);
+			
+        });
+    </script>
+	<script type="text/javascript">
+
+function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){
+  // do your stuffs with id
+  $("#successMessage").html("Record With id "+id+" Deleted successfully!");
+  var urlData='{{ base_url }}admin/resturant/delete/'+id;
+   $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+			    success:function() 
+				{
+				$('#deleteModal').modal('hide'); // now close modal
+				window.location.reload();
+				}
+			});
+			
+  
+}  
+
+</script>
+</body>
+</html>                     

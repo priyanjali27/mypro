@@ -1,0 +1,239 @@
+{% include 'admin/lib/header.html' %}
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			{% include 'admin/lib/nav.html' %}
+<!--inner block start here-->
+<div class="inner-block">
+<!--mainpage chit-chating-->
+<div class="chit-chat-layer1">
+	<div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left">
+		<div class="col-md-2 col-sm-2 col-xs-12 col-lg-3"></div>
+			<div class="col-md-8 col-sm-8 col-lg-12 col-lg-6 chit-chat-layer1-left">
+				<div class="work-progres">
+					<div class="modal-content">
+						<div class="modal-header">
+						  <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+						  <h4 class="modal-title">{{constant('MY PROFILE')}}</h4>
+						</div>
+						<div class="col-md-12">
+							<div class="card form-white" style="box-shadow: none;">
+								<div class="card" style="box-shadow:none">
+									<div class="card-body">
+										<!-- Form contact -->
+										{% if(success_massage) %}
+											<div class="alert alert-success alert-dismissable">
+												<button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>{{success_massage}}
+											</div>										
+										{% endif %}
+										<form  method="POST" action="{{ base_url }}admin/user/profile" name="userregistration">												
+											<div class="col-md-6 md-form">
+												<i class="fa fa-user prefix grey-text active"></i>
+												<label for="user_name" class="active">{{ constant('NAME')}} </label>
+												<input type="text" id="user_name" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('NAME')}}" name="user_name" value="{{set_data.user_name}}" class="form-control">
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-phone prefix grey-text"></i>										
+												<label for="user_phoneno">{{ constant('PHONENO')}} </label>
+												<input type="tel" id="user_phoneno" min="0" maxlength="20" placeholder="{{ constant('ENTER')}} {{ constant('PHONENO')}}" name="user_phoneno" value="{{set_data.user_phoneno}}" class="form-control">
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-envelope prefix grey-text"></i>
+												<label for="user_email">{{ constant('EMAIL')}}</label>
+												<input type="email" id="user_email" maxlength="70" placeholder="{{ constant('ENTER')}} {{ constant('EMAIL')}}" name="user_email" value="{{set_data.user_email}}" class="form-control">
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-user prefix grey-text"></i>
+												<label for="user_city">{{ constant('CITY')}}</label>
+												<input type="text" id="user_city" maxlength="50" placeholder="{{ constant('ENTER')}} {{ constant('CITY')}}" name="user_city" value="{{set_data.user_city}}" class="form-control">
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-address-card prefix grey-text"></i>
+												<label for="user_address">{{ constant('ADDRESS')}}</label>
+												<textarea type="text" id="user_address" maxlength="500" placeholder="{{ constant('ENTER')}} {{ constant('ADDRESS')}}" name="user_address" class="md-textarea" style="height: 30px" placeholder="Address" >{{set_data.user_address}}</textarea>
+											</div>
+											<div class="col-md-6 md-form">
+												<i class="fa fa-map-pin prefix grey-text"></i>
+												<label for="user_zipcode">{{ constant('ZIPCODE')}}</label>
+												<input type="text" id="user_zipcode" maxlength="7" placeholder="{{ constant('ENTER')}} {{ constant('ZIPCODE')}}" name="user_zipcode" value="{{set_data.user_zipcode}}" class="form-control">
+											</div>
+											<div class="col-md-12 text-center">
+												<button class="btn btn-success waves-effect waves-light">{{ constant('SUBMIT') }}</button>
+											</div>
+										</form>
+										<!-- Form contact -->
+									</div>
+								</div>
+							</div>
+						</div>			
+						<div class="modal-footer">
+						  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-2 col-lg-3 col-xs-12"></div>			   
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!--main page chit chating end here-->
+
+<!--climate end here-->
+</div>
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'admin/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+    {% include 'admin/lib/sidebar.html' %}
+	<div class="clearfix"> </div>
+</div>
+<!--slide bar menu end here-->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+			<script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{base_url}}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{base_url}}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<script type="text/javascript">
+
+	// Wait for the DOM to be ready
+$(function() {
+  // Initialize form validation on the registration form.
+  // It has the name attribute "registration"
+  $("form[name='userregistration']").validate({
+    // Specify validation rules
+    rules: {
+      // The key name on the left side is the name attribute
+      // of an input field. Validation rules are defined
+      // on the right side
+		user_name: "required",
+		user_username: "required",
+		user_phoneno: {
+			required: true,
+			number: true
+        },
+		user_gender: "required",
+		user_address: "required",
+		user_dob: "required", 
+		user_city: "required",
+		user_zipcode: {
+			required: true,
+        },
+
+        user_email: {
+			required: true,
+			// Specify that email should be validated
+			// by the built-in "email" rule
+			email: true
+        },
+        user_password: {
+			required: true,
+			minlength: 5
+        }
+    },
+    // Specify validation error messages
+    messages: {
+		user_name: "Please enter your Name",
+		user_username: "Please enter your username",
+		user_phoneno: {
+		required: "Please enter phone number",
+			number: "Your Phone no  must be numeric"
+		},
+		user_gender: "Please select your gender",
+		user_city: "Please enter your city",
+		user_address: "Please enter your address",
+		user_dob: "Enter your date of birth",	  
+		user_password: {
+			required: "Please provide a password",
+			minlength: "Your password must be at least 5 characters long",
+		},		
+		user_zipcode: {
+			required: "Please enter zipcode",
+		},
+		user_email: {
+			required: "Please enter  email address",
+			// Specify that email should be validated
+			// by the built-in "email" rule
+			email: "Please enter a valid email address",
+        },
+  
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+	     var formData = $(form).serialize();
+		 var urlData = $(form).attr('action');
+		 $.ajax(
+			{
+				url : urlData,
+				type: "POST",
+				crossDomain: true,
+				data : formData,
+				success:function(data) 
+				{
+				   var data = $.parseJSON(data);
+					if(data.error == 'true'){
+					   if(data.msg=='false'){
+						$.each(data.error_msg, function( index, value ) {
+						$('#'+index).after('<label id="'+index+'-error" class="error" for="user_name">'+value+'</label>');
+                       });
+					   }else{
+					   $('form[name="userregistration"]')[0].reset();
+						 $('form[name="userregistration"]').before('<div class="alert alert-danger alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>') ;
+						if($('.alert').delay(10000).fadeOut(100)){
+                          // window.location.reload();
+						   }
+					   }
+					}else{
+						///$('form[name="userregistration"]')[0].reset();
+						$('form[name="userregistration"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>'+data.success_message+'</div>');
+						$('.alert').delay(1000).fadeOut(100);
+            		}
+				}
+			});
+    }
+  });
+});
+</script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+   $(document).ready(function () {
+
+            $("#user_dob").datepicker({
+                changeMonth: true,
+                changeYear: true,
+				dateFormat: "yy-mm-dd",
+				yearRange: "-90:+00",
+				maxDate: 0
+            });
+			});
+</script>
+</body>
+</html>                     

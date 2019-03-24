@@ -1,0 +1,64 @@
+<!--Sub heder end here-->   
+ <div class="header-main other-header">
+  <div class="rows">
+   
+   <div class="col-md-2 com-logo">
+    {% if brand.resturantbrand_file %}
+            <img src="{{base_url}}upload/logoimages/{{brand.resturantbrand_file}}" title="Restaurant Logo" alt="Restaurant Logo" class="data_images1 text-rest-img" width="100"> {%else%}
+            <img src="{{base_url}}upload/companydefault.png" title="Restaurant Logo" alt="Restaurant Logo" class="data_images1 text-rest-img" width="100"> 
+            {%endif%}
+   </div>
+   <div class="col-md-2 separator-c pad-t">
+    <h3>{{ brand.resturantbrand_language_name}}</h3>
+    <h4>{{ cuisine_details.cuisine_language_cuisine_name|e }}</h4>
+   </div>
+   <div class="col-md-2 separator-c pad-t">
+    <h6>Telephone</h6>
+    <h5>{{ brand.resturantbrand_phoneno|e }}</h5>
+   </div>
+   <div class="col-md-2 separator-c pad-t">
+    <h6>Country</h6>
+    <h5>{{country.country_language_country_name}}</h5>
+   </div>
+   <!-- <div class="col-md-1 pad-t"> -->
+    <!-- <h6>TimeZone</h6> -->
+    <!-- <h5>{{country.country_language_country_name}}</h5> -->
+   <!-- </div> -->
+  </div>
+  
+   <div class="col-md-3 ">
+     <div class="profile_details">       
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">   
+                            <span class="prfil-img"><img src="{{ base_url }}images/p1.png" alt=""> </span> 
+                            <div class="user-name">
+                                <p>{{session.userdata.user_name}}</p>
+                                <span>{% if session.userdata.user_role=="0"  %} {{ constant('SUPER ADMINISTRATOR')}}
+                                    {% else  %}
+                                    {{ constant('ADMINISTRATOR')}}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <i class="fa fa-angle-down lnr"></i>
+                            <i class="fa fa-angle-up lnr"></i>
+                            <div class="clearfix"></div>    
+                        </div>  
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        <li><a href="{{base_url}}admin/user/profile"><i class="fa fa-user"></i>{{ constant('MY PROFILE')}}</a> </li> 
+                        <li> <a href="{{ base_url }}admin/language"><i class="fa fa-language"></i> {{ constant('LANGUAGE') }}</a> </li> 
+                        <li> <a href="{{base_url}}admin/user/change_password"><i class="fa fa-cog"></i> {{ constant('CHANGE PASSWORD')}}</a> </li>
+                        <!--<li> <a href="#"><i class="fa fa-cog"></i> {{ constant('SETTING')}}</a> </li>       -->                                 
+                        <li> <a href="{{base_url}}admin/terms"><i class="fa fa-cogs"></i> {{ constant('TERMS & CONDITIONS') }}</a> </li> 
+                        <li><a href="{{ base_url }}admin/logout"><i class="fa fa-sign-out"></i> {{ constant('LOGOUT')}}</a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+		</div>
+  
+  <div class="clearfix"> </div>
+ </div>
+ <!-- End -->

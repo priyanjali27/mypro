@@ -1,0 +1,65 @@
+{% include 'resturant/lib/header.html' %}
+
+<body>	
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+  {% include 'resturant/lib/nav.html' %}
+<!--inner block start here-->
+
+<div class="inner-block">
+    <div class="error-404">  	
+    	<div class="error-page-left">
+    		<img src="{{base_url}}assets/images/404.png" alt="">
+    	</div>
+    	<div class="error-right">
+	    	<h2>Oops! Page Not Open</h2>
+	    	<h4>Nothing Is Found Here!!</h4>
+	    	<a href="{{base_url}}resturant/resturant/profile">Go Back</a>
+    	</div>
+    </div>
+</div>
+
+<!--inner block end here-->
+<!--copy rights start here-->
+{% include 'resturant/lib/footer.html' %}
+<!--COPY rights end here-->
+</div>
+</div>
+<!--slider menu-->
+{% include 'resturant/lib/sidebar.html' %}
+</div>
+<!--slide bar menu end here-->
+
+
+
+<script>
+var toggle = true;
+            
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }               
+                toggle = !toggle;
+            });
+</script>
+<!--scrolling js-->
+		<script src="{{ base_url }}assets/js/jquery.nicescroll.js"></script>
+		<script src="{{ base_url }}assets/js/scripts.js"></script>
+		<!--//scrolling js-->
+<script src="{{ base_url }}assets/js/bootstrap.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<!-- mother grid end here-->
+
+</body>
+</html>                     

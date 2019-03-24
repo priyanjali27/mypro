@@ -1,0 +1,101 @@
+<div class="sidebar-menu">
+		  	<div class="logo"> <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#"> <span id="logo" ></span> 
+			      <!--<img id="logo" src="" alt="Logo"/>--> 
+			  </a> </div>		  
+		    <div class="menu">
+		    
+			{% if privillage.locationstatus==true %}
+			<ul id="menu">
+				<li><a href="{{ base_url }}admin/branchesaccess/"><i class="fa fa-list"></i><span> {{ constant('BRANCH')}}</span>
+				</a></li>
+			</ul>
+            {% else %}	
+		<ul id="menu">
+		<li id="menu-home" {% if title=="Dashboard" %} class="active_sub" {% endif %}><a href="{{ base_url }}admin/dashboard"><i class="fa fa-dashboard"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+		<!-- <li {% if title=="Brand" %} class="active_sub"  {% endif %}><a href="{{ base_url }}admin/Resturant" title="{{ constant('BRAND MANAGEMENT')}}"><i class="fa fa-group"></i><span>{{ constant('BRAND MANAGEMENT')}} </span> </a>
+
+		
+		</li> -->
+			<li {% if title=="User" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('USER MANAGEMENT')}}"><i class="fa fa-handshake-o"></i><span>{{ constant('USER MANAGEMENT')}} </span> </a>
+		<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="User" %} style="display:block"  {% endif %}>
+			<li {% if heading=="Department" %} class="active" {% endif %}><a href="{{ base_url }}admin/department" title="{{ constant('DEPT MANAGEMENT')}}"><i class="fa fa-cubes"></i><span>{{ constant('DEPT MANAGEMENT')}}</span></a></li>
+			<!--<li {% if heading=="Staff" %} class="active" {% endif %} id="menu-comunicacao"><a href="{{ base_url }}admin/User" tittle="{{ constant('STAFF MANAGEMENT')}}" title="{{ constant('STAFF MANAGEMENT')}}"><i class="fa fa-street-view"></i><span>{{ constant('STAFF MANAGEMENT')}}</span></a></li>-->
+			<li {% if heading=="Customer" %} class="active" {% endif %}><a href="{{ base_url }}admin/customer" title="{{ constant('CUSTOMER MANAGEMENT')}}"><i class="fa fa-user-secret"></i><span>{{ constant('CUSTOMER MANAGEMENT')}}</span></a></li>
+			
+			<li {% if heading=="StafRole" %} class="active" {% endif %} id="menu-academico"><a href="{{ base_url }}admin/staffrole" title="{{ constant('ROLE MANAGEMENT')}}"><i class="fa fa-user-plus"></i><span>{{ constant('ROLE MANAGEMENT')}}</span></a></li>
+			
+			
+		<!--	<li {% if heading=="usertype" %} class="active" {% endif %} id="menu-academico"><a href="{{ base_url }}admin/Usertype" title="{{ constant('USER TYPE')}}"><i class="fa fa-signing"></i><span>{{ constant('USER TYPE')}}</span></a></li>-->
+			<li {% if heading=="Userlocation" %} class="active" {% endif %} id="menu-academico"><a href="{{ base_url }}admin/Userlocation" title="{{ constant('USER LOCATION MANAGMENT')}}"><i class="fa fa-address-book"></i><span>{{ constant('USER LOCATION MANAGMENT')}}</span></a></li>
+		</ul>
+		</li>
+		
+		
+
+		<li {% if title=="Company" %} class="active_sub"  {% endif %}><a href="{{ base_url }}admin/company" title="{{ constant('COMPANY')}} {{constant('Manage')}}"><i class="fa fa-group"></i><span>{{ constant('COMPANY')}} {{constant('Manage')}} </span> </a>
+		
+		</li>
+		<li {% if title=="Plan" %} class="active_sub"  {% endif %}><a href="{{ base_url }}admin/plan" title="{{ constant('PLAN MANAGMENT')}}"><i class="fa fa-adjust"></i><span>{{ constant('PLAN MANAGMENT')}} </span> </a>
+		
+		</li>
+	
+		<!--<li {% if title=="Menu" %} class="active_sub"  {% endif %}><a href="javascript:void(0); title="{{ constant('MENU MANAGEMENT')}}"><i class="fa fa-tasks"></i><span>{{ constant('MENU MANAGEMENT')}} </span> </a>
+		<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="Menu" %} style="display:block"  {% endif %}>
+			<li {% if heading=="Category" %} class="active" {% endif %}><a href="{{ base_url }}admin/category" title="{{ constant('CATEGORY MANAGEMENT')}}"><i class="fa fa-calculator"></i><span>{{ constant('CATEGORY MANAGEMENT')}}</span></a></li>
+				<li {% if heading=="Menu" %} class="active" {% endif %}><a href="{{ base_url }}admin/menus" title="{{ constant('MENU MANAGEMENT')}}"><i class="fa fa-list"></i><span>{{ constant('MENU MANAGEMENT')}}</span></a></li>
+		
+		</ul>
+		</li>-->
+		<li {% if title=="Location" %} class="active_sub"  {% endif %}>
+		    <a href="javascript:void(0);" title="{{ constant('LOCATION MANAGEMENT')}}">
+		    <i class="fa fa-location-arrow"></i><span>{{ constant('LOCATION')}} {{ constant('Manage')}} </span>
+		    </a>
+		<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="Location" %} style="display:block"  {% endif %}>
+			<li {% if heading=="Country" %} class="active" {% endif %}><a href="{{ base_url }}admin/Country" title="{{ constant('COUNTRY MANAGEMENT')}}"><i class="fa fa-globe"></i><span>{{ constant('COUNTRY MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="City" %} class="active" {% endif %}><a href="{{ base_url }}admin/City" title="{{ constant('CITY MANAGEMENT')}}"><i class="fa fa-ship"></i><span>{{ constant('CITY MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Location" %} class="active" {% endif %}><a href="{{ base_url }}admin/Location" title="{{ constant('LOCATION MANAGEMENT')}}"><i class="fa fa-map-marker"></i><span>{{ constant('LOCATION MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Region" %} class="active" {% endif %}><a href="{{ base_url }}admin/Region" title="{{ constant('REGION MANAGEMENT')}}"><i class="fa fa-dot-circle-o"></i><span>{{ constant('REGION MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Zone" %} class="active" {% endif %}><a href="{{ base_url }}admin/zone" title="{{ constant('ZONE MANAGEMENT')}}"><i class="fa fa-life-bouy"></i><span>{{ constant('ZONE MANAGEMENT')}}</span></a></li>
+		</ul>
+		</li>
+		
+			<li {% if title=="System Tool Settings" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('SYSTEM TOOL')}} "><i class="fa fa-asterisk"></i><span>{{ constant('SYSTEM TOOL')}} </span> </a>
+			<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="System Tool Settings" %} style="display:block"  {% endif %}>
+			   <li {% if heading=="Discount" %} class="active" {% endif %}><a href="{{ base_url }}admin/discount" tittle="{{ constant('DISCOUNT MANAGEMENT')}}"><i class="fa fa-binoculars"></i><span>{{ constant('DISCOUNT MANAGEMENT')}}</span></a></li>
+				<li {% if heading=="Point" %} class="active" {% endif %}><a href="{{ base_url }}admin/point" title="{{ constant('POINT MANAGEMENT')}}"><i class="fa fa-file-powerpoint-o"></i><span>{{ constant('POINT MANAGEMENT')}}</span></a></li>
+				
+				<li {% if heading=="cms" %} class="active" {% endif %}><a href="{{ base_url }}admin/Cms" title="{{ constant('CMS')}}"><i class="fa fa-bank"></i><span>{{ constant('CMS')}}</span></a></li>
+			
+				<li {% if heading=="FAQs" %} class="active" {% endif %}><a href="{{ base_url }}admin/Faq" title="{{ constant('ALL')}} {{ constant('FAQ') }}"><i class="fa fa-shopping-basket"></i><span>{{ constant('ALL')}} {{ constant('FAQ') }}</span></a></li>
+				<li></li>
+				<li {% if heading=="FAQ Category" %} class="active" {% endif %}><a href="{{ base_url }}admin/Faq_category" title="{{ constant('FAQ')}} {{ constant('CATEGORY')}}"><i class="fa fa-server"></i><span>{{ constant('FAQ')}} {{ constant('CATEGORY')}}</span></a></li>
+				
+			<li><a href="{{ base_url }}admin/cuisine" tittle="{{ constant('CUISINE MANAGEMENT')}}"><i class="fa fa-binoculars"></i><span>{{ constant('CUISINE MANAGEMENT')}}</span></a></li>
+			</ul>
+			</li>
+
+			<li {% if title=="Global Settings" %} class="active_sub"  {% endif %}><a href="javascript:void(0);" title="{{ constant('Global Settings')}} "><i class="fa fa-cogs"></i><span>{{ constant('Global Settings')}} </span> </a>
+			<ul id="menu-comunicacao-sub" class="menu-comunicacao-sub" {% if title=="Global Settings" %} style="display:block"  {% endif %}>
+		
+		   	<li {% if heading=="Payment Method" %} class="active" {% endif %}><a href="{{ base_url }}admin/paymentmethod" tittle="{{ constant('PAYMENT MANAGEMENT')}}"><i class="fa fa-cc-diners-club"></i><span>{{ constant('PAYMENT MANAGEMENT')}}</span></a></li>
+		   		<li {% if heading=="Order type" %} class="active" {% endif %}><a href="{{ base_url }}admin/ordertype" title="{{ constant('ORDERTYPE MANAGEMENT')}}"><i class="fa fa-reorder"></i><span>{{ constant('ORDERTYPE MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Order status" %} class="active" {% endif %}><a href="{{ base_url }}admin/orderstatus" title="{{ constant('ORDERSTATUS MANAGEMENT')}}"><i class="fa fa-road"></i><span>{{ constant('ORDERSTATUS MANAGEMENT')}}</span></a></li>
+			<li {% if heading=="Advertisement" %} class="active" {% endif %}><a href="{{ base_url }}admin/advertisement" title="{{ constant('ADVERTISEMENT MANAGEMENT')}}"><i class="fa fa-road"></i><span>{{ constant('ADVERTISEMENT MANAGEMENT')}}</span></a></li>
+		</ul>
+		</li>
+		
+
+		
+</ul>
+{% endif %}	
+
+
+ </div>
+	 </div>
+	<div class="clearfix"> </div>
+	<style>
+	<!-- #menu-comunicacao-sub li a span{ -->
+    <!-- position: RELATIVE !important; -->
+    <!-- OPACITY:1 !important; -->
+<!-- } -->
+	</style>

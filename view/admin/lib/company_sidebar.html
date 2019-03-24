@@ -1,0 +1,33 @@
+<div class="sidebar-menu">
+   <div class="logo">
+      <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> 
+      <a href="#">
+         <span id="logo" ></span> 
+         <!--<img id="logo" src="" alt="Logo"/>--> 
+      </a>
+   </div>
+   <div class="menu">
+         {% if privillage.locationstatus==true %}
+         <ul id="menu">
+            <li><a href="{{ base_url }}admin/branchesaccess/"><i class="fa fa-list"></i><span> BRANCHES</span>
+            </a></li>
+         </ul>
+            {% else %}  
+      <ul id="menu">
+         <li ><a href="{{ base_url }}admin/company"  title="{{ constant('COMPANY')}} {{ constant('Manage')}}"><i class="fa fa-arrow-left"></i><span>{{ constant('BACK')}} </span> </a></li>
+		 <li ><a href="#"  style="border:1px 0px 1px 0px solid white;" title="{{ constant('COMPANY SETTINGS')}}"><span>{{ constant('COMPANY SETTINGS')}} </span> </a></li>
+       <li id="menu-home" {% if title=="Company Dashboard" %} class="active_sub" {% endif %}><a href="{{ base_url }}admin/companydashboard/index/{{session.company_id}}"><i class="fa fa-dashboard"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+         <li {% if title=="User" %} class="active" {% endif %}><a href="{{ base_url }}admin/companyUsers/index/{{session.company_id}}" title="{{ constant('STAFF MANAGEMENT')}}"><i class="fa fa-motorcycle"></i><span>{{ constant('STAFF MANAGEMENT')}}</span></a></li>	
+         <li {% if title=="Brand" %} class="active" {% endif %}>
+            <a href="{{ base_url }}admin/resturant/brands/{{ session.company_id }}" title="{{ constant('RESTURANT MANAGEMENT')}}"><i class="fa fa-group"></i><span>{{ constant('BRAND MANAGEMENT')}}</span></a></li>
+         <li {% if title=="Tax" %} class="active" {% endif %}>
+            <a href="{{ base_url }}admin/companyTax/index/{{session.company_id }}" title="{{ constant('TAX MANAGEMENT')}}"><i class="fa fa-group"></i><span>{{ constant('TAX MANAGEMENT')}}</span></a></li>
+          <!--  <li {% if title=="User location list" %} class="active" {% endif %}><a href="{{ base_url }}admin/userlocationCompany/index/{{ session.company_id }}" title="{{ constant('USER LOCATION MANAGMENT')}}"><i class="fa fa-list"></i><span>{{ constant('USER LOCATION MANAGMENT')}}</span></a></li>  -->
+
+      <li{% if title=="Plan" %} class="active" {% endif %}><a href="{{ base_url }}admin/company/fetch_plan_details/{{ session.company_id }}" title="{{ constant('PLAN MANAGMENT')}}"><i class="fa fa-list"></i><span>{{ constant('PLAN MANAGMENT')}}</span></a></li>  
+
+      </ul> 
+      {% endif %} 
+   </div>
+</div>
+<div class="clearfix"> </div>

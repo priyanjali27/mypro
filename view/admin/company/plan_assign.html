@@ -1,0 +1,242 @@
+{% include 'admin/lib/header.html' %}
+<script src="{{base_url}}assets/js/jquery.min.js"></script>
+<body>
+ <div class="page-container">
+   <div class="left-content">
+     <div class="mother-grid-inner">
+                <!--header start here-->
+        {% include 'admin/lib/company_nav.html' %}
+           <div class="inner-block">
+                    <!--mainpage chit-chating-->
+                    <!--  {%include 'admin/lib/company_breadcrumb.html' %}-->
+            {% if plan_count > 0 %}
+             <div class="chit-chat-layer1">
+              <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres">
+               <div class="">
+               <div class="chit-chat-heading">
+                <h3>{{ constant('ASSIGN PLAN') }}</h3>
+                </div>
+                  <form name="company_plan_assign" method="POST" action="{{ base_url }}admin/company/plan_assign/">
+
+                   <div class="col-md-12 md-form" style="padding:0px;">
+                   <div class="col-md-12 md-form" style="padding:0px;">
+
+                  {% for all_detail in selected_plan_data %}
+                     <div class="col-md-2 md-form"></div>
+                    <div class="col-md-8 md-form">
+                     <div class="columns">
+                      <ul class="price-p">
+
+                       
+                      {% for plandetail,detail_v in all_detail %}
+                       {% if detail_v %} 
+                       {% for k1,value in detail_v %}
+                        {% if value.plan_model_name!="" %}
+                          <div class="col-md-4 md-form">
+                             <div class="columns">
+                                 <ul class="price-p">
+                            <li class="header" style="background-color:#9f0660">{{ value.plan_model_name|e }}
+                             <i class="fa fa-check-circle"></i>
+                                   </br>
+                          {% if value.plan_detail_quantity %} 
+                          {{ constant('QUANTITY') }}&nbsp;:{{ value.plan_detail_quantity|e }} {% endif %}
+
+                           </li>
+                            </ul>
+                          </div>
+                        </div>
+                           {% endif %} {% endfor %} {% endif %} {% endfor %} 
+                           {% for unassigned_model in diff_result %} 
+                           {% for key,value in unassigned_model %}
+                           <div class="col-md-4 md-form">
+                              <div class="columns">
+                              <ul class="price-p">
+                                <li class="header" style="background-color:#9f0660">
+                              {{ value.plan_model_name|e }} </br>
+                              {% if value.plan_model_quantity %} {{ constant('QUANTITY') }}&nbsp;:{{ value.plan_model_quantity|e }} {% endif %}
+                                <button class="btn btn-success waves-effect waves-light" value="Upgrade" name="upgrade">Upgrade</button>
+                                 </li>
+
+                            </ul>
+                                </div>
+                              </div>
+                       {% endfor %} {% endfor %}
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 md-form">
+                                            </div>
+
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    {% else %}
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 col-sm-12 col-lg-12 chit-chat-layer1-left work-progres">
+                            <div class="">
+                                <div class="chit-chat-heading">
+                                    <h3>{{ constant('ASSIGN PLAN') }}</h3>
+                                </div>
+                                <form name="company_plan_assign" method="POST" action="{{ base_url }}admin/company/plan_assign/">
+                                    <input type="hidden" name="company_id" id="last_company_id" value="{{company_id}}" />
+                                    <div class="col-md-12 md-form" style="padding:0px;">
+                                        <div class="col-md-12 md-form" style="padding:0px;">
+                                            <i class="fa fa-user prefix grey-text"></i>
+                                            <label for="plan_id">{{ constant('PLAN')}}<span class="required">*</span></label>
+                                            {% for all_detail in all_plan_data %}
+
+                                            <div class="col-md-6 md-form">
+                                                <div class="columns">
+                                                    <ul class="price-p">
+
+                                                        {% for plan,plan_v in all_detail %} {% if plan_v.plan_name !='' %}
+                                                        <li class="header" style="background-color:#9f0660">{{ plan_v.plan_name|e }}</li>
+                                                        <li class="grey-1">{{ plan_v.plan_price|e }}</li>
+                                                        {% endif %} {% endfor %} {% for plandetail,detail_v in all_detail %} {% if detail_v %} {% for k1,v1 in detail_v %} {% if v1.plan_model_name!="" %}
+                                                        <li class="grey-2">{{ v1.plan_model_name|e }}&nbsp;&nbsp;{{ v1.plan_detail_quantity|e }}</li>
+                                                        {% endif %} {% endfor %} {% endif %} {% endfor %}
+                                                        <li class="grey-3">
+                                                            <input type="radio" name="plan_id" value="{{all_detail.plan_id}}">
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            {% endfor %}
+
+                                        </div>
+                                        <a href="{{base_url}}/admin/company/custom_plan/{{company_id}}">Custom Plan</a>
+                                        <div class="col-md-6 md-form">
+
+                                            <label for="no_of_days">{{constant('NUMDAYS')}}<span class="required">*</span></label>
+                                            <input type="number" id="no_of_days" maxlength="10" min="1" placeholder="{{ constant('ENTER') }} {{ constant('NUMDAYS')}}" name="no_of_days" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-success">{{ constant('SUBMIT')}}</button>
+                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">{{ constant('CANCEL')}}</button> -->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            <!--copy rights start here-->
+            {% include 'admin/lib/footer.html' %}
+            <!--COPY rights end here-->
+
+        </div>
+        <!--slider menu-->
+        {% include 'admin/lib/company_sidebar.html' %}
+    </div>
+    <!--slide bar menu end here-->
+    <!--Assign Model to company Ends here...-->
+
+    <script>
+        var toggle = true;
+
+        $(".sidebar-icon").click(function() {
+            if (toggle) {
+                $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                $("#menu span").css({
+                    "position": "absolute"
+                });
+            } else {
+                $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                setTimeout(function() {
+                    $("#menu span").css({
+                        "position": "relative"
+                    });
+                }, 400);
+            }
+            toggle = !toggle;
+        });
+    </script>
+    <!--scrolling js-->
+    <script src="{{base_url}}/assets/js/jquery.validate.min.js"></script>
+    <script src="{{base_url}}assets/js/jquery.nicescroll.js"></script>
+    <script src="{{base_url}}assets/js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="{{base_url}}assets/js/bootstrap.js">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+    <!-- mother grid end here-->
+    <script type="text/javascript">
+        $(function() {
+
+            /*Plan assign form to company */
+            $("form[name='company_plan_assign']").validate({
+                // Specify validation rules
+                rules: {
+                    // The key name on the left side is the name attribute
+                    // of an input field. Validation rules are defined
+                    // on the right side
+                    plan_id: "required",
+                    no_of_days: {
+                        required: true,
+                        number: true
+                    },
+                },
+                // Specify validation error messages
+                messages: {
+                    plan_id: "Please Select Plan",
+                    no_of_days: {
+                        required: "Please enter no. of days of plan subscription",
+                        number: "Days must be numeric",
+                    },
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function(form) {
+                    var urlData = $(form).attr('action');
+                    var formData = $(form).serialize();
+                    $.ajax({
+                        url: urlData,
+                        type: "POST",
+                        crossDomain: true,
+                        data: formData,
+                        success: function(data) {
+                            var data = $.parseJSON(data);
+                            if (data.error == 'true') {
+                                $.each(data.error_msg, function(index, value) {
+                                    $('#' + index).after('<label id="' + index + '-error" class="error" for="customer_name">' + value + '</label>');
+                                });
+                            } else {
+
+                                //alert(data); return false;
+                                $('form[name="company_plan_assign"]')[0].reset();
+                                $('form[name="company_plan_assign"]').before('<div class="alert alert-success alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button"> × </button>' + data.success_message + '</div>');
+                                if ($('.alert').delay(10000).fadeOut(100)) {
+                                    window.location.href = "{{ base_url }}admin/company/";
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        canvas {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+{% if(session.resturant_userdata.user_role=='2' or session.resturant_userdata.user_role=='3') %}  
+{% if (privillage.brandstatus=='true') and (session.resturant_userdata.user_role!='2') %}
+<div class="sidebar-menu side-menu-r">
+    <div class="logo">
+        <div class="logo-name">
+            <a href="{{base_url}}resturant/dashboard">
+                <img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+            </a>  								
+        </div>
+    </div>
+    <div class="menu">        
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Manage')}}</a><li> 
+            <li id="menu-home" {% if heading=="brand List"  %} class="active" {% endif %}><a data-toggle="tooltip" title="{{ constant('BRAND MANAGEMENT')}}" href="{{base_url}}resturant/company/brand/" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('BRAND MANAGEMENT')}}</span></a></li>
+            <li class="main-manage"><a href="javascript:;">{{ constant('Global Settings')}}</a><li>
+            <li id="menu-home" {% if heading=="PROFILE"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('MY PROFILE')}}" href="{{base_url}}resturant/user/profile" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('MY PROFILE')}}</span></a></li>
+        </ul>
+    </div>
+</div>
+{% else %}
+<div class="sidebar-menu side-menu-r">
+    <div class="logo">
+        <div class="logo-name">
+            <a href="{{base_url}}resturant/dashboard">
+                <img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+            </a>  								
+        </div>
+    </div>		
+
+    <div class="menu" >
+        <ul id="menu" class="menu-new width-li">
+            <li {% if title=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('DASHBOARD')}}" style="padding-bottom:1px;" href="{{base_url}}resturant/dashboard"><i class="fa fa-tachometer"></i></a></li> 		   
+            <li id="menu-home" {% if title=="Resturant"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Manage')}}" href="{{base_url}}resturant/company/brand" style="border-top:1px solid #fff;"><i class="fa fa-drivers-license"></i></a></li>
+            <li {% if title=="User"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('PROFILE')}}" href="{{base_url}}resturant/user/profile"><i class="fa fa-cogs"></i></a></li> 
+        </ul>
+
+        {% if title=="Resturant"  %}
+        <ul id="menu" class="menu-new width-ri">
+
+            <li class="main-manage"><a href="javascript:;">{{ constant('Manage')}}</a><li> 
+            <li id="menu-home" {% if heading=="brand List"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('BRAND MANAGEMENT')}}" href="{{base_url}}resturant/company/brand/" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('BRAND MANAGEMENT')}}</span></a></li>
+            <li id="menu-home" {% if heading=="ListUser"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('Staff Management')}} " href="{{base_url}}resturant/staffrole" class="active-sub"><i class="fa fa-group"></i><span>{{ constant('Staff Management')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Tax"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('TAX MANAGEMENT')}} " href="{{base_url}}resturant/companytax/Tax" class="active-sub"><i class="fa fa-list-alt"></i><span>{{ constant('TAX MANAGEMENT')}}</span></a></li>
+            <!--<li id="menu-home" {% if heading=="User location list"  %} class="active" {% endif%}><a  data-toggle="tooltip" title=" {{ constant('USER LOCATION MANAGMENT')}}  " href="{{base_url}}resturant/userlocation" class="active-sub"><i class="fa fa-list-alt"></i><span> {{ constant('USER LOCATION MANAGMENT')}} </span></a></li>-->
+            <li id="menu-home" {% if heading=="Plan"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('PLAN MANAGMENT')}} " href="{{base_url}}resturant/plan" class="active-sub"><i class="fa fa-adjust"></i><span>{{ constant('PLAN MANAGMENT')}}</span></a></li>
+        </ul>
+
+        {% endif %}
+
+        {% if title=="User"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Global Settings')}}</a><li>
+            <li id="menu-home" {% if heading=="PROFILE"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('MY PROFILE')}}" href="{{base_url}}resturant/user/profile" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('MY PROFILE')}}</span></a></li>
+            {% if (session.resturant_userdata.user_role=='2')  %}
+            <li id="menu-home" {% if heading=="Edit company Profile"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('COMPANY')}} " href="{{base_url}}resturant/Companysetting/company_address" class="active-sub"><i class="fa fa-address-book"></i><span>{{constant('COMPANY')}} {{constant('ADDRESS')}} </span></a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        {% if title=="Dashboard"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Setup')}}</a><li>
+            <li id="menu-home" {% if heading=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('DASHBOARD')}}" href="{{base_url}}resturant/dashboard" class="active-sub"><i class="fa fa-tachometer"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Error"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li id="menu-home" ><a href="#" class="active-sub"><span>&nbsp;</span></a></li>
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+{% if(session.resturant_userdata.user_role=='4' or session.resturant_userdata.user_role=='6') %}
+<div class="sidebar-menu side-menu-r">
+    <div class="logo">
+        <div class="logo-name">
+            <a href="{{base_url}}resturant/dashboard"> <!--<h1>Shoppy</h1>--> 
+                <img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+            </a>  								
+        </div>
+    </div>		
+
+    <div class="menu" >
+        <ul id="menu" class="menu-new width-li">
+            <li {% if title=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('DASHBOARD')}}" style="padding-bottom:1px;" href="{{base_url}}resturant/dashboard"><i class="fa fa-tachometer"></i></a></li> 		   
+            <li id="menu-home" {% if title=="Resturant"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Manage')}}" href="{{base_url}}resturant/resturant" style="border-top:1px solid #fff;"><i class="fa fa-drivers-license"></i></a></li>
+            <li id="menu-home" {% if title=="Menu"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Menu Setup')}}" href="{{base_url}}resturant/menus/items" style="border-top:1px solid #fff;"><i class="fa fa-th-large"></i></a></li>
+            <li {% if title=="Fee"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('FEE MANAGEMENT')}}" href="{{base_url}}resturant/commission/"><i class="fa fa-car"></i></a></li> 
+            <li {% if title=="User"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('PROFILE')}}" href="{{base_url}}resturant/user/profile"><i class="fa fa-cogs"></i></a></li> 
+        </ul>
+
+        {% if title=="Resturant"  %}
+        <ul id="menu" class="menu-new width-ri">
+
+            <li class="main-manage"><a href="javascript:;">{{ constant('Manage')}}</a><li>
+
+            <li id="menu-home" {% if heading=="Resturant List"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('Manage Branches')}}" href="{{base_url}}resturant/resturant/" class="active-sub"><i class="fa fa-list"></i><span>{{ constant('Manage Branches')}}</span></a></li>
+            <li id="menu-home" {% if heading=="ListUser"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('Staff Management')}} " href="{{base_url}}resturant/user/" class="active-sub"><i class="fa fa-list-alt"></i><span>{{ constant('Staff Management')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Customer"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('CUSTOMER MANAGEMENT')}}" href="{{base_url}}resturant/customer/" class="active-sub"><i class="fa fa-user"></i><span>{{constant('CUSTOMER MANAGEMENT')}} </span></a></li>
+            <li id="menu-home" {% if heading=="DiscountList"  %} class="active"  {% endif %}><a data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('DISCOUNT')}} " href="{{ base_url }}resturant/Discount" class="active-sub"><i class="fa fa-arrows"></i><span> {{ constant('DISCOUNT')}} {{constant('Manage')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Point"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('POINT')}} " href="{{base_url}}resturant/point/" class="active-sub"><i class="fa fa-tasks"></i><span>{{constant('POINT MANAGEMENT')}} </span></a></li>
+            <li id="menu-home" {% if heading=="Tax"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('TAX')}} " href="{{base_url}}resturant/tax/" class="active-sub"><i class="fa fa-bank"></i><span>{{constant('TAX MANAGEMENT')}} </span></a></li>
+        </ul>
+
+        {% endif %}
+
+        {% if title=="User"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Global Settings')}}</a><li>
+
+            <li id="menu-home" {% if heading=="PROFILE"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('MY PROFILE')}}" href="{{base_url}}resturant/user/profile" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('MY PROFILE')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Edit Resturant Profile"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('RESTADDRESS')}} " href="{{base_url}}resturant/resturant/profile" class="active-sub"><i class="fa fa-address-book"></i><span>{{constant('RESTADDRESS')}} </span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Fee"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('FEE MANAGEMENT')}}</a><li>
+            <li id="menu-home" {% if heading=="Commission"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('COMMISSION MANAGEMENT')}}" href="{{base_url}}resturant/commission/" class="active-sub"><i class="fa fa-window-restore"></i><span>{{ constant('COMMISSION MANAGEMENT')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Delivery"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('DELIVERY DRIVER MANAGEMENT')}} " href="{{base_url}}resturant/delivery" class="active-sub"><i class="fa fa-motorcycle"></i><span>{{constant('DELIVERY DRIVER MANAGEMENT')}} </span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Dashboard"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Setup')}}</a><li>
+            <li id="menu-home" {% if heading=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('DASHBOARD')}}" href="{{base_url}}resturant/dashboard" class="active-sub"><i class="fa fa-tachometer"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Menu"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Menu Setup')}}</a><li>		       
+            <li id="menu-home" {% if heading=="Menu item"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('Menu Setup')}}" href="{{base_url}}resturant/menus/items" class="active-sub"><i class="fa fa-id-badge"></i><span>{{ constant('Menu Setup')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Menu combo item"  %} class="active" {% endif%}><a href="{{base_url}}resturant/menus/additems" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('ADD ITEMS')}}</span></a></li>
+            <li id="menu-home" {% if heading=="List category"  %} class="active" {% endif%}><a href="{{base_url}}resturant/category" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('CATEGORY MANAGEMENT')}}</span></a></li>
+            <li id="menu-home" {% if heading=="List Menu"  %} class="active" {% endif%}><a href="{{base_url}}resturant/menus" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('ITEMS MANAGEMENT')}}</span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Error"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li id="menu-home" ><a href="#" class="active-sub"><span>&nbsp;</span></a></li>
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if(session.resturant_userdata.user_role=='5' or session.resturant_userdata.user_role=='7') %}
+<div class="sidebar-menu side-menu-r">
+    <div class="logo">
+        <div class="logo-name">
+            <a href="{{base_url}}resturant/dashboard"> <!--<h1>Shoppy</h1>--> 
+                <img id="logo" src="{{base_url}}assets/images/logo.png" class="img-responsive" alt="Logo"/>
+            </a>  								
+        </div>
+    </div>		
+
+    <div class="menu" >
+        <ul id="menu" class="menu-new width-li">
+            <li {% if title=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('DASHBOARD')}}" style="padding-bottom:1px;" href="{{base_url}}resturant/dashboard"><i class="fa fa-tachometer"></i></a></li> 		   
+            <li id="menu-home" {% if title=="Resturant"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Manage')}}" href="{{base_url}}resturant/resturant" style="border-top:1px solid #fff;"><i class="fa fa-drivers-license"></i></a></li>
+            <li id="menu-home" {% if title=="Menu"  %} class="active" {% endif%} ><a data-toggle="tooltip" title="{{constant('Menu Setup')}}" href="{{base_url}}resturant/menus/items" style="border-top:1px solid #fff;"><i class="fa fa-th-large"></i></a></li>
+            <li {% if title=="Fee"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('FEE MANAGEMENT')}}" href="{{base_url}}resturant/commission/"><i class="fa fa-car"></i></a></li> 
+            <li {% if title=="User"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{constant('PROFILE')}}" href="{{base_url}}resturant/user/profile"><i class="fa fa-cogs"></i></a></li> 
+        </ul>
+
+        {% if title=="Resturant"  %}
+        <ul id="menu" class="menu-new width-ri">
+
+            <li class="main-manage"><a href="javascript:;">{{ constant('Manage')}}</a><li>
+
+            <li id="menu-home" {% if heading=="Resturant List"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('Manage Branches')}}" href="{{base_url}}resturant/resturant/" class="active-sub"><i class="fa fa-list"></i><span>{{ constant('Manage Branches')}}</span></a></li>
+            <li id="menu-home" {% if heading=="ListUser"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('Staff Management')}} " href="{{base_url}}resturant/user/" class="active-sub"><i class="fa fa-list-alt"></i><span>{{ constant('Staff Management')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Customer"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('CUSTOMER MANAGEMENT')}}" href="{{base_url}}resturant/customer/" class="active-sub"><i class="fa fa-user"></i><span>{{constant('CUSTOMER MANAGEMENT')}} </span></a></li>
+            <li id="menu-home" {% if heading=="DiscountList"  %} class="active"  {% endif %}><a data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('DISCOUNT')}} " href="{{ base_url }}resturant/Discount" class="active-sub"><i class="fa fa-arrows"></i><span> {{ constant('DISCOUNT')}} {{constant('Manage')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Point"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('POINT')}} " href="{{base_url}}resturant/point/" class="active-sub"><i class="fa fa-tasks"></i><span>{{constant('POINT MANAGEMENT')}} </span></a></li>
+            <li id="menu-home" {% if heading=="Tax"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('MANAGE')}} {{constant('TAX')}} " href="{{base_url}}resturant/tax/" class="active-sub"><i class="fa fa-bank"></i><span>{{constant('TAX MANAGEMENT')}} </span></a></li>
+        </ul>
+
+        {% endif %}
+
+        {% if title=="User"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Global Settings')}}</a><li>
+
+            <li id="menu-home" {% if heading=="PROFILE"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('MY PROFILE')}}" href="{{base_url}}resturant/user/profile" class="active-sub"><i class="fa fa-drivers-license"></i><span>{{ constant('MY PROFILE')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Edit Resturant Profile"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('RESTADDRESS')}} " href="{{base_url}}resturant/resturant/profile" class="active-sub"><i class="fa fa-address-book"></i><span>{{constant('RESTADDRESS')}} </span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Fee"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('FEE MANAGEMENT')}}</a><li>
+            <li id="menu-home" {% if heading=="Commission"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('COMMISSION MANAGEMENT')}}" href="{{base_url}}resturant/commission/" class="active-sub"><i class="fa fa-window-restore"></i><span>{{ constant('COMMISSION MANAGEMENT')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Delivery"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{constant('DELIVERY DRIVER MANAGEMENT')}} " href="{{base_url}}resturant/delivery" class="active-sub"><i class="fa fa-motorcycle"></i><span>{{constant('DELIVERY DRIVER MANAGEMENT')}} </span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Dashboard"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Setup')}}</a><li>
+            <li id="menu-home" {% if heading=="Dashboard"  %} class="active" {% endif%}><a data-toggle="tooltip" title="{{ constant('DASHBOARD')}}" href="{{base_url}}resturant/dashboard" class="active-sub"><i class="fa fa-tachometer"></i><span>{{ constant('DASHBOARD')}}</span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Menu"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li class="main-manage"><a href="javascript:;">{{ constant('Menu Setup')}}</a><li>		       
+            <li id="menu-home" {% if heading=="Menu item"  %} class="active" {% endif%}><a  data-toggle="tooltip" title="{{ constant('Menu Setup')}}" href="{{base_url}}resturant/menus/items" class="active-sub"><i class="fa fa-id-badge"></i><span>{{ constant('Menu Setup')}}</span></a></li>
+            <li id="menu-home" {% if heading=="Menu combo item"  %} class="active" {% endif%}><a href="{{base_url}}resturant/menus/additems" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('ADD ITEMS')}}</span></a></li>
+            <li id="menu-home" {% if heading=="List category"  %} class="active" {% endif%}><a href="{{base_url}}resturant/category" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('CATEGORY MANAGEMENT')}}</span></a></li>
+            <li id="menu-home" {% if heading=="List Menu"  %} class="active" {% endif%}><a href="{{base_url}}resturant/menus" class="active-sub"><i class="fa fa-id-card"></i><span>{{ constant('ITEMS MANAGEMENT')}}</span></a></li>
+        </ul>
+        {% endif %}
+
+        {% if title=="Error"  %}
+        <ul id="menu" class="menu-new width-ri">
+            <li id="menu-home" ><a href="#" class="active-sub"><span>&nbsp;</span></a></li>
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+<div class="clearfix"> </div>
+<style>
+    .logo {
+        width: auto;
+        position: relative;
+        left:0px;
+        top:10px;
+    }
+</style>

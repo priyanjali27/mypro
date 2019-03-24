@@ -1,0 +1,96 @@
+{% include 'admin/lib/header.html' %}
+<body>
+	<!-- Main navbar -->
+	{% include 'admin/lib/nav.html' %}
+	<!-- /main navbar -->
+	<!-- Page container -->
+	<div class="page-container">
+		<!-- Page content -->
+		<div class="page-content">
+			<!-- Main sidebar -->
+			{% include 'admin/lib/sidebar.html' %}
+			<!-- /main sidebar -->
+			<!-- Main content -->
+			<div class="content-wrapper">
+				<!-- Content area -->
+				<div class="content">
+					<div class="success_msg" style="text-align:center;" >{{ success }}</div>
+					<div class="error_msg" style="text-align:center;" >{{ error }} </div>
+					<!--  Page content -->
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">{{ constant('VIEW')}} </h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+			                		<li><a data-action="collapse"></a></li>
+			                		<li><a data-action="reload"></a></li>
+			                		<li><a data-action="close"></a></li>
+			                	</ul>
+		                	</div>
+						</div>
+						<div class="panel-body">
+						  <div class="table-responsive">
+							<table class="table">
+								<tbody>
+									    <tr>
+										<td><b>{{ constant('NAME')}}</b></td>
+										<td>{{ resturant.resturantbrand_name|e }}</td>
+										</tr>
+										<tr>
+										<td><b>{{ constant('DISPLAY NAME')}}</b></td>
+										<td>{{ resturant.resturantbrand_displayname|e }}</td>
+										</tr>
+										<tr>
+										<td><b>{{ constant('BRAND')}}</b></td>
+										<td>{{ resturant.t2resturantbrand_name|e }}</td>
+										</tr>
+										<tr>
+										<td><b>{{ constant('EMAIL')}}</b></td>
+										<td>{{ resturant.resturantbrand_email|e }}</td>
+										</tr>
+										<tr>
+										<td><b>{{ constant('ADDRESS')}}</b></td>
+										<td>{{ resturant.resturantbrand_address|e }}</td>
+										</tr>
+										<tr>
+										<td><b>{{ constant('PHONENO')}}</b></td>
+										<td>{{ resturant.resturantbrand_phoneno|e }}</td>
+										</tr>
+										{% if resturant.resturantbrand_countusers %}
+										<tr>
+										<td><b>{{ constant('COUNTUSERS')}}</b></td>
+										<td>{{ resturant.resturantbrand_countusers|e }}</td>
+										</tr>
+										{% endif %}
+										{% if resturant.resturantbrand_countpos %}
+										<tr>
+										<td><b>{{ constant('COUNTPOS')}}</b></td>
+										<td>{{ resturant.resturantbrand_countpos|e }}</td>
+										</tr>
+									    {% endif %}
+										<tr>
+										<td><b>{{ constant('CREATED')}}</b></td>
+										<td>{{ resturant.resturantbrand_created|e }}</td>
+										</tr>
+							</tbody>
+							</table>
+					
+								<div class="text-right">
+									<a href="{{ base_url }}admin/resturant/" type="button" class="btn btn-warning">{{ constant('BACK')}}</a>
+								
+									<a href="{{ base_url }}admin/resturant/edit/{{ resturant.resturantbrand_id|e }}" type="button" class="btn btn-primary">{{ constant('EDIT')}}</a>
+								</div>	
+						</div>
+					</div>
+					<!-- /// Page content -->
+				{% include 'admin/lib/footer.html' %}
+				</div>
+				<!-- /content area -->
+			</div>
+			<!-- /main content -->
+		</div>
+		<!-- /page content -->
+	</div>
+	<!-- /page container -->
+</body>
+</html>
